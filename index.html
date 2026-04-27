@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>resicodeo · Tu negocio creativo, en orden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0F1115;
+  --bg-secondary: #1C1F26;
+  --bg-tertiary: #252932;
+  --bg-card: #1C1F26;
+  --accent: #7B6DFF;
+  --accent-hover: #9587FF;
+  --accent-soft: rgba(123, 109, 255, 0.12);
+  --accent-glow: rgba(123, 109, 255, 0.3);
+  --green: #22C55E;
+  --green-soft: rgba(34, 197, 94, 0.12);
+  --red: #F87171;
+  --red-soft: rgba(248, 113, 113, 0.12);
+  --orange: #FB923C;
+  --orange-soft: rgba(251, 146, 60, 0.12);
+  --text-primary: #F5F6FA;
+  --text-secondary: #A0A3B1;
+  --text-tertiary: #6B6F7D;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== LOGO ===== */
+.logo {
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-bottom: 18px;
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--bg-tertiary);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.logo-mark::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+}
+
+/* ===== LAYOUT ===== */
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+  padding-bottom: 100px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding: 8px 0;
+}
+
+.tagline {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tagline .accent {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+/* ===== TABS ===== */
+.tabs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-secondary);
+  padding: 6px;
+  border-radius: 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tabs.primary {
+  background: linear-gradient(135deg, rgba(123,109,255,0.08), rgba(123,109,255,0.02));
+  border: 1px solid rgba(123,109,255,0.15);
+}
+
+.tabs.primary .tab {
+  flex: 1;
+  justify-content: center;
+  padding: 14px 18px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.tabs.primary .tab:not(.active) {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.tabs.primary .tab:not(.active):hover {
+  background: var(--bg-secondary);
+  border: 1px solid var(--accent);
+}
+
+.tab {
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab:hover { color: var(--text-primary); }
+
+.tab.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 4px 16px var(--accent-glow);
+  border-color: transparent;
+}
+
+.tab svg { width: 16px; height: 16px; }
+
+.tab-link {
+  text-decoration: none;
+}
+
+.tab-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent) !important;
+}
+
+@media (max-width: 600px) {
+  .tabs.primary .tab {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+  .tabs.primary .tab svg { width: 18px; height: 18px; }
+}
+
+/* ===== PANELS ===== */
+.panel { display: none; animation: fadeIn 0.3s ease; }
+.panel.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ===== SUMMARY CARDS ===== */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+}
+
+.summary-card.green::before { background: var(--green); }
+.summary-card.red::before { background: var(--red); }
+.summary-card.accent::before { background: var(--accent); }
+.summary-card.orange::before { background: var(--orange); }
+
+.summary-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.summary-value {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-family: 'Plus Jakarta Sans', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-value.green { color: var(--green); }
+.summary-value.red { color: var(--red); }
+.summary-value.accent { color: var(--accent); }
+
+.summary-meta {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ===== FORMS ===== */
+.form-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.form-grid.full { grid-template-columns: 1fr; }
+
+@media (max-width: 700px) {
+  .form-grid, .form-grid.three { grid-template-columns: 1fr; }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input, select.input, textarea.input {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+  outline: none;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+}
+
+.input::placeholder { color: var(--text-tertiary); }
+
+select.input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23A0A3B1' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.field-hint {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  letter-spacing: -0.01em;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+.btn.ghost {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+}
+
+.btn.ghost:hover {
+  background: var(--bg-secondary);
+  box-shadow: none;
+}
+
+.btn.danger {
+  background: var(--red);
+}
+
+.btn.danger:hover {
+  background: #FF5C5C;
+  box-shadow: 0 8px 24px rgba(248, 113, 113, 0.3);
+}
+
+.btn.small { padding: 8px 14px; font-size: 12px; }
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===== CHECKBOX ===== */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: all 0.2s;
+}
+
+.checkbox-row:hover { border-color: var(--accent); }
+
+.checkbox-row input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-strong);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.checkbox-row input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.checkbox-row input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 1px;
+  width: 6px; height: 11px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-row label {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 1;
+}
+
+/* ===== STATUS BADGES ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge.green { background: var(--green-soft); color: var(--green); }
+.badge.red { background: var(--red-soft); color: var(--red); }
+.badge.orange { background: var(--orange-soft); color: var(--orange); }
+.badge.accent { background: var(--accent-soft); color: var(--accent); }
+
+/* ===== LIST ITEMS ===== */
+.list { margin-top: 24px; }
+
+.list-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+
+.list-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.list-item:hover {
+  border-color: var(--border-strong);
+}
+
+.list-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.list-icon svg { width: 18px; height: 18px; color: var(--accent); }
+
+.list-icon.red { background: var(--red-soft); }
+.list-icon.red svg { color: var(--red); }
+
+.list-info { min-width: 0; }
+
+.list-desc {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-meta {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.list-amount {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: right;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.list-amount.in { color: var(--green); }
+.list-amount.out { color: var(--red); }
+
+.list-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  justify-content: flex-end;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.icon-btn:hover { color: var(--red); }
+
+/* ===== EMPTY ===== */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-tertiary);
+}
+
+.empty-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  background: var(--bg-tertiary);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-icon svg { width: 28px; height: 28px; color: var(--text-tertiary); }
+
+.empty-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ===== CALC SECTION ===== */
+.calc-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.calc-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.calc-line:last-child { border-bottom: none; }
+
+.calc-label { color: var(--text-secondary); font-weight: 500; }
+.calc-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.calc-line.total {
+  border-top: 1.5px solid var(--accent);
+  border-bottom: none;
+  padding-top: 16px;
+  margin-top: 8px;
+}
+
+.calc-line.total .calc-label { color: var(--text-primary); font-weight: 700; font-size: 15px; }
+.calc-line.total .calc-value { color: var(--accent); font-size: 20px; font-weight: 700; }
+
+/* ===== ALERTS ===== */
+.alert {
+  padding: 14px 18px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+.alert svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+
+.alert.info { background: var(--accent-soft); color: #C5BFFF; }
+.alert.info svg { color: var(--accent); }
+.alert.warning { background: var(--orange-soft); color: #FFD9B8; }
+.alert.warning svg { color: var(--orange); }
+.alert.success { background: var(--green-soft); color: #B8E8C8; }
+.alert.success svg { color: var(--green); }
+.alert.danger { background: var(--red-soft); color: #FFCCCC; }
+.alert.danger svg { color: var(--red); }
+
+/* ===== TIP CARD ===== */
+.tip {
+  background: var(--accent-soft);
+  border: 1px solid rgba(123, 109, 255, 0.2);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #D4CFFF;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.tip strong { color: var(--accent); font-weight: 700; }
+
+/* ===== ANNUAL VIEW ===== */
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.year-month {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 16px 14px;
+  border-radius: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.year-month:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.year-month-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.year-month-income {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.year-month-pay {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.year-month-pay.has { color: var(--red); }
+.year-month-pay.zero { color: var(--text-tertiary); }
+
+/* ===== MONTH SELECTOR ===== */
+.month-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ===== AYUDA ===== */
+.help-block {
+  margin-bottom: 24px;
+}
+
+.help-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.help-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.help-text strong { color: var(--text-primary); }
+
+/* ===== RATES TABLE ===== */
+.rates-table {
+  width: 100%;
+}
+
+.rates-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.rates-row:last-child { border-bottom: none; }
+
+.rates-row .rate { color: var(--accent); font-weight: 700; }
+
+/* ===== FILTER TABS ===== */
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-tab {
+  padding: 8px 14px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-tab:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.filter-tab.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.filter-count {
+  background: rgba(255,255,255,0.15);
+  padding: 1px 8px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+}
+
+.filter-tab:not(.active) .filter-count {
+  background: var(--bg-secondary);
+  color: var(--text-tertiary);
+}
+
+.filter-totals {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.filter-total-item {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.filter-total-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.filter-total-value.green { color: var(--green); }
+.filter-total-value.accent { color: var(--accent); }
+
+.filter-empty {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: var(--green);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  transform: translateX(400px);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast.show { transform: translateX(0); }
+.toast.error { background: var(--red); }
+
+/* ===== FOOTER MOTTO ===== */
+.footer-motto {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.footer-motto .accent {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+/* ===== LOADING ===== */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--bg-tertiary);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-text {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===== ICONS ===== */
+.icon-camera, .icon-list, .icon-stats, .icon-peace,
+.icon-add, .icon-receipt, .icon-calendar, .icon-help {
+  width: 16px;
+  height: 16px;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="logo">
+        resicodeo<span class="dot"></span>
+      </div>
+      <div class="tagline">Tu negocio creativo, en orden. <span class="accent">Sin complicaciones.</span></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-wrapper">
+    <div class="tabs primary">
+      <button class="tab" data-tab="ingreso">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Nuevo cobro
+      </button>
+      <button class="tab" data-tab="gasto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+        Nuevo gasto
+      </button>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="resumen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+        Resumen
+      </button>
+      <button class="tab" data-tab="cobros">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+        Cobros
+      </button>
+      <button class="tab" data-tab="anual">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+        Reportes
+      </button>
+      <a href="#" onclick="abrirCurso(event)" class="tab tab-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Curso
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12" style="margin-left: 2px; opacity: 0.6;"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+      <button class="tab" data-tab="ayuda">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+        Ayuda
+      </button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading" class="panel active">
+    <div class="loading-screen">
+      <div class="spinner"></div>
+      <div class="loading-text">Cargando tu información...</div>
+    </div>
+  </div>
+
+  <!-- RESUMEN MENSUAL -->
+  <div id="panel-resumen" class="panel">
+    <div class="month-selector">
+      <select class="input" id="select-mes" style="width: auto;"></select>
+      <select class="input" id="select-anio" style="width: auto;"></select>
+    </div>
+    <div id="resumen-content"></div>
+  </div>
+
+  <!-- INGRESO -->
+  <div id="panel-ingreso" class="panel">
+    <h2 class="section-title">Nuevo cobro</h2>
+    <p class="section-subtitle">Registra el dinero que efectivamente recibiste por un trabajo.</p>
+
+    <div class="tip">
+      💡 <strong>Recuerda:</strong> en RESICO solo cuenta lo que YA TE PAGARON. Si emitiste factura PPD pero aún no entra el pago, registra hasta que recibas el dinero.
+    </div>
+
+    <div class="form-section">
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label">Descripción</label>
+          <input type="text" class="input" id="ing-desc" placeholder="Ej: Boda Pérez–Gómez">
+        </div>
+        <div class="field">
+          <label class="field-label">Fecha de cobro</label>
+          <input type="date" class="input" id="ing-fecha">
+        </div>
+      </div>
+
+      <div class="form-grid three">
+        <div class="field">
+          <label class="field-label">Tipo de cliente</label>
+          <select class="input" id="ing-cliente">
+            <option value="fisica_factura">Persona física (con factura)</option>
+            <option value="fisica_sin">Persona física (sin factura → global)</option>
+            <option value="moral">Persona moral / agencia</option>
+            <option value="extranjero">Cliente extranjero</option>
+          </select>
+          <span class="field-hint">Cambia el cálculo de retenciones</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Tipo de actividad</label>
+          <select class="input" id="ing-actividad">
+            <option value="profesional">Servicio profesional</option>
+            <option value="empresarial">Actividad empresarial</option>
+          </select>
+          <span class="field-hint">Empresarial = sin retenciones</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Cotización</label>
+          <select class="input" id="ing-cotizacion">
+            <option value="mas_iva">Precio + IVA aparte</option>
+            <option value="incluido">Precio con IVA incluido</option>
+          </select>
+          <span class="field-hint">Cómo cotizaste al cliente</span>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label">Monto cobrado total (MXN)</label>
+          <input type="number" class="input" id="ing-monto" placeholder="0.00" step="0.01" min="0">
+          <span class="field-hint" id="ing-monto-hint">El total que entró a tu cuenta</span>
+        </div>
+        <div class="field">
+          <label class="field-label">Notas <span style="color: var(--text-tertiary); text-transform: none; font-weight: 500;">(opcional)</span></label>
+          <input type="text" class="input" id="ing-notas" placeholder="Ej: Anticipo, factura A-123">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" id="btn-add-ingreso">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M12 5v14M5 12h14"/></svg>
+          Guardar cobro
+        </button>
+        <button class="btn ghost" id="btn-clear-ingreso">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="list" id="lista-ingresos-mes"></div>
+  </div>
+
+  <!-- GASTO -->
+  <div id="panel-gasto" class="panel">
+    <h2 class="section-title">Nuevo gasto</h2>
+    <p class="section-subtitle">Registra los gastos relacionados con tu trabajo creativo.</p>
+
+    <div class="tip">
+      💡 <strong>Solo registra gastos CON FACTURA.</strong> En RESICO no necesitas gastos para reducir ISR (no hay deducciones), pero el IVA sí lo puedes acreditar. Sin factura, el SAT no lo cuenta.
+    </div>
+
+    <div class="form-section">
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label">Descripción</label>
+          <input type="text" class="input" id="gas-desc" placeholder="Ej: Disco duro 4TB">
+        </div>
+        <div class="field">
+          <label class="field-label">Fecha de pago</label>
+          <input type="date" class="input" id="gas-fecha">
+        </div>
+      </div>
+
+      <div class="form-grid three">
+        <div class="field">
+          <label class="field-label">Categoría</label>
+          <select class="input" id="gas-categoria">
+            <option value="equipo">Equipo (cámaras, lentes, audio)</option>
+            <option value="software">Software / nube / internet</option>
+            <option value="transporte">Transporte / gasolina</option>
+            <option value="renta_equipo">Renta de equipo</option>
+            <option value="capacitacion">Cursos / capacitación</option>
+            <option value="colaboradores">Honorarios de colaboradores</option>
+            <option value="otros">Otros gastos del trabajo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Subtotal (sin IVA)</label>
+          <input type="number" class="input" id="gas-subtotal" placeholder="0.00" step="0.01" min="0">
+          <span class="field-hint">Antes del 16%</span>
+        </div>
+        <div class="field">
+          <label class="field-label">IVA pagado</label>
+          <input type="number" class="input" id="gas-iva" placeholder="0.00" step="0.01" min="0">
+          <span class="field-hint">El 16% que viene desglosado</span>
+        </div>
+      </div>
+
+      <div class="checkbox-row" id="checkbox-factura">
+        <input type="checkbox" id="gas-tiene-factura" checked>
+        <label for="gas-tiene-factura">Tengo factura (CFDI) por este gasto</label>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" id="btn-add-gasto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M5 13l4 4L19 7"/></svg>
+          Guardar gasto
+        </button>
+        <button class="btn ghost" id="btn-calc-iva">Calcular IVA del subtotal</button>
+      </div>
+    </div>
+
+    <div class="list" id="lista-gastos-mes"></div>
+  </div>
+
+  <!-- COBROS (lista global) -->
+  <div id="panel-cobros" class="panel">
+    <h2 class="section-title">Cobros</h2>
+    <p class="section-subtitle">Historial de todos tus cobros registrados.</p>
+    <div id="cobros-content"></div>
+  </div>
+
+  <!-- ANUAL -->
+  <div id="panel-anual" class="panel">
+    <h2 class="section-title">Reportes</h2>
+    <p class="section-subtitle">Vista anual de tu negocio creativo.</p>
+
+    <div class="month-selector">
+      <select class="input" id="select-anio-anual" style="width: auto;"></select>
+    </div>
+
+    <div id="resumen-anual-content"></div>
+  </div>
+
+
+  <!-- AYUDA -->
+  <div id="panel-ayuda" class="panel">
+    <h2 class="section-title">Ayuda</h2>
+    <p class="section-subtitle">Cómo usar resicodeo y dudas frecuentes.</p>
+
+    <div class="alert info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div><strong>resicodeo es solo para tu control personal.</strong> No presenta declaraciones ni emite facturas. Te ayuda a saber cuánto debes pagar mensualmente al SAT.</div>
+    </div>
+
+    <div class="card">
+      <div class="help-block">
+        <h3 class="help-title">Flujo recomendado</h3>
+        <p class="help-text"><strong>1. Cuando te paguen un trabajo:</strong> Registra el cobro. La app calcula automáticamente IVA y retenciones según el tipo de cliente.</p>
+        <p class="help-text"><strong>2. Cuando compres algo del trabajo CON FACTURA:</strong> Registra el gasto. Esto te permite acreditar el IVA.</p>
+        <p class="help-text"><strong>3. Del 5 al 10 de cada mes:</strong> Ve a "Resumen" del mes anterior. Verás cuánto pagar al SAT.</p>
+        <p class="help-text"><strong>4. Del 10 al 17:</strong> Entra a sat.gob.mx, presenta declaración y paga la línea de captura.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="help-block">
+        <h3 class="help-title">Tasas ISR RESICO 2026</h3>
+        <div class="rates-table">
+          <div class="rates-row"><span>Hasta $25,000 mensual</span><span class="rate">1.00%</span></div>
+          <div class="rates-row"><span>Hasta $50,000 mensual</span><span class="rate">1.10%</span></div>
+          <div class="rates-row"><span>Hasta $83,333.33 mensual</span><span class="rate">1.50%</span></div>
+          <div class="rates-row"><span>Hasta $208,333.33 mensual</span><span class="rate">2.00%</span></div>
+          <div class="rates-row"><span>Hasta $3,500,000 anual</span><span class="rate">2.50%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="help-block">
+        <h3 class="help-title">Cálculo de IVA</h3>
+        <p class="help-text">IVA cobrado a clientes (16%) <strong>−</strong> IVA acreditable de gastos con factura <strong>−</strong> IVA retenido por personas morales <strong>=</strong> IVA a pagar.</p>
+        <p class="help-text">Si el resultado es negativo, tienes saldo a favor.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="help-block">
+        <h3 class="help-title">Retenciones de personas morales</h3>
+        <p class="help-text">Cuando facturas a una empresa por <strong>servicio profesional</strong>, te retienen 10% de ISR sobre el subtotal y 2/3 del IVA.</p>
+        <p class="help-text">Estas retenciones se ACREDITAN en tu declaración mensual y reducen lo que pagas. resicodeo las calcula automáticamente.</p>
+      </div>
+    </div>
+
+    <div class="alert warning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>
+      <div>Esta calculadora usa reglas vigentes del SAT a abril 2026. Verifica en sat.gob.mx antes de declarar. Ante dudas, llama a PRODECON al <strong>55 1205 9000</strong> (asesoría gratuita).</div>
+    </div>
+
+    <div class="btn-row" style="margin-top: 24px;">
+      <button class="btn ghost" id="btn-exportar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Exportar mis datos
+      </button>
+      <button class="btn danger" id="btn-borrar-todo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        Borrar todo
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-motto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 9V5a3 3 0 00-6 0v4"/><path d="M10 9h4M8 14l4 4 4-4M12 14V2"/></svg>
+    Menos estrés fiscal, más <span class="accent">historias</span> que contar.
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ============ ESTADO ============
+let ingresos = [];
+let gastos = [];
+
+const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const mesesShort = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const hoy = new Date();
+let mesSel = hoy.getMonth();
+let anioSel = hoy.getFullYear();
+
+// ============ STORAGE ============
+async function loadData() {
+  try {
+    const res = await window.storage.get('ingresos');
+    if (res && res.value) ingresos = JSON.parse(res.value);
+  } catch (e) { ingresos = []; }
+  try {
+    const res = await window.storage.get('gastos');
+    if (res && res.value) gastos = JSON.parse(res.value);
+  } catch (e) { gastos = []; }
+}
+
+async function saveIngresos() {
+  try { await window.storage.set('ingresos', JSON.stringify(ingresos)); }
+  catch (e) { showToast('Error al guardar', true); }
+}
+
+async function saveGastos() {
+  try { await window.storage.set('gastos', JSON.stringify(gastos)); }
+  catch (e) { showToast('Error al guardar', true); }
+}
+
+// ============ HELPERS ============
+function fmt(n) {
+  return '$' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.innerHTML = (isError ? '⚠ ' : '✓ ') + msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function tasaISR(ingresoMes) {
+  if (ingresoMes <= 25000) return 0.01;
+  if (ingresoMes <= 50000) return 0.011;
+  if (ingresoMes <= 83333.33) return 0.015;
+  if (ingresoMes <= 208333.33) return 0.02;
+  return 0.025;
+}
+
+function descomponerIngreso(monto) {
+  const subtotal = monto / 1.16;
+  const iva = monto - subtotal;
+  return { subtotal, iva, total: monto };
+}
+
+function calcRetenciones(subtotal, iva, cliente, actividad) {
+  if (cliente === 'moral' && actividad === 'profesional') {
+    return {
+      isr_ret: subtotal * 0.10,
+      iva_ret: iva * (2/3)
+    };
+  }
+  return { isr_ret: 0, iva_ret: 0 };
+}
+
+function tasaIVA(cliente) {
+  return cliente === 'extranjero' ? 0 : 0.16;
+}
+
+// ============ TABS ============
+async function abrirCurso(event) {
+  event.preventDefault();
+
+  // Lista de posibles nombres del archivo curso
+  const posiblesNombres = ['curso.html', 'curso_resicodeo.html'];
+
+  // Intentar encontrar cuál existe
+  for (const nombre of posiblesNombres) {
+    try {
+      const res = await fetch(nombre, { method: 'HEAD' });
+      if (res.ok) {
+        window.open(nombre, '_blank', 'noopener');
+        return;
+      }
+    } catch (e) {
+      // Si falla fetch (file:// con CORS), intentar abrir directo igual
+    }
+  }
+
+  // Fallback: intentar abrir curso.html directamente (puede que fetch falle pero el window.open sí funcione)
+  const ventana = window.open('curso.html', '_blank', 'noopener');
+
+  // Si aún así no se abre, mostrar mensaje
+  setTimeout(() => {
+    if (!ventana || ventana.closed) {
+      alert('No se pudo abrir el curso. Asegúrate de tener el archivo "curso.html" (o "curso_resicodeo.html") en la misma carpeta que esta aplicación.');
+    }
+  }, 500);
+}
+
+document.querySelectorAll('.tab:not(.tab-link)').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab:not(.tab-link)').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+
+    if (tab.dataset.tab === 'resumen') renderResumenMes();
+    if (tab.dataset.tab === 'ingreso') renderListaIngresos();
+    if (tab.dataset.tab === 'gasto') renderListaGastos();
+    if (tab.dataset.tab === 'cobros') renderCobros();
+    if (tab.dataset.tab === 'anual') renderResumenAnual();
+  });
+});
+
+// ============ INIT SELECTS ============
+function initSelects() {
+  const selectMes = document.getElementById('select-mes');
+  meses.forEach((m, i) => {
+    const o = document.createElement('option');
+    o.value = i;
+    o.textContent = m;
+    if (i === mesSel) o.selected = true;
+    selectMes.appendChild(o);
+  });
+
+  const anioActual = hoy.getFullYear();
+  const selAnio = document.getElementById('select-anio');
+  const selAnioAnual = document.getElementById('select-anio-anual');
+  for (let y = anioActual - 2; y <= anioActual + 1; y++) {
+    [selAnio, selAnioAnual].forEach(sel => {
+      const o = document.createElement('option');
+      o.value = y;
+      o.textContent = y;
+      if (y === anioSel) o.selected = true;
+      sel.appendChild(o);
+    });
+  }
+
+  selectMes.addEventListener('change', e => { mesSel = parseInt(e.target.value); renderResumenMes(); });
+  selAnio.addEventListener('change', e => { anioSel = parseInt(e.target.value); renderResumenMes(); });
+  selAnioAnual.addEventListener('change', e => { anioSel = parseInt(e.target.value); renderResumenAnual(); });
+
+  const hoyStr = hoy.toISOString().split('T')[0];
+  document.getElementById('ing-fecha').value = hoyStr;
+  document.getElementById('gas-fecha').value = hoyStr;
+}
+
+// ============ INGRESO ============
+document.getElementById('ing-cotizacion').addEventListener('change', updateIngresoHint);
+function updateIngresoHint() {
+  const cot = document.getElementById('ing-cotizacion').value;
+  const hint = document.getElementById('ing-monto-hint');
+  if (cot === 'mas_iva') {
+    hint.textContent = 'El total que recibiste (subtotal + IVA). Ej: cotizaste $20k+IVA, te pagaron $23,200, pones 23200.';
+  } else {
+    hint.textContent = 'El total con IVA incluido. Ej: cotizaste $20k todo incluido, pones 20000.';
+  }
+}
+updateIngresoHint();
+
+document.getElementById('btn-clear-ingreso').addEventListener('click', () => {
+  document.getElementById('ing-desc').value = '';
+  document.getElementById('ing-monto').value = '';
+  document.getElementById('ing-notas').value = '';
+});
+
+document.getElementById('btn-add-ingreso').addEventListener('click', async () => {
+  const desc = document.getElementById('ing-desc').value.trim();
+  const fecha = document.getElementById('ing-fecha').value;
+  const cliente = document.getElementById('ing-cliente').value;
+  const actividad = document.getElementById('ing-actividad').value;
+  const cotizacion = document.getElementById('ing-cotizacion').value;
+  const monto = parseFloat(document.getElementById('ing-monto').value);
+  const notas = document.getElementById('ing-notas').value.trim();
+
+  if (!desc || !fecha || !monto || monto <= 0) {
+    showToast('Completa descripción, fecha y monto', true);
+    return;
+  }
+
+  const tIVA = tasaIVA(cliente);
+  let subtotal, iva;
+
+  if (tIVA === 0) {
+    subtotal = monto;
+    iva = 0;
+  } else {
+    const desc_ = descomponerIngreso(monto);
+    subtotal = desc_.subtotal;
+    iva = desc_.iva;
+  }
+
+  const ret = calcRetenciones(subtotal, iva, cliente, actividad);
+
+  ingresos.push({
+    id: Date.now() + Math.random(),
+    fecha, desc, cliente, actividad, cotizacion, notas,
+    monto_total: monto,
+    subtotal, iva,
+    isr_ret: ret.isr_ret,
+    iva_ret: ret.iva_ret
+  });
+
+  await saveIngresos();
+  showToast('Cobro guardado');
+  document.getElementById('ing-desc').value = '';
+  document.getElementById('ing-monto').value = '';
+  document.getElementById('ing-notas').value = '';
+  renderListaIngresos();
+});
+
+function tipoClienteLabel(tipo) {
+  return {
+    fisica_factura: 'Persona física',
+    fisica_sin: 'Persona física (global)',
+    moral: 'Persona moral',
+    extranjero: 'Extranjero'
+  }[tipo];
+}
+
+function renderListaIngresos() {
+  const cont = document.getElementById('lista-ingresos-mes');
+  const ahora = new Date();
+  const recientes = ingresos
+    .filter(i => {
+      const f = new Date(i.fecha + 'T00:00:00');
+      return f.getMonth() === ahora.getMonth() && f.getFullYear() === ahora.getFullYear();
+    })
+    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+  if (recientes.length === 0) {
+    cont.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        </div>
+        <div class="empty-text">Sin cobros este mes todavía</div>
+      </div>`;
+    return;
+  }
+
+  cont.innerHTML = '<div class="list-title">COBROS DE ESTE MES</div>' +
+    recientes.map(i => {
+      const fechaFmt = new Date(i.fecha + 'T00:00:00').toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
+      return `
+        <div class="list-item">
+          <div class="list-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg>
+          </div>
+          <div class="list-info">
+            <div class="list-desc">${i.desc}</div>
+            <div class="list-meta">${fechaFmt} · ${tipoClienteLabel(i.cliente)} · Subtotal ${fmt(i.subtotal)}${i.isr_ret > 0 ? ' · Ret ISR '+fmt(i.isr_ret) : ''}</div>
+          </div>
+          <div>
+            <div class="list-amount in">${fmt(i.monto_total)}</div>
+            <div class="list-actions"><button class="icon-btn" onclick="borrarIngreso(${i.id})">Eliminar</button></div>
+          </div>
+        </div>`;
+    }).join('');
+}
+
+window.borrarIngreso = async (id) => {
+  if (!confirm('¿Eliminar este cobro?')) return;
+  ingresos = ingresos.filter(i => i.id !== id);
+  await saveIngresos();
+  showToast('Cobro eliminado');
+  renderListaIngresos();
+  if (document.querySelector('.tab.active').dataset.tab === 'cobros') renderCobros();
+  if (document.querySelector('.tab.active').dataset.tab === 'resumen') renderResumenMes();
+};
+
+// ============ GASTO ============
+document.getElementById('btn-calc-iva').addEventListener('click', () => {
+  const sub = parseFloat(document.getElementById('gas-subtotal').value);
+  if (!sub || sub <= 0) {
+    showToast('Pon primero el subtotal', true);
+    return;
+  }
+  document.getElementById('gas-iva').value = (sub * 0.16).toFixed(2);
+  showToast('IVA calculado');
+});
+
+document.getElementById('btn-add-gasto').addEventListener('click', async () => {
+  const desc = document.getElementById('gas-desc').value.trim();
+  const fecha = document.getElementById('gas-fecha').value;
+  const categoria = document.getElementById('gas-categoria').value;
+  const subtotal = parseFloat(document.getElementById('gas-subtotal').value) || 0;
+  const iva = parseFloat(document.getElementById('gas-iva').value) || 0;
+  const tieneFactura = document.getElementById('gas-tiene-factura').checked;
+
+  if (!desc || !fecha || subtotal <= 0) {
+    showToast('Completa descripción, fecha y subtotal', true);
+    return;
+  }
+
+  if (!tieneFactura && iva > 0) {
+    if (!confirm('Sin factura el IVA NO es acreditable. ¿Guardar de todos modos?')) return;
+  }
+
+  gastos.push({
+    id: Date.now() + Math.random(),
+    fecha, desc, categoria,
+    subtotal, iva, total: subtotal + iva,
+    tiene_factura: tieneFactura
+  });
+
+  await saveGastos();
+  showToast('Gasto guardado');
+  document.getElementById('gas-desc').value = '';
+  document.getElementById('gas-subtotal').value = '';
+  document.getElementById('gas-iva').value = '';
+  renderListaGastos();
+});
+
+function renderListaGastos() {
+  const cont = document.getElementById('lista-gastos-mes');
+  const ahora = new Date();
+  const recientes = gastos
+    .filter(g => {
+      const f = new Date(g.fecha + 'T00:00:00');
+      return f.getMonth() === ahora.getMonth() && f.getFullYear() === ahora.getFullYear();
+    })
+    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+  if (recientes.length === 0) {
+    cont.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        </div>
+        <div class="empty-text">Sin gastos este mes todavía</div>
+      </div>`;
+    return;
+  }
+
+  const catFmt = {
+    equipo:'Equipo', software:'Software', transporte:'Transporte',
+    renta_equipo:'Renta', capacitacion:'Capacitación',
+    colaboradores:'Colaboradores', otros:'Otros'
+  };
+
+  cont.innerHTML = '<div class="list-title">GASTOS DE ESTE MES</div>' +
+    recientes.map(g => {
+      const fechaFmt = new Date(g.fecha + 'T00:00:00').toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
+      return `
+        <div class="list-item">
+          <div class="list-icon red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M6 14h4"/></svg>
+          </div>
+          <div class="list-info">
+            <div class="list-desc">${g.desc} ${!g.tiene_factura ? '<span class="badge orange" style="margin-left: 6px;">Sin factura</span>' : '<span class="badge accent" style="margin-left: 6px;">Deducible</span>'}</div>
+            <div class="list-meta">${fechaFmt} · ${catFmt[g.categoria]} · Subtotal ${fmt(g.subtotal)} + IVA ${fmt(g.iva)}</div>
+          </div>
+          <div>
+            <div class="list-amount out">${fmt(g.total)}</div>
+            <div class="list-actions"><button class="icon-btn" onclick="borrarGasto(${g.id})">Eliminar</button></div>
+          </div>
+        </div>`;
+    }).join('');
+}
+
+window.borrarGasto = async (id) => {
+  if (!confirm('¿Eliminar este gasto?')) return;
+  gastos = gastos.filter(g => g.id !== id);
+  await saveGastos();
+  showToast('Pago eliminado');
+  renderListaGastos();
+  if (document.querySelector('.tab.active').dataset.tab === 'resumen') renderResumenMes();
+};
+
+// ============ COBROS GLOBAL ============
+function renderCobros() {
+  const cont = document.getElementById('cobros-content');
+  if (ingresos.length === 0) {
+    cont.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+        </div>
+        <div class="empty-text">Sin cobros registrados todavía</div>
+      </div>`;
+    return;
+  }
+
+  const ordenados = [...ingresos].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+  let totalAnio = 0;
+  const anioActual = new Date().getFullYear();
+  ingresos.forEach(i => {
+    if (new Date(i.fecha).getFullYear() === anioActual) totalAnio += i.subtotal;
+  });
+
+  cont.innerHTML = `
+    <div class="summary-grid">
+      <div class="summary-card green">
+        <div class="summary-label">Total cobrado ${anioActual}</div>
+        <div class="summary-value green">${fmt(totalAnio)}</div>
+        <div class="summary-meta">Subtotal sin IVA</div>
+      </div>
+      <div class="summary-card accent">
+        <div class="summary-label">Cobros registrados</div>
+        <div class="summary-value">${ingresos.length}</div>
+        <div class="summary-meta">Histórico total</div>
+      </div>
+    </div>
+
+    <div class="list-title" style="margin-top: 24px;">TODOS LOS COBROS</div>
+    ${ordenados.map(i => {
+      const fechaFmt = new Date(i.fecha + 'T00:00:00').toLocaleDateString('es-MX', { day:'2-digit', month:'short', year:'numeric' });
+      return `
+        <div class="list-item">
+          <div class="list-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg>
+          </div>
+          <div class="list-info">
+            <div class="list-desc">${i.desc}</div>
+            <div class="list-meta">${fechaFmt} · ${tipoClienteLabel(i.cliente)}</div>
+          </div>
+          <div>
+            <div class="list-amount in">${fmt(i.monto_total)}</div>
+            <div class="list-actions"><button class="icon-btn" onclick="borrarIngreso(${i.id})">Eliminar</button></div>
+          </div>
+        </div>`;
+    }).join('')}
+  `;
+}
+
+// ============ RESUMEN MES ============
+function calcularMes(mes, anio) {
+  const ingMes = ingresos.filter(i => {
+    const f = new Date(i.fecha + 'T00:00:00');
+    return f.getMonth() === mes && f.getFullYear() === anio;
+  });
+  const gasMes = gastos.filter(g => {
+    const f = new Date(g.fecha + 'T00:00:00');
+    return f.getMonth() === mes && f.getFullYear() === anio;
+  });
+
+  const subtotalIng = ingMes.reduce((s, i) => s + i.subtotal, 0);
+  const ivaCobrado = ingMes.reduce((s, i) => s + i.iva, 0);
+  const isrRetenido = ingMes.reduce((s, i) => s + i.isr_ret, 0);
+  const ivaRetenido = ingMes.reduce((s, i) => s + i.iva_ret, 0);
+
+  // Desglose por tipo de cliente / facturación
+  const desglose = {
+    fisica_factura: ingMes.filter(i => i.cliente === 'fisica_factura'),
+    fisica_sin: ingMes.filter(i => i.cliente === 'fisica_sin'),
+    moral: ingMes.filter(i => i.cliente === 'moral'),
+    extranjero: ingMes.filter(i => i.cliente === 'extranjero')
+  };
+
+  const ivaAcreditable = gasMes.filter(g => g.tiene_factura).reduce((s, g) => s + g.iva, 0);
+  const subtotalGas = gasMes.reduce((s, g) => s + g.subtotal, 0);
+  const totalGas = gasMes.reduce((s, g) => s + g.total, 0);
+
+  const tasa = tasaISR(subtotalIng);
+  const isrCausado = subtotalIng * tasa;
+  const isrAPagar = Math.max(0, isrCausado - isrRetenido);
+
+  const ivaCausado = ivaCobrado;
+  const ivaAPagar = ivaCausado - ivaAcreditable - ivaRetenido;
+
+  return {
+    ingresos: ingMes.length,
+    gastos: gasMes.length,
+    ingMes, // para el filtro
+    desglose,
+    subtotalIng, ivaCobrado, isrRetenido, ivaRetenido,
+    subtotalGas, totalGas, ivaAcreditable,
+    tasa, isrCausado, isrAPagar,
+    ivaCausado, ivaAPagar,
+    totalAPagar: isrAPagar + Math.max(0, ivaAPagar),
+    utilidad: subtotalIng - subtotalGas,
+    saldoFavorIVA: ivaAPagar < 0 ? -ivaAPagar : 0,
+    saldoFavorISR: isrCausado < isrRetenido ? isrRetenido - isrCausado : 0
+  };
+}
+
+function renderResumenMes() {
+  const data = calcularMes(mesSel, anioSel);
+  const cont = document.getElementById('resumen-content');
+
+  const fechaLim = new Date(anioSel, mesSel + 1, 17);
+  const fechaLimStr = fechaLim.toLocaleDateString('es-MX', { day:'numeric', month:'long', year:'numeric' });
+
+  if (data.ingresos === 0 && data.gastos === 0) {
+    cont.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+        </div>
+        <div class="empty-text">Sin movimientos en ${meses[mesSel]} ${anioSel}<br>Empieza registrando un cobro o gasto</div>
+      </div>`;
+    return;
+  }
+
+  // Mini chart de últimos 6 meses
+  const chartData = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(anioSel, mesSel - i, 1);
+    const m = calcularMes(d.getMonth(), d.getFullYear());
+    chartData.push({ mes: mesesShort[d.getMonth()], val: m.subtotalIng });
+  }
+  const maxChart = Math.max(...chartData.map(c => c.val), 1);
+
+  cont.innerHTML = `
+    <div class="summary-grid">
+      <div class="summary-card green">
+        <div class="summary-label">Ingresos</div>
+        <div class="summary-value green">${fmt(data.subtotalIng)}</div>
+        <div class="summary-meta">${data.ingresos} cobro${data.ingresos !== 1 ? 's' : ''} · sin IVA</div>
+      </div>
+      <div class="summary-card red">
+        <div class="summary-label">Gastos deducibles</div>
+        <div class="summary-value red">${fmt(data.subtotalGas)}</div>
+        <div class="summary-meta">${data.gastos} gasto${data.gastos !== 1 ? 's' : ''}</div>
+      </div>
+      <div class="summary-card accent">
+        <div class="summary-label">Utilidad acumulada</div>
+        <div class="summary-value">${fmt(data.utilidad)}</div>
+        <div class="summary-meta">Ingresos − gastos</div>
+      </div>
+      <div class="summary-card orange">
+        <div class="summary-label">Estimado a pagar RESICO</div>
+        <div class="summary-value">${fmt(data.totalAPagar)}</div>
+        <div class="summary-meta">Tasa aplicable: ${(data.tasa * 100).toFixed(2)}%</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+      <div>Declaración mensual: a presentar a más tardar el <strong>${fechaLimStr}</strong> en sat.gob.mx</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📊 Gráfica de ingresos</div>
+      </div>
+      <div style="display: flex; align-items: flex-end; gap: 12px; height: 140px; padding: 0 8px;">
+        ${chartData.map(c => `
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width: 100%; background: linear-gradient(to top, var(--accent), var(--accent-hover)); border-radius: 6px 6px 0 0; height: ${(c.val / maxChart) * 100}%; min-height: ${c.val > 0 ? '4px' : '0'}; transition: height 0.5s ease;"></div>
+            <div style="font-size: 11px; color: var(--text-tertiary); font-weight: 600;">${c.mes}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🔍 Cobros por tipo de factura</div>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Filtra y revisa el desglose de tus cobros del mes según cómo facturaste a cada cliente.</p>
+
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-tab active" data-filter="todos">
+          Todos
+          <span class="filter-count">${data.ingresos}</span>
+        </button>
+        <button class="filter-tab" data-filter="fisica_factura">
+          Persona física
+          <span class="filter-count">${data.desglose.fisica_factura.length}</span>
+        </button>
+        <button class="filter-tab" data-filter="fisica_sin">
+          Sin factura (Global)
+          <span class="filter-count">${data.desglose.fisica_sin.length}</span>
+        </button>
+        <button class="filter-tab" data-filter="moral">
+          Persona moral
+          <span class="filter-count">${data.desglose.moral.length}</span>
+        </button>
+        <button class="filter-tab" data-filter="extranjero">
+          Extranjero
+          <span class="filter-count">${data.desglose.extranjero.length}</span>
+        </button>
+      </div>
+
+      <div id="filter-summary"></div>
+      <div id="filter-list"></div>
+    </div>
+
+    <div class="calc-section">
+      <div class="card-title" style="margin-bottom: 16px;">Cálculo de ISR</div>
+      <div class="calc-line">
+        <span class="calc-label">Ingresos cobrados (subtotal)</span>
+        <span class="calc-value">${fmt(data.subtotalIng)}</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">Tasa RESICO aplicable</span>
+        <span class="calc-value" style="color: var(--accent);">${(data.tasa * 100).toFixed(2)}%</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">ISR causado</span>
+        <span class="calc-value">${fmt(data.isrCausado)}</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">− ISR retenido por personas morales</span>
+        <span class="calc-value">${fmt(data.isrRetenido)}</span>
+      </div>
+      <div class="calc-line total">
+        <span class="calc-label">ISR a pagar</span>
+        <span class="calc-value">${fmt(data.isrAPagar)}</span>
+      </div>
+      ${data.saldoFavorISR > 0 ? `
+        <div class="alert success" style="margin-top: 16px; margin-bottom: 0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <div>Tienes saldo a favor de ISR de <strong>${fmt(data.saldoFavorISR)}</strong>. Lo acreditas el siguiente mes o lo pides en devolución.</div>
+        </div>` : ''}
+    </div>
+
+    <div class="calc-section">
+      <div class="card-title" style="margin-bottom: 16px;">Cálculo de IVA</div>
+      <div class="calc-line">
+        <span class="calc-label">IVA cobrado a clientes</span>
+        <span class="calc-value">${fmt(data.ivaCausado)}</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">− IVA acreditable (gastos con factura)</span>
+        <span class="calc-value">${fmt(data.ivaAcreditable)}</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">− IVA retenido por personas morales</span>
+        <span class="calc-value">${fmt(data.ivaRetenido)}</span>
+      </div>
+      <div class="calc-line total">
+        <span class="calc-label">IVA a pagar</span>
+        <span class="calc-value">${fmt(Math.max(0, data.ivaAPagar))}</span>
+      </div>
+      ${data.saldoFavorIVA > 0 ? `
+        <div class="alert success" style="margin-top: 16px; margin-bottom: 0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <div>Tienes saldo a favor de IVA de <strong>${fmt(data.saldoFavorIVA)}</strong>. Acredítalo el siguiente mes o pide devolución.</div>
+        </div>` : ''}
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(123,109,255,0.15), rgba(123,109,255,0.05)); border-color: rgba(123,109,255,0.3);">
+      <div class="card-title" style="margin-bottom: 16px; color: var(--accent);">💰 Total a pagar al SAT</div>
+      <div class="calc-line">
+        <span class="calc-label">ISR</span>
+        <span class="calc-value">${fmt(data.isrAPagar)}</span>
+      </div>
+      <div class="calc-line">
+        <span class="calc-label">IVA</span>
+        <span class="calc-value">${fmt(Math.max(0, data.ivaAPagar))}</span>
+      </div>
+      <div class="calc-line total">
+        <span class="calc-label">TOTAL ${meses[mesSel]} ${anioSel}</span>
+        <span class="calc-value">${fmt(data.totalAPagar)}</span>
+      </div>
+    </div>
+  `;
+
+  // Activar filtro de cobros por tipo
+  setupFilterTabs(data);
+}
+
+function setupFilterTabs(data) {
+  const tabs = document.querySelectorAll('.filter-tab');
+  if (!tabs.length) return;
+
+  function renderFiltered(filter) {
+    const summary = document.getElementById('filter-summary');
+    const list = document.getElementById('filter-list');
+
+    let cobros;
+    if (filter === 'todos') {
+      cobros = data.ingMes;
+    } else {
+      cobros = data.desglose[filter];
+    }
+
+    // Calcular totales del filtro
+    const subtotal = cobros.reduce((s, i) => s + i.subtotal, 0);
+    const iva = cobros.reduce((s, i) => s + i.iva, 0);
+    const isrRet = cobros.reduce((s, i) => s + i.isr_ret, 0);
+    const ivaRet = cobros.reduce((s, i) => s + i.iva_ret, 0);
+    const total = cobros.reduce((s, i) => s + i.monto_total, 0);
+
+    if (cobros.length === 0) {
+      summary.innerHTML = '';
+      list.innerHTML = '<div class="filter-empty">Sin cobros de este tipo en el mes</div>';
+      return;
+    }
+
+    // Totales
+    let totalsHTML = `
+      <div class="filter-totals">
+        <div>
+          <div class="filter-total-item">Cobros</div>
+          <div class="filter-total-value accent">${cobros.length}</div>
+        </div>
+        <div>
+          <div class="filter-total-item">Subtotal</div>
+          <div class="filter-total-value green">${fmt(subtotal)}</div>
+        </div>
+        <div>
+          <div class="filter-total-item">IVA cobrado</div>
+          <div class="filter-total-value">${fmt(iva)}</div>
+        </div>
+        <div>
+          <div class="filter-total-item">Total recibido</div>
+          <div class="filter-total-value">${fmt(total)}</div>
+        </div>`;
+
+    if (isrRet > 0 || ivaRet > 0) {
+      totalsHTML += `
+        <div>
+          <div class="filter-total-item">ISR retenido</div>
+          <div class="filter-total-value">${fmt(isrRet)}</div>
+        </div>
+        <div>
+          <div class="filter-total-item">IVA retenido</div>
+          <div class="filter-total-value">${fmt(ivaRet)}</div>
+        </div>`;
+    }
+
+    totalsHTML += '</div>';
+    summary.innerHTML = totalsHTML;
+
+    // Lista de cobros del filtro
+    const ordenados = [...cobros].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    list.innerHTML = ordenados.map(i => {
+      const fechaFmt = new Date(i.fecha + 'T00:00:00').toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
+      return `
+        <div class="list-item" style="margin-bottom: 6px;">
+          <div class="list-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg>
+          </div>
+          <div class="list-info">
+            <div class="list-desc">${i.desc}</div>
+            <div class="list-meta">${fechaFmt} · Subtotal ${fmt(i.subtotal)}${i.iva > 0 ? ' + IVA ' + fmt(i.iva) : ' · IVA 0%'}</div>
+          </div>
+          <div class="list-amount in">${fmt(i.monto_total)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      renderFiltered(tab.dataset.filter);
+    });
+  });
+
+  // Render inicial con "Todos"
+  renderFiltered('todos');
+}
+
+// ============ ANUAL ============
+function renderResumenAnual() {
+  const cont = document.getElementById('resumen-anual-content');
+  const datos = [];
+  let acumIng = 0, acumPagar = 0, acumGas = 0;
+
+  for (let m = 0; m < 12; m++) {
+    const d = calcularMes(m, anioSel);
+    datos.push(d);
+    acumIng += d.subtotalIng;
+    acumGas += d.subtotalGas;
+    acumPagar += d.totalAPagar;
+  }
+
+  const limite = 3500000;
+  const porcLimite = (acumIng / limite) * 100;
+  let alertLimite = '';
+  if (porcLimite >= 100) {
+    alertLimite = `
+      <div class="alert danger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <div>Pasaste el límite de RESICO ($3.5M anuales). Debes cambiar de régimen para el siguiente año fiscal.</div>
+      </div>`;
+  } else if (porcLimite >= 80) {
+    alertLimite = `
+      <div class="alert warning">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>
+        <div>Vas en ${porcLimite.toFixed(1)}% del límite anual de RESICO. Empieza a planear si seguirás creciendo.</div>
+      </div>`;
+  }
+
+  const maxBar = Math.max(...datos.map(d => d.subtotalIng), 1);
+
+  cont.innerHTML = `
+    ${alertLimite}
+
+    <div class="summary-grid">
+      <div class="summary-card green">
+        <div class="summary-label">Ingresos totales</div>
+        <div class="summary-value green">${fmt(acumIng)}</div>
+        <div class="summary-meta">Subtotal ${anioSel}</div>
+      </div>
+      <div class="summary-card red">
+        <div class="summary-label">Gastos deducibles</div>
+        <div class="summary-value red">${fmt(acumGas)}</div>
+        <div class="summary-meta">Total ${anioSel}</div>
+      </div>
+      <div class="summary-card accent">
+        <div class="summary-label">Utilidad acumulada</div>
+        <div class="summary-value">${fmt(acumIng - acumGas)}</div>
+        <div class="summary-meta">Ingresos − gastos</div>
+      </div>
+      <div class="summary-card orange">
+        <div class="summary-label">Pagado al SAT</div>
+        <div class="summary-value">${fmt(acumPagar)}</div>
+        <div class="summary-meta">${porcLimite.toFixed(1)}% del límite RESICO</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Ingresos por mes · ${anioSel}</div>
+      </div>
+      <div style="display: flex; align-items: flex-end; gap: 8px; height: 200px; padding: 0 4px;">
+        ${datos.map((d, i) => `
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer;" onclick="(function(){
+            mesSel = ${i};
+            document.getElementById('select-mes').value = ${i};
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab=resumen]').classList.add('active');
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-resumen').classList.add('active');
+            renderResumenMes();
+          })()">
+            <div style="font-size: 10px; color: var(--text-tertiary); font-weight: 600; text-align: center; height: 14px;">${d.subtotalIng > 0 ? '$' + Math.round(d.subtotalIng/1000) + 'k' : ''}</div>
+            <div style="width: 100%; background: linear-gradient(to top, var(--accent), var(--accent-hover)); border-radius: 6px 6px 0 0; height: ${(d.subtotalIng / maxBar) * 100}%; min-height: ${d.subtotalIng > 0 ? '4px' : '0'}; transition: all 0.3s ease;"></div>
+            <div style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">${mesesShort[i]}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Vista mensual rápida</div>
+      </div>
+      <div class="year-grid">
+        ${datos.map((d, i) => `
+          <button class="year-month" onclick="(function(){
+            mesSel = ${i};
+            document.getElementById('select-mes').value = ${i};
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab=resumen]').classList.add('active');
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-resumen').classList.add('active');
+            renderResumenMes();
+          })()">
+            <div class="year-month-name">${mesesShort[i]}</div>
+            <div class="year-month-income">${fmt(d.subtotalIng)}</div>
+            <div class="year-month-pay ${d.totalAPagar > 0 ? 'has' : 'zero'}">${d.totalAPagar > 0 ? '↓ ' + fmt(d.totalAPagar) : '—'}</div>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ============ AYUDA ============
+document.getElementById('btn-borrar-todo').addEventListener('click', async () => {
+  if (!confirm('⚠️ Esto borrará TODOS tus cobros y gastos. ¿Estás seguro?')) return;
+  if (!confirm('¿De verdad? Esta acción no se puede deshacer.')) return;
+  ingresos = [];
+  gastos = [];
+  await saveIngresos();
+  await saveGastos();
+  showToast('Todos los datos borrados');
+});
+
+document.getElementById('btn-exportar').addEventListener('click', () => {
+  const data = { ingresos, gastos, exportado: new Date().toISOString() };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `resicodeo_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Datos exportados');
+});
+
+// ============ INIT ============
+async function init() {
+  await loadData();
+  initSelects();
+  document.getElementById('loading').classList.remove('active');
+  document.getElementById('panel-resumen').classList.add('active');
+  renderResumenMes();
+}
+
+init();
+</script>
+</body>
+</html>
