@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de uso · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0F1115;
+  --bg-secondary: #1C1F26;
+  --bg-tertiary: #252932;
+  --bg-card: #1C1F26;
+  --accent: #7B6DFF;
+  --accent-hover: #9587FF;
+  --accent-soft: rgba(123, 109, 255, 0.12);
+  --accent-glow: rgba(123, 109, 255, 0.3);
+  --green: #22C55E;
+  --green-soft: rgba(34, 197, 94, 0.12);
+  --red: #F87171;
+  --red-soft: rgba(248, 113, 113, 0.12);
+  --orange: #FB923C;
+  --orange-soft: rgba(251, 146, 60, 0.12);
+  --text-primary: #F5F6FA;
+  --text-secondary: #A0A3B1;
+  --text-tertiary: #6B6F7D;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+/* HEADER */
+.header {
+  position: sticky;
+  top: 0;
+  background: rgba(15, 17, 21, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 16px 24px;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.logo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  animation: dotPulse 3s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 12px var(--accent-glow); }
+  50% { box-shadow: 0 0 20px var(--accent-glow), 0 0 30px var(--accent-glow); }
+}
+
+.btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn.ghost {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+}
+
+.btn.ghost:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent);
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  width: 0%;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* MAIN */
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 40px 0 60px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 60px;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 28px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* STEPS */
+.step {
+  margin-bottom: 80px;
+  scroll-margin-top: 100px;
+}
+
+.step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.step-number {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+.step-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.step-eyebrow {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.step-title h2 {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.step-title p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* CONTENT */
+.content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+
+.content h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.content h3:first-child { margin-top: 0; }
+
+.content p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.content p:last-child { margin-bottom: 0; }
+
+.content strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.content ul, .content ol {
+  margin: 0 0 16px 20px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.content li { margin-bottom: 4px; }
+
+/* MOCKUP */
+.mockup {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.mockup-label {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mock-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.mock-tab {
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: 7px;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.mock-tab.active {
+  background: var(--accent);
+  color: white;
+}
+
+/* === ANIMACIONES NUEVAS — el corazón de la mejora === */
+
+/* Highlight: pulso suave en el elemento que se está explicando */
+.highlight-this {
+  position: relative;
+  animation: highlightPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes highlightPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--accent-soft), 0 0 0 0 var(--accent-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 4px var(--accent-soft), 0 0 20px 6px var(--accent-glow);
+  }
+}
+
+/* Anillo orbital alrededor del elemento */
+.spotlight {
+  position: relative;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  animation: spotlightRing 2.4s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes spotlightRing {
+  0% { opacity: 0; transform: scale(0.95); }
+  50% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.05); }
+}
+
+/* Flecha animada apuntando al elemento */
+.with-arrow {
+  position: relative;
+  display: inline-block;
+}
+
+.with-arrow::after {
+  content: '👆';
+  position: absolute;
+  bottom: -38px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  animation: arrowBounce 1.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* Botón animado tipo "click acá" */
+.click-me {
+  position: relative;
+  animation: clickPulse 2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes clickPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 8px transparent, 0 0 20px var(--accent-glow);
+  }
+}
+
+/* Brillo deslizante (shimmer) */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(123, 109, 255, 0.25), transparent);
+  animation: shimmerSlide 2.6s ease-in-out infinite;
+}
+
+@keyframes shimmerSlide {
+  0% { left: -100%; }
+  60%, 100% { left: 100%; }
+}
+
+/* Borde animado que va trazando */
+.tracing-border {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tracing-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: 12px;
+  background: conic-gradient(from var(--angle, 0deg), var(--accent) 0%, transparent 30%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotateAngle 3s linear infinite;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotateAngle {
+  to { --angle: 360deg; }
+}
+
+/* Cursor que escribe (typing effect) */
+.typing {
+  position: relative;
+}
+
+.typing::after {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  background: var(--accent);
+  margin-left: 2px;
+  animation: blink 0.7s step-end infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Drag indicator: ilustra arrastrar */
+.drag-anim {
+  position: relative;
+}
+
+.drag-anim::before {
+  content: '📄';
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  font-size: 24px;
+  animation: dragPath 3s ease-in-out infinite;
+  z-index: 5;
+  pointer-events: none;
+}
+
+@keyframes dragPath {
+  0% { transform: translate(-30px, -30px) scale(0.8); opacity: 0; }
+  20% { transform: translate(-20px, -15px) scale(1); opacity: 1; }
+  60% { transform: translate(50%, 30%) scale(1); opacity: 1; }
+  80% { transform: translate(50%, 30%) scale(0.5); opacity: 0; }
+  100% { transform: translate(50%, 30%) scale(0); opacity: 0; }
+}
+
+/* Number counter / aparición secuencial */
+.fade-in-stagger > * {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.fade-in-stagger > *:nth-child(1) { animation-delay: 0.0s; }
+.fade-in-stagger > *:nth-child(2) { animation-delay: 0.15s; }
+.fade-in-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+.fade-in-stagger > *:nth-child(4) { animation-delay: 0.45s; }
+.fade-in-stagger > *:nth-child(5) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === FIN ANIMACIONES === */
+
+.mock-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.mock-input.highlight {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.mock-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+
+.mock-radio {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+@media (max-width: 600px) {
+  .mock-radio { grid-template-columns: 1fr; }
+}
+
+.mock-radio-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 12px;
+}
+
+.mock-radio-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.mock-radio-card .title {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.mock-radio-card.selected .title { color: var(--accent); }
+
+.mock-radio-card .desc {
+  color: var(--text-tertiary);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.mock-btn {
+  background: var(--accent);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  cursor: default;
+  margin-top: 12px;
+}
+
+.mock-btn.ghost {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+}
+
+.mock-list-item {
+  background: var(--bg-secondary);
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mock-list-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mock-list-info { flex: 1; min-width: 0; }
+.mock-list-desc { font-size: 13px; font-weight: 600; margin-bottom: 2px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mock-list-meta { font-size: 11px; color: var(--text-tertiary); }
+.mock-list-amount { font-size: 14px; font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
+
+.mock-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.mock-badge.green { background: var(--green-soft); color: var(--green); }
+.mock-badge.orange { background: var(--orange-soft); color: var(--orange); }
+.mock-badge.red { background: var(--red-soft); color: var(--red); }
+
+.mock-dropzone {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--bg-secondary) 100%);
+  border: 2px dashed rgba(123, 109, 255, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mock-dropzone-icon {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 8px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.mock-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.mock-summary-card {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.mock-summary-card.green { border-left: 3px solid var(--green); }
+.mock-summary-card.orange { border-left: 3px solid var(--orange); }
+.mock-summary-card.purple { border-left: 3px solid var(--accent); }
+
+.mock-summary-label {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.mock-summary-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.mock-summary-value.green { color: var(--green); }
+.mock-summary-value.orange { color: var(--orange); }
+.mock-summary-value.purple { color: var(--accent); }
+
+/* CALLOUTS */
+.tip {
+  background: var(--accent-soft);
+  border: 1px solid rgba(123, 109, 255, 0.2);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.tip-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tip strong { color: var(--accent); }
+
+.warning {
+  background: var(--orange-soft);
+  border: 1px solid rgba(251, 146, 60, 0.2);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.warning strong { color: var(--orange); }
+
+.success {
+  background: var(--green-soft);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.success strong { color: var(--green); }
+
+/* OJO — el callout legal casual (estilo distinto, más relajado) */
+.ojo {
+  background: rgba(255, 255, 255, 0.025);
+  border-left: 3px solid var(--text-tertiary);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ojo-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+.ojo strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.ojo a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+/* CHECKLIST */
+.checklist {
+  background: var(--bg-secondary);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.checklist-item::before {
+  content: '✓';
+  width: 22px;
+  height: 22px;
+  background: var(--green-soft);
+  color: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* FAQ */
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+
+.faq-q {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.faq-a {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* TOC */
+.toc {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 40px 0;
+}
+
+.toc-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.toc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 8px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+}
+
+.toc-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateX(4px);
+}
+
+.toc-item-num {
+  width: 24px;
+  height: 24px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* CTA */
+.cta-final {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  border-radius: 24px;
+  padding: 48px 40px;
+  text-align: center;
+  margin: 60px 0 40px;
+  box-shadow: 0 20px 60px var(--accent-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-final::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  animation: shimmerSlide 4s ease-in-out infinite;
+}
+
+.cta-final h2 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: white;
+  position: relative;
+}
+
+.cta-final p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-bottom: 24px;
+  color: white;
+  position: relative;
+}
+
+.cta-final .btn {
+  background: white;
+  color: var(--accent);
+  position: relative;
+}
+
+.cta-final .btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Disclaimer final ampliado */
+.legal-final {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 40px 0 0;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.7;
+}
+
+.legal-final strong { color: var(--text-secondary); }
+
+/* FLOATING NAV */
+.floating-nav {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(28, 31, 38, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  padding: 8px;
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+}
+
+.float-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 18px;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.float-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  transform: scale(1.1);
+}
+
+.float-btn.primary {
+  background: var(--accent);
+  color: white;
+}
+
+.float-btn.primary:hover {
+  background: var(--accent-hover);
+}
+
+@media (max-width: 600px) {
+  .container { padding: 24px 16px 100px; }
+  .content { padding: 20px; }
+  .step-header { flex-direction: column; gap: 14px; }
+  .step-number { width: 48px; height: 48px; font-size: 18px; }
+  .cta-final { padding: 32px 20px; }
+}
+
+@media print {
+  .header, .floating-nav, .toc, .hero-actions, .cta-final { display: none; }
+  .container { padding: 0; max-width: none; }
+  body { background: white; color: black; }
+  .step { page-break-inside: avoid; }
+  .highlight-this, .spotlight, .click-me, .shimmer, .typing, .drag-anim {
+    animation: none !important;
+  }
+}
+
+/* Accesibilidad: respeta prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <a href="#top" style="text-decoration: none; color: inherit;">
+      <div class="logo">
+        resicodeo<span class="logo-dot"></span>
+      </div>
+    </a>
+    <a href="/resicodeo/" class="btn ghost" style="font-size: 12px;">
+      Abrir app →
+    </a>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress"></div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-eyebrow">Guía paso a paso · 8 minutos</div>
+  <h1>Aprende a usar <span class="accent">resicodeo</span> en menos de 10 minutos</h1>
+  <p>Esta guía te lleva de la mano por todo lo que necesitas saber: desde el primer cobro hasta emitir tu primera factura. No necesitas experiencia previa.</p>
+  <div class="hero-actions">
+    <a href="#paso-1" class="btn">Empezar guía</a>
+    <a href="/resicodeo/" class="btn ghost">Saltar a la app</a>
+  </div>
+
+  <div class="ojo" style="max-width: 560px; margin: 32px auto 0; text-align: left;">
+    <span class="ojo-icon">👋</span>
+    <div>
+      <strong>Antes de empezar:</strong> resicodeo es una herramienta para <strong>organizar y calcular</strong>. Te ahorra muchísimo tiempo, pero <strong>no reemplaza a un contador</strong>. Para casos complejos o si tienes dudas serias, busca a uno o llama a PRODECON gratis al <strong>55 1205 9000</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">📚 ¿Qué vas a aprender?</div>
+  <div class="toc-list">
+    <a href="#paso-1" class="toc-item"><span class="toc-item-num">1</span> Lo primero al abrir la app</a>
+    <a href="#paso-2" class="toc-item"><span class="toc-item-num">2</span> Crear tu primer cliente</a>
+    <a href="#paso-3" class="toc-item"><span class="toc-item-num">3</span> Registrar un cobro</a>
+    <a href="#paso-4" class="toc-item"><span class="toc-item-num">4</span> Crear paquetes para cotizar</a>
+    <a href="#paso-5" class="toc-item"><span class="toc-item-num">5</span> Calculadora de cotización</a>
+    <a href="#paso-6" class="toc-item"><span class="toc-item-num">6</span> Registrar gastos</a>
+    <a href="#paso-7" class="toc-item"><span class="toc-item-num">7</span> Importar XML del SAT</a>
+    <a href="#paso-8" class="toc-item"><span class="toc-item-num">8</span> Emitir una factura</a>
+    <a href="#paso-9" class="toc-item"><span class="toc-item-num">9</span> Marcar como cobrado</a>
+    <a href="#paso-10" class="toc-item"><span class="toc-item-num">10</span> Ver tu resumen mensual</a>
+    <a href="#paso-11" class="toc-item"><span class="toc-item-num">11</span> Calendario fiscal</a>
+    <a href="#paso-12" class="toc-item"><span class="toc-item-num">12</span> Respaldar tus datos</a>
+    <a href="#faq" class="toc-item"><span class="toc-item-num">?</span> Preguntas frecuentes</a>
+  </div>
+</div>
+
+<!-- PASO 1 -->
+<div class="step reveal" id="paso-1">
+  <div class="step-header">
+    <div class="step-number">1</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Bienvenida</div>
+      <h2>Lo primero al abrir resicodeo</h2>
+      <p>Cuando abras la app por primera vez, verás el panel principal: el <strong>Resumen mensual</strong>. Está vacío porque aún no has registrado nada.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>🗂 La barra de navegación</h3>
+    <p>En la parte superior tienes todas las pestañas. Cada una hace algo distinto. Aquí cuál:</p>
+
+    <div class="mockup">
+      <div class="mockup-label">Barra de navegación</div>
+      <div class="mock-tabs">
+        <div class="mock-tab active highlight-this">Resumen</div>
+        <div class="mock-tab">Nuevo cobro</div>
+        <div class="mock-tab">Nuevo gasto</div>
+        <div class="mock-tab">Cobros</div>
+        <div class="mock-tab">Clientes</div>
+        <div class="mock-tab">Reportes</div>
+        <div class="mock-tab">Calendario</div>
+        <div class="mock-tab">Curso</div>
+        <div class="mock-tab">Ayuda</div>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>Resumen</strong> — vista del mes con totales y cálculos</li>
+      <li><strong>Nuevo cobro</strong> — registrar dinero recibido</li>
+      <li><strong>Nuevo gasto</strong> — registrar compras del trabajo</li>
+      <li><strong>Cobros</strong> — historial completo y filtros</li>
+      <li><strong>Clientes</strong> — datos de tus clientes recurrentes</li>
+      <li><strong>Reportes</strong> — vista anual con gráficas</li>
+      <li><strong>Calendario</strong> — fechas fiscales importantes</li>
+      <li><strong>Curso</strong> — abre el curso completo de RESICO</li>
+      <li><strong>Ayuda</strong> — exportar, borrar, soporte</li>
+    </ul>
+
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div><strong>Tip:</strong> el orden recomendado al empezar es: <strong>1)</strong> guarda tus clientes, <strong>2)</strong> crea tus paquetes, <strong>3)</strong> registra cobros y gastos. Verás los totales calculados en automático en "Resumen".</div>
+    </div>
+
+    <div class="ojo">
+      <span class="ojo-icon">📌</span>
+      <div>Las cifras y tasas que ves vienen de la <strong>regla vigente del SAT a abril 2026</strong>. La ley fiscal cambia cada cierto tiempo, así que si estás leyendo esto mucho después, verifica que las tasas estén actualizadas.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 2 -->
+<div class="step reveal" id="paso-2">
+  <div class="step-header">
+    <div class="step-number">2</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Clientes</div>
+      <h2>Crear tu primer cliente</h2>
+      <p>Antes de registrar cobros, vale la pena guardar a tus clientes recurrentes. Así no tienes que escribir sus datos cada vez.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>🚀 La forma rápida (recomendada)</h3>
+    <p>Si tienes la <strong>Constancia de Situación Fiscal</strong> de tu cliente en PDF, todo se autocompleta:</p>
+
+    <ol class="fade-in-stagger">
+      <li>Ve a <strong>Clientes</strong> en la barra superior</li>
+      <li>Click en <strong class="typing">+ Nuevo cliente</strong></li>
+      <li>Arrastra el PDF a la zona morada <strong>↓</strong></li>
+    </ol>
+
+    <div class="mockup">
+      <div class="mockup-label">Modal nuevo cliente</div>
+      <div class="mock-dropzone drag-anim spotlight">
+        <div class="mock-dropzone-icon">📄</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">Autocompletar con Constancia Fiscal</div>
+        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Arrastra el PDF · llena RFC, nombre, CP, régimen</div>
+      </div>
+      <div class="mock-label">RFC</div>
+      <div class="mock-input shimmer">PMX190215XYZ</div>
+      <div class="mock-label">Nombre o razón social</div>
+      <div class="mock-input shimmer">PRODUCTORA MEXICANA SA DE CV</div>
+      <div class="mock-label">Código postal</div>
+      <div class="mock-input shimmer">06600</div>
+    </div>
+
+    <div class="success">
+      <span class="tip-icon">🔒</span>
+      <div><strong>Privacidad:</strong> el PDF se procesa en tu navegador. <strong>Nunca se sube a internet.</strong> Tus datos y los de tus clientes se quedan contigo.</div>
+    </div>
+
+    <h3>✏️ La forma manual</h3>
+    <p>Si no tienes el PDF, puedes llenar los campos manualmente:</p>
+    <ul>
+      <li><strong>Nombre</strong> obligatorio (lo demás opcional)</li>
+      <li><strong>Tipo:</strong> Persona física, Persona moral, o Extranjero</li>
+      <li><strong>RFC</strong>, <strong>código postal</strong>, <strong>email</strong> según los tengas</li>
+      <li><strong>Notas:</strong> útil para "pagan a 30 días" o "contacto: Ana"</li>
+    </ul>
+
+    <div class="warning">
+      <span class="tip-icon">⚠️</span>
+      <div>El campo <strong>email</strong> queda vacío al subir el PDF — las constancias del SAT no incluyen email del contribuyente. Llénalo tú con el correo real.</div>
+    </div>
+
+    <div class="ojo">
+      <span class="ojo-icon">🤝</span>
+      <div>Al guardar datos de tus clientes en la app, técnicamente eres "responsable" de esos datos personales según la <strong>Ley Federal de Protección de Datos</strong>. Como todo vive solo en tu dispositivo, el riesgo es bajo, pero <strong>no compartas tu computadora con random people</strong> y respalda con cuidado.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 3 -->
+<div class="step reveal" id="paso-3">
+  <div class="step-header">
+    <div class="step-number">3</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Cobros</div>
+      <h2>Registrar tu primer cobro</h2>
+      <p>Acabas de cobrar una boda. Vamos a registrarlo. Es rápido — menos de 30 segundos.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>📝 Llenar el formulario</h3>
+
+    <ol class="fade-in-stagger">
+      <li>Click en la pestaña <strong class="typing">Nuevo cobro</strong></li>
+      <li>Llena los campos:</li>
+    </ol>
+
+    <div class="mockup">
+      <div class="mockup-label">Nuevo cobro</div>
+      <div class="mock-label">Descripción</div>
+      <div class="mock-input">Boda Pérez–Gómez</div>
+
+      <div class="mock-label">Cliente (opcional)</div>
+      <div class="mock-input shimmer">Productora Mexicana SA de CV</div>
+
+      <div class="mock-label">Estado del cobro</div>
+      <div class="mock-radio">
+        <div class="mock-radio-card selected highlight-this">
+          <div class="title">✓ Ya cobrado</div>
+          <div class="desc">El dinero entró. Cuenta para impuestos.</div>
+        </div>
+        <div class="mock-radio-card">
+          <div class="title">⏱ Pendiente</div>
+          <div class="desc">Facturé pero no me pagan aún.</div>
+        </div>
+      </div>
+
+      <div class="mock-label">Fecha · Tipo cliente · Actividad</div>
+      <div class="mock-input">15 mar 2026  ·  Persona moral  ·  Servicio profesional</div>
+
+      <div class="mock-label">Cotización · Monto total</div>
+      <div class="mock-input">Precio + IVA aparte  ·  $23,200.00</div>
+
+      <div class="mock-label">Forma de pago</div>
+      <div class="mock-input">🏦 Transferencia electrónica</div>
+
+      <div class="mock-btn click-me">+ Guardar cobro</div>
+    </div>
+
+    <h3>🎯 Lo que importa entender</h3>
+
+    <p><strong>Estado del cobro:</strong> esta es la diferencia más importante.</p>
+    <ul>
+      <li><strong>Cobrado</strong> = el dinero entró a tu cuenta. SÍ cuenta para impuestos del mes.</li>
+      <li><strong>Pendiente</strong> = facturaste pero no te pagan. NO cuenta hasta que cobres realmente.</li>
+    </ul>
+
+    <p><strong>Cotización:</strong></p>
+    <ul>
+      <li><strong>Precio + IVA aparte</strong> = al cliente le cobras $20,000 más IVA = $23,200 totales. Tú pones $23,200.</li>
+      <li><strong>Precio con IVA incluido</strong> = el cliente acordó pagarte $20,000 todo incluido. Tú pones $20,000.</li>
+    </ul>
+
+    <p><strong>Tipo de cliente:</strong> cambia los cálculos de retenciones. Si es Persona moral con servicio profesional, te retienen 10% ISR + 2/3 IVA automáticamente.</p>
+
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div><strong>Tip:</strong> selecciona el cliente del dropdown y la app llena automáticamente el "Tipo de cliente". Menos clicks.</div>
+    </div>
+
+    <div class="ojo">
+      <span class="ojo-icon">📐</span>
+      <div>Los cálculos de IVA y retenciones siguen las reglas del <strong>Código Fiscal de la Federación</strong> y la Ley del IVA. Funcionan bien para los casos comunes de RESICO, pero hay situaciones especiales (anticipos, descuentos, devoluciones, donaciones) donde conviene revisar con un contador.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 4 -->
+<div class="step reveal" id="paso-4">
+  <div class="step-header">
+    <div class="step-number">4</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Plantillas</div>
+      <h2>Paquetes para cotizar al instante</h2>
+      <p>Si vendes los mismos servicios siempre (boda chica, boda grande, video corporativo), guárdalos como paquetes.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>📦 Crear un paquete</h3>
+
+    <ol class="fade-in-stagger">
+      <li>En "Nuevo cobro", click en <strong class="typing">Mis paquetes</strong></li>
+      <li>Click en <strong>+ Nuevo paquete</strong></li>
+      <li>Llena el formulario:</li>
+    </ol>
+
+    <div class="mockup">
+      <div class="mockup-label">Nuevo paquete</div>
+      <div class="mock-label">Nombre del paquete</div>
+      <div class="mock-input">Boda Oro · Cobertura 8h</div>
+      <div class="mock-label">Descripción para la factura</div>
+      <div class="mock-input">Servicio de cobertura audiovisual de boda — paquete oro (8 horas + edición)</div>
+      <div class="mock-label">Precio sin IVA · Categoría</div>
+      <div class="mock-input">$25,000.00  ·  💍 Bodas</div>
+    </div>
+
+    <h3>⚡ Aplicar un paquete</h3>
+
+    <p>Cuando cotices o registres un cobro, click en <strong>"Mis paquetes"</strong> → click en el paquete que quieras y todo se llena automáticamente:</p>
+
+    <ul>
+      <li>La descripción del cobro</li>
+      <li>El monto total con IVA ya calculado ($25,000 × 1.16 = $29,000)</li>
+      <li>La cotización tipo "Precio + IVA aparte"</li>
+    </ul>
+
+    <div class="success">
+      <span class="tip-icon">⚡</span>
+      <div><strong>Velocidad real:</strong> registrar un cobro pasa de 30 segundos a 5 segundos. Cuando un cliente pide cotización por WhatsApp, abres la app, click en el paquete, y le mandas el precio con IVA en 10 segundos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 5 -->
+<div class="step reveal" id="paso-5">
+  <div class="step-header">
+    <div class="step-number">5</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Cotizaciones</div>
+      <h2>Calculadora "¿Cuánto cotizar?"</h2>
+      <p>El error #1 de los freelancers: cobrar mal y darse cuenta tarde. Esta calculadora lo resuelve.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>🧮 Cómo funciona</h3>
+
+    <p>Te dice cuánto cobrarle al cliente para que <strong>después de impuestos te queden los pesos limpios que tú quieres</strong>.</p>
+
+    <ol class="fade-in-stagger">
+      <li>En "Nuevo cobro", click en <strong>Calculadora · ¿Cuánto cotizar?</strong></li>
+      <li>Pones cuánto quieres ganar limpio (ej: <strong>$25,000</strong>)</li>
+      <li>Eliges el tipo de cliente y actividad</li>
+      <li>Click <strong class="click-me" style="display: inline-block; padding: 4px 10px; background: var(--accent); color: white; border-radius: 6px;">Calcular</strong></li>
+    </ol>
+
+    <div class="mockup">
+      <div class="mockup-label">Calculadora</div>
+      <div class="mock-label">Quiero ganar limpio</div>
+      <div class="mock-input highlight highlight-this">$25,000.00</div>
+      <div class="mock-label">Tipo cliente · Actividad</div>
+      <div class="mock-input">Persona moral · Servicio profesional</div>
+      <div class="mock-btn click-me" style="width: 100%; justify-content: center;">Calcular</div>
+
+      <div style="background: var(--green-soft); border-radius: 12px; padding: 16px; margin-top: 16px;">
+        <div style="color: var(--green); font-weight: 800; font-size: 16px; margin-bottom: 4px;">Cobra al cliente: $32,407</div>
+        <div style="font-size: 11px; color: var(--text-secondary);">Subtotal $27,937 + IVA $4,470</div>
+      </div>
+
+      <div style="background: var(--bg-tertiary); padding: 14px; border-radius: 10px; margin-top: 8px; font-size: 12px;">
+        <div style="display: flex; justify-content: space-between; padding: 4px 0;"><span>Cotiza al cliente</span> <strong>$32,407</strong></div>
+        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: var(--orange);"><span>− Retención ISR (10%)</span> <strong>$2,794</strong></div>
+        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: var(--orange);"><span>− Retención IVA (2/3)</span> <strong>$2,980</strong></div>
+        <div style="display: flex; justify-content: space-between; padding: 4px 0; color: var(--green); border-top: 1px solid var(--border); margin-top: 4px; padding-top: 8px;"><span>🎯 Tu ganancia limpia</span> <strong>$25,000</strong></div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div><strong>Truco:</strong> al cotizar al cliente, di <strong>"$X más IVA"</strong>, no precio cerrado. Así el IVA sale del cliente, no de tu utilidad.</div>
+    </div>
+
+    <div class="ojo">
+      <span class="ojo-icon">🧮</span>
+      <div>El cálculo asume las tasas vigentes de RESICO y las retenciones estándar para personas morales. Si el cliente tiene retenciones especiales (gobierno, plataformas tecnológicas, donatarias) los números pueden variar. <strong>Siempre verifica con el comprobante real.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 6 -->
+<div class="step reveal" id="paso-6">
+  <div class="step-header">
+    <div class="step-number">6</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Gastos</div>
+      <h2>Registrar gastos del trabajo</h2>
+      <p>El IVA de tus gastos con factura es acreditable. Eso significa que pagas menos IVA al SAT.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>💸 Registro manual</h3>
+
+    <ol class="fade-in-stagger">
+      <li>Click en <strong class="typing">Nuevo gasto</strong></li>
+      <li>Llena: descripción, fecha, categoría, subtotal e IVA</li>
+      <li>Marca <strong>"Tiene factura"</strong> si tienes el CFDI del proveedor</li>
+    </ol>
+
+    <div class="mockup">
+      <div class="mockup-label">Nuevo gasto</div>
+      <div class="mock-label">Descripción</div>
+      <div class="mock-input">Disco duro 4TB para edición</div>
+      <div class="mock-label">Categoría · Fecha</div>
+      <div class="mock-input">📦 Equipo  ·  10 mar 2026</div>
+      <div class="mock-label">Subtotal · IVA</div>
+      <div class="mock-input">$2,500.00  ·  $400.00</div>
+      <div style="font-size: 12px; color: var(--green); margin-top: 8px; font-weight: 600;" class="highlight-this">☑ Tengo factura (CFDI)</div>
+    </div>
+
+    <div class="warning">
+      <span class="tip-icon">⚠️</span>
+      <div><strong>Importante:</strong> en RESICO los gastos NO reducen ISR (no hay deducciones como en otros regímenes). Pero el IVA de gastos con factura SÍ es acreditable. Por eso registrar gastos sigue valiendo la pena — el SAT te debe ese IVA.</div>
+    </div>
+
+    <h3>🎯 Categorías disponibles</h3>
+    <ul>
+      <li>📦 Equipo (cámaras, lentes, accesorios)</li>
+      <li>💻 Software (Adobe, suscripciones)</li>
+      <li>🚗 Transporte (gasolina, casetas, Uber)</li>
+      <li>🏢 Renta de equipo</li>
+      <li>📚 Capacitación</li>
+      <li>👥 Colaboradores (asistentes, editores)</li>
+      <li>🎯 Otros</li>
+    </ul>
+
+    <div class="ojo">
+      <span class="ojo-icon">📑</span>
+      <div>Para que un gasto sea válido fiscalmente, el CFDI del proveedor debe estar <strong>vigente y a tu nombre/RFC</strong>. Guarda los XMLs originales — la ley te obliga a conservarlos por <strong>5 años</strong>. La app te ayuda a registrarlos pero los archivos físicos del XML/PDF los guardas tú.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 7 -->
+<div class="step reveal" id="paso-7">
+  <div class="step-header">
+    <div class="step-number">7</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Magia</div>
+      <h2>Importar XML de facturas</h2>
+      <p>Si tienes el archivo XML del SAT, no escribas nada. Arrástralo y la app lo lee solo.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>📥 ¿Para qué sirve?</h3>
+
+    <p>Cuando emites una factura en el portal SAT (o cuando un proveedor te factura), te dan dos archivos: el PDF y el <strong>XML</strong>. El XML tiene todos los datos estructurados.</p>
+
+    <p>resicodeo lee ese XML y registra automáticamente:</p>
+    <ul>
+      <li>Descripción, fecha, montos, IVA</li>
+      <li>Cliente o proveedor (lo crea si no existe)</li>
+      <li>Folio fiscal y método de pago</li>
+      <li>Estado: <strong>cobrado</strong> si es PUE, <strong>pendiente</strong> si es PPD</li>
+    </ul>
+
+    <h3>📂 Cómo se ve en la app</h3>
+
+    <p>Tanto en "Nuevo cobro" como en "Nuevo gasto" verás esta zona:</p>
+
+    <div class="mockup">
+      <div class="mockup-label">Importar XML</div>
+      <div class="mock-dropzone drag-anim spotlight">
+        <div class="mock-dropzone-icon">📄</div>
+        <div style="font-size: 13px; font-weight: 700;">Importar XML del CFDI emitido</div>
+        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">Arrastra archivos XML aquí o haz click para elegir</div>
+        <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 4px;">Soporta múltiples archivos · CFDI 4.0</div>
+      </div>
+    </div>
+
+    <ol class="fade-in-stagger">
+      <li>Arrastra uno o varios archivos <strong>.xml</strong> a la zona morada</li>
+      <li>O haz click y selecciónalos desde tu computadora</li>
+      <li>Verás un toast verde: <strong>"✓ 5 XMLs importados"</strong></li>
+    </ol>
+
+    <div class="success">
+      <span class="tip-icon">⚡</span>
+      <div><strong>Caso de uso real:</strong> al final del mes descargas todos los XMLs del portal SAT, los arrastras a la app y en 10 segundos tienes el mes completo capturado. Sin escribir nada.</div>
+    </div>
+
+    <h3>🔍 Categorización automática</h3>
+    <p>Si el XML tiene "cámara" o "lente" en la descripción, la app lo clasifica automáticamente como <strong>Equipo</strong>. Si dice "gasolina" lo clasifica como <strong>Transporte</strong>. Y así sucesivamente.</p>
+
+    <div class="ojo">
+      <span class="ojo-icon">🔄</span>
+      <div>La app lee CFDI versión <strong>4.0</strong> (la actual). Si llegas a tener XMLs viejos en versión 3.3, todavía se leen pero algunos campos pueden quedar vacíos. Lo ideal es trabajar siempre con la versión vigente.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 8 -->
+<div class="step reveal" id="paso-8">
+  <div class="step-header">
+    <div class="step-number">8</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Facturación</div>
+      <h2>Emitir una factura con el asistente</h2>
+      <p>resicodeo no emite la factura por ti, pero te prepara absolutamente todo para que solo copies y pegues en el portal SAT.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>📄 Cómo abrir el asistente</h3>
+
+    <ol class="fade-in-stagger">
+      <li>En cualquier cobro, click en el botón <strong class="click-me" style="display: inline-block; padding: 3px 8px; background: var(--green-soft); color: var(--green); border-radius: 6px; font-size: 12px;">📄 Facturar</strong></li>
+      <li>Se abre un modal con TODOS los datos pre-llenados</li>
+    </ol>
+
+    <h3>🎯 Lo que verás</h3>
+
+    <div class="mockup">
+      <div class="mockup-label">Asistente factura</div>
+      <div style="font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 10px;">📋 Pasos en el portal SAT</div>
+      <div style="font-size: 12px; color: var(--text-secondary); padding: 4px 0;">☑ 1. Iniciar sesión en sat.gob.mx</div>
+      <div style="font-size: 12px; color: var(--text-secondary); padding: 4px 0;">☐ 2. Llenar datos del receptor</div>
+      <div style="font-size: 12px; color: var(--text-secondary); padding: 4px 0;">☐ 3. Agregar concepto</div>
+
+      <div style="background: var(--bg-tertiary); padding: 14px; border-radius: 12px; margin-top: 14px;" class="tracing-border">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <span style="font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase;">👤 Datos del receptor</span>
+          <span style="background: var(--accent-soft); color: var(--accent); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;" class="click-me">Copiar bloque</span>
+        </div>
+        <div style="font-size: 12px; padding: 4px 0; display: flex; justify-content: space-between;"><span>RFC</span> <strong style="font-family: monospace;">PMX190215XYZ</strong></div>
+        <div style="font-size: 12px; padding: 4px 0; display: flex; justify-content: space-between;"><span>Razón Social</span> <strong>PRODUCTORA MEXICANA SA DE CV</strong></div>
+        <div style="font-size: 12px; padding: 4px 0; display: flex; justify-content: space-between;"><span>Régimen</span> <strong>601 - General de Ley</strong></div>
+        <div style="font-size: 12px; padding: 4px 0; display: flex; justify-content: space-between;"><span>Uso CFDI</span> <strong>G03 - Gastos en general</strong></div>
+      </div>
+    </div>
+
+    <p>El asistente te muestra <strong>5 secciones</strong>:</p>
+    <ol>
+      <li><strong>Receptor</strong> — RFC, razón social, CP, régimen, uso CFDI (todo correcto según el cliente)</li>
+      <li><strong>Concepto</strong> — clave SAT detectada automáticamente (boda → 82111804, edición → 82111803, etc.)</li>
+      <li><strong>Impuestos</strong> — IVA y retenciones calculados</li>
+      <li><strong>Pago</strong> — forma de pago, método (PUE o PPD), moneda</li>
+      <li><strong>UUID</strong> — campo para guardar el folio fiscal después de timbrar</li>
+    </ol>
+
+    <h3>📋 El flujo real</h3>
+
+    <ol class="fade-in-stagger">
+      <li>Click <strong>"Copiar bloque"</strong> en Receptor → pegas en el portal SAT</li>
+      <li>Click <strong>"Copiar bloque"</strong> en Concepto → pegas en el portal SAT</li>
+      <li>Llenas pago y método según lo que muestre la app</li>
+      <li>Sellas con tu CSD en el portal, descargas XML+PDF</li>
+      <li>Copias el UUID del folio fiscal</li>
+      <li>Vuelves a la app, lo pegas y das click <strong>"Guardar"</strong></li>
+    </ol>
+
+    <div class="success">
+      <span class="tip-icon">⏱</span>
+      <div><strong>Tiempo real:</strong> de 10 minutos por factura a 2 minutos. Y eliminas errores de captura.</div>
+    </div>
+
+    <div class="warning">
+      <span class="tip-icon">⚠️</span>
+      <div><strong>Importante:</strong> resicodeo <strong>no</strong> emite la factura. El timbrado lo hace el SAT (gratis en su portal) o un PAC (con cuenta empresarial). Esto es un asistente que te ahorra 80% del tiempo de captura, no un emisor de facturas.</div>
+    </div>
+
+    <div class="ojo">
+      <span class="ojo-icon">🤖</span>
+      <div>Las claves SAT que sugiere el asistente (82111804 para bodas, 82111803 para edición, etc.) son las más comunes para servicios audiovisuales. Pero el catálogo SAT es enorme — si tu servicio es muy específico, puedes <strong>cambiar la clave manualmente</strong> en el portal antes de sellar.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 9 -->
+<div class="step reveal" id="paso-9">
+  <div class="step-header">
+    <div class="step-number">9</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Cobros pendientes</div>
+      <h2>Marcar un pendiente como cobrado</h2>
+      <p>Cuando facturas con método PPD, registras el cobro como pendiente. Cuando llega el dinero, lo marcas como cobrado.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>✓ El botón "Cobré"</h3>
+
+    <p>En cualquier cobro pendiente verás un botón verde <strong>"✓ Cobré"</strong>:</p>
+
+    <div class="mockup">
+      <div class="mockup-label">Cobro pendiente</div>
+      <div class="mock-list-item">
+        <div class="mock-list-icon">$</div>
+        <div class="mock-list-info">
+          <div class="mock-list-desc">Boda Pérez–Gómez <span class="mock-badge orange">● Pendiente</span></div>
+          <div class="mock-list-meta">15 mar · Productora Mexicana · 🏦 Transferencia</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+          <div class="mock-list-amount" style="color: var(--text-tertiary);">$23,200</div>
+          <div style="display: flex; gap: 4px;">
+            <span style="background: var(--green-soft); color: var(--green); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;" class="click-me">✓ Cobré</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>🔄 Lo que pasa al hacer click</h3>
+
+    <ol class="fade-in-stagger">
+      <li>Te pregunta la fecha real en que entró el pago</li>
+      <li>El cobro pasa de "Pendiente" a "Cobrado" 🟢</li>
+      <li>Si la factura era PPD (con receptor RFC), aparece un recordatorio:</li>
+    </ol>
+
+    <div class="mockup">
+      <div class="mockup-label">Recordatorio REP</div>
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <div style="width: 36px; height: 36px; background: var(--orange-soft); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-size: 18px;">⏱</div>
+        <div>
+          <div style="font-weight: 700; font-size: 14px;">¿Era factura PPD?</div>
+          <div style="font-size: 11px; color: var(--text-secondary);">No olvides el Complemento de Pago</div>
+        </div>
+      </div>
+      <div style="background: var(--orange-soft); padding: 12px; border-radius: 10px; font-size: 12px; color: var(--text-primary); line-height: 1.5;" class="highlight-this">
+        <strong style="color: var(--orange);">Fecha límite: 5 abril</strong><br>
+        Te quedan <strong>14 días</strong> para emitirlo en el portal SAT.
+      </div>
+    </div>
+
+    <div class="warning">
+      <span class="tip-icon">⚠️</span>
+      <div><strong>El REP (Complemento de Pago)</strong> es obligatorio cuando facturas PPD. Si no lo emites antes del día 5 del mes siguiente al cobro, hay multa. resicodeo te avisa, pero el complemento lo emites tú en el portal SAT.</div>
+    </div>
+
+    <h3>🚨 Vencidos automáticos</h3>
+    <p>Si un cobro pendiente lleva <strong>más de 30 días sin cobrarse</strong>, la app le pone badge rojo de "Vencido" automáticamente. Sirve para detectar clientes morosos a tiempo.</p>
+
+    <div class="ojo">
+      <span class="ojo-icon">⚖️</span>
+      <div>Las multas del SAT por no emitir REP a tiempo van de aprox. <strong>$400 a $13,000 MXN por cada CFDI</strong>, dependiendo del caso. La app te avisa, pero la responsabilidad de emitirlo es 100% tuya.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 10 -->
+<div class="step reveal" id="paso-10">
+  <div class="step-header">
+    <div class="step-number">10</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Resumen</div>
+      <h2>Tu resumen mensual al instante</h2>
+      <p>La pestaña "Resumen" te dice exactamente cuánto ganaste, cuánto debes pagar al SAT y qué pasos siguen.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>📊 Las 4 tarjetas principales</h3>
+
+    <div class="mockup">
+      <div class="mockup-label">Resumen marzo</div>
+      <div class="mock-summary-grid fade-in-stagger">
+        <div class="mock-summary-card green">
+          <div class="mock-summary-label">Ingresos del mes</div>
+          <div class="mock-summary-value green">$80,500</div>
+        </div>
+        <div class="mock-summary-card orange">
+          <div class="mock-summary-label">Gastos</div>
+          <div class="mock-summary-value orange">$8,200</div>
+        </div>
+        <div class="mock-summary-card purple">
+          <div class="mock-summary-label">Utilidad</div>
+          <div class="mock-summary-value purple">$72,300</div>
+        </div>
+        <div class="mock-summary-card purple highlight-this">
+          <div class="mock-summary-label">A pagar al SAT</div>
+          <div class="mock-summary-value purple">$1,420</div>
+        </div>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>Ingresos</strong> — solo los cobros COBRADOS del mes (los pendientes no cuentan hasta cobrar)</li>
+      <li><strong>Gastos</strong> — total con IVA</li>
+      <li><strong>Utilidad</strong> — ingresos menos gastos del mes</li>
+      <li><strong>A pagar al SAT</strong> — ISR + IVA neto que tienes que declarar y pagar antes del día 17 del mes siguiente</li>
+    </ul>
+
+    <h3>💰 Cobros por forma de pago</h3>
+    <p>Una tarjeta especial te muestra desglosado cómo te pagaron este mes (transferencia, efectivo, etc.). Útil para reconciliar con tu cuenta bancaria.</p>
+
+    <h3>🔍 Filtro por tipo de factura</h3>
+    <p>Pestañas para ver solo los cobros de:</p>
+    <ul>
+      <li>Persona física con factura</li>
+      <li>Persona física sin factura (se irán a la global)</li>
+      <li>Persona moral / agencias</li>
+      <li>Clientes extranjeros</li>
+    </ul>
+
+    <h3>📈 Gráfica de los últimos 6 meses</h3>
+    <p>Una barra por mes para ver tu evolución. Útil para detectar meses bajos antes de que sea problema.</p>
+
+    <h3>📅 Alerta de declaración</h3>
+    <p>Te recuerda en qué fecha límite tienes que declarar el mes (siempre el día 17 del mes siguiente, ajustado a día hábil).</p>
+
+    <div class="ojo">
+      <span class="ojo-icon">🎯</span>
+      <div>El total "<strong>A pagar al SAT</strong>" que ves es lo que la app calcula <strong>según la información que has registrado</strong>. La cifra real puede variar si te faltó capturar algo, si hay retenciones especiales o si tienes saldos a favor previos. <strong>Antes de pagar, verifica con tu propia revisión</strong> en el portal del SAT.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 11 -->
+<div class="step reveal" id="paso-11">
+  <div class="step-header">
+    <div class="step-number">11</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Calendario</div>
+      <h2>Calendario fiscal — nunca más una multa</h2>
+      <p>Las fechas críticas del SAT visualizadas como calendario, con alertas automáticas.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <h3>📅 Las fechas que importan</h3>
+
+    <ul class="fade-in-stagger">
+      <li><strong>Día 5</strong> de cada mes — emitir REP (Complementos de Pago) de cobros del mes pasado</li>
+      <li><strong>Día 17</strong> de cada mes — presentar y pagar declaración mensual</li>
+      <li><strong>Último día</strong> de cada mes — emitir factura global de público en general</li>
+      <li><strong>31 de enero</strong> — última fecha para cambio de régimen anual</li>
+      <li><strong>Marzo–Abril</strong> — declaración anual (si aplica)</li>
+    </ul>
+
+    <h3>👀 Cómo se ve</h3>
+
+    <p>Una cuadrícula tipo calendario con:</p>
+    <ul>
+      <li>Días con eventos resaltados con badges de colores</li>
+      <li>Día actual marcado con borde morado</li>
+      <li>Click en cualquier día con eventos → modal con detalle</li>
+      <li>Navegación ← → para meses anteriores y futuros</li>
+    </ul>
+
+    <h3>🚨 Alertas inteligentes</h3>
+
+    <p>Arriba del calendario aparecen alertas de los próximos 7 días. El color cambia según urgencia:</p>
+
+    <div class="mockup">
+      <div class="mockup-label">Alertas calendario</div>
+      <div style="background: var(--orange-soft); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; gap: 10px;" class="highlight-this">
+        <span style="font-size: 16px;">⏱</span>
+        <div style="font-size: 12px;"><strong style="color: var(--orange);">EN 3 DÍAS (día 17):</strong> Declaración mensual febrero<br><span style="font-size: 11px; opacity: 0.8;">Última fecha para presentar y pagar</span></div>
+      </div>
+      <div style="background: var(--accent-soft); padding: 12px; border-radius: 10px; display: flex; gap: 10px;">
+        <span style="font-size: 16px;">📋</span>
+        <div style="font-size: 12px;"><strong style="color: var(--accent);">EN 5 DÍAS:</strong> Emite REP de cobros de febrero<br><span style="font-size: 11px; opacity: 0.8;">Día 5 — recuerda los Complementos de Pago</span></div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div>El calendario considera <strong>días hábiles</strong>. Si el día 17 cae sábado o domingo, automáticamente mueve la fecha al lunes siguiente.</div>
+    </div>
+
+    <div class="ojo">
+      <span class="ojo-icon">🎉</span>
+      <div>Algunas fechas se mueven cuando hay <strong>días feriados o "puentes" oficiales del SAT</strong>. La app no siempre puede predecir estos cambios extraordinarios. Si el SAT publica una prórroga oficial, esa siempre tiene prioridad sobre lo que diga el calendario de la app.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 12 -->
+<div class="step reveal" id="paso-12">
+  <div class="step-header">
+    <div class="step-number">12</div>
+    <div class="step-title">
+      <div class="step-eyebrow">Seguridad</div>
+      <h2>Respaldar tus datos (importantísimo)</h2>
+      <p>Tus datos viven en este navegador. Si lo borras o cambias de computadora, los pierdes. Por eso hay que respaldar.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="warning">
+      <span class="tip-icon">⚠️</span>
+      <div><strong>Por qué importa:</strong> resicodeo guarda todo localmente en tu navegador (privacidad total). Pero si limpias caché, formateas la PC, o pierdes el dispositivo, no hay backup en la nube. Tu responsabilidad: respaldar manualmente.</div>
+    </div>
+
+    <h3>💾 Cómo respaldar</h3>
+
+    <ol class="fade-in-stagger">
+      <li>Ve a la pestaña <strong class="typing">Ayuda</strong></li>
+      <li>Click en <strong class="click-me" style="display: inline-block; padding: 4px 10px; background: var(--bg-tertiary); border-radius: 6px;">📥 Exportar mis datos</strong></li>
+      <li>Se descarga un archivo <code style="background: var(--bg-tertiary); padding: 2px 6px; border-radius: 4px; font-size: 12px;">resicodeo_2026-03-21.json</code></li>
+      <li>Guárdalo en Google Drive, Dropbox, iCloud, donde quieras</li>
+    </ol>
+
+    <h3>🔔 Recordatorio automático</h3>
+    <p>Si pasan más de 14 días sin respaldar, te aparece este banner morado abajo:</p>
+
+    <div class="mockup">
+      <div class="mockup-label">Recordatorio backup</div>
+      <div style="background: linear-gradient(135deg, var(--accent), var(--accent-hover)); padding: 14px; border-radius: 12px; color: white; display: flex; align-items: center; gap: 12px;" class="shimmer">
+        <span style="font-size: 20px;">📥</span>
+        <div style="flex: 1; font-size: 12px;">
+          <strong>Hace 18 días que no respaldas tus datos</strong><br>
+          <span style="opacity: 0.9; font-size: 11px;">Tus datos viven en este navegador. Si lo borras, los pierdes.</span>
+        </div>
+        <div style="background: white; color: var(--accent); padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px;" class="click-me">Respaldar</div>
+      </div>
+    </div>
+
+    <div class="success">
+      <span class="tip-icon">💡</span>
+      <div><strong>Recomendación:</strong> respalda al menos una vez por semana. Cuando llegue auditoría del SAT (puede pasar hasta 5 años después), tendrás todo. La ley obliga a guardar tus comprobantes 5 años.</div>
+    </div>
+
+    <h3>🔄 Restaurar datos</h3>
+    <p>Si cambias de dispositivo o navegador, abre la app en el nuevo lugar y... actualmente la restauración manual requiere copiar el archivo JSON al localStorage del navegador (tema técnico). En la próxima versión Pro habrá importación visual.</p>
+
+    <div class="ojo">
+      <span class="ojo-icon">📦</span>
+      <div>Tus respaldos contienen información fiscal sensible (RFCs, montos, datos de clientes). Trátalos como tratarías un disco con tu contabilidad: <strong>no los subas a servicios públicos</strong>, no los compartas, y borra los respaldos viejos cuando ya no los necesites.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="step reveal" id="faq">
+  <div class="step-header">
+    <div class="step-number">?</div>
+    <div class="step-title">
+      <div class="step-eyebrow">FAQ</div>
+      <h2>Preguntas frecuentes</h2>
+      <p>Las dudas más comunes de los videógrafos que usan resicodeo.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿La app emite mis facturas?</div>
+      <div class="faq-a">No. resicodeo te <strong>asiste</strong> en la facturación: te pre-llena todos los datos para que copies y pegues en el portal del SAT. La emisión y timbrado siempre lo hace el SAT (gratis en su portal) o un PAC. resicodeo te ahorra el 80% del tiempo de captura.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Mis datos están seguros?</div>
+      <div class="faq-a">Sí. Todo vive en tu navegador (localStorage). No hay servidor, no hay nube, no hay terceros viendo tus cobros. La privacidad es absoluta. La contra: tú eres responsable de respaldar los datos manualmente.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Reemplaza a mi contador?</div>
+      <div class="faq-a">No, y no debe. resicodeo es una herramienta de organización y cálculo. La interpretación legal y la presentación final de tus declaraciones complejas siguen siendo de un Contador Público. Para casos sencillos de RESICO, te puede dejar autosuficiente. Para casos especiales, siempre verifica con un profesional.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Funciona sin internet?</div>
+      <div class="faq-a">Sí, una vez cargada la app funciona offline (excepto el lector de PDF que requiere descargar PDF.js la primera vez). Una vez que la abriste con internet, puedes usarla sin conexión.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Puedo usarla en celular?</div>
+      <div class="faq-a">Sí, está optimizada para móvil. Toda la interfaz se adapta. Tip: en iOS y Android puedes "agregar a pantalla de inicio" desde el navegador para que parezca una app nativa.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Qué pasa si me cambio de RESICO a otro régimen?</div>
+      <div class="faq-a">Los cálculos están específicamente diseñados para RESICO Personas Físicas. Si te cambias a Actividades Profesionales (612) los cálculos no aplican. Si dejas RESICO, lo correcto es exportar tus datos y empezar con otra herramienta.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Y si paso del límite de $3.5M?</div>
+      <div class="faq-a">La app te avisa cuando llevas 80%, 90% y 100% del límite anual. Pasado de eso, debes cambiarte de régimen al siguiente año. resicodeo te avisa pero el cambio lo haces tú en el SAT (antes del 31 de enero).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Soporta moneda extranjera (USD)?</div>
+      <div class="faq-a">Parcialmente. Si seleccionas "Cliente extranjero" la app sabe que el IVA es 0% (exportación). Pero la conversión a MXN debes hacerla manualmente con el tipo de cambio del DOF del día del cobro.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">❓ ¿Si me equivoco en un cobro y el SAT me audita, qué pasa?</div>
+      <div class="faq-a">La responsabilidad final de tus declaraciones siempre es tuya. resicodeo es una herramienta de apoyo — no un seguro contra errores. Por eso recomendamos: <strong>respaldar tus datos seguido</strong>, <strong>verificar los cálculos antes de declarar</strong>, y <strong>guardar tus XMLs originales 5 años</strong>. Si el caso es grande, busca asesoría profesional.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <h2>¿Listo para usar resicodeo?</h2>
+  <p>Ya tienes todas las herramientas. Empieza por crear un cliente o registrar tu primer cobro.</p>
+  <a href="/resicodeo/" class="btn">Abrir la app →</a>
+</div>
+
+<!-- LEGAL FINAL — más completo pero al final, sin atascar -->
+<div class="legal-final">
+  <strong>Aviso de uso · Lo importante en una sola sección</strong><br><br>
+  <strong>resicodeo es una herramienta de organización y cálculo.</strong> No sustituye los servicios de un Contador Público o asesor fiscal autorizado, no presenta declaraciones, no emite facturas y no genera asesoría fiscal personalizada. Los cálculos son orientativos y se basan en la información que tú capturas; la responsabilidad sobre tus declaraciones y el cumplimiento fiscal es exclusivamente tuya.<br><br>
+
+  Las tasas, fórmulas y fechas reflejan reglas vigentes a abril de 2026 según el Código Fiscal de la Federación, Ley del ISR y Ley del IVA. La normativa puede cambiar — si dudas, consulta sat.gob.mx o llama gratis a PRODECON al <strong>55 1205 9000</strong>.<br><br>
+
+  Toda tu información se almacena localmente en tu navegador. Los PDFs de Constancias Fiscales que cargues nunca se envían a internet. Eres responsable de respaldar tus datos y de manejar la información de tus clientes según la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares</strong>.<br><br>
+
+  Para casos complejos (anticipos, devoluciones, retenciones especiales, cambios de régimen, auditorías), audita siempre tu información con un Contador Público Certificado.
+</div>
+
+</div><!-- /container -->
+
+<!-- FLOATING NAV -->
+<div class="floating-nav">
+  <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Inicio">↑</button>
+  <button class="float-btn" onclick="window.print()" title="Imprimir">🖨</button>
+  <a href="/resicodeo/" class="float-btn primary" title="Abrir app">📱</a>
+</div>
+
+<script>
+// Progress bar al hacer scroll
+window.addEventListener('scroll', () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('progress').style.width = scrolled + '%';
+});
+
+// Smooth scroll para anchors
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href === '#') return;
+    e.preventDefault();
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Reveal on scroll: animar pasos al entrar en viewport
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
