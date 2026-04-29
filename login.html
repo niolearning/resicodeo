@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar sesión · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0F1115;
+  --bg-secondary: #1C1F26;
+  --bg-tertiary: #252932;
+  --bg-card: #1C1F26;
+  --accent: #7B6DFF;
+  --accent-hover: #9587FF;
+  --accent-soft: rgba(123, 109, 255, 0.12);
+  --accent-glow: rgba(123, 109, 255, 0.3);
+  --green: #22C55E;
+  --green-soft: rgba(34, 197, 94, 0.12);
+  --red: #F87171;
+  --red-soft: rgba(248, 113, 113, 0.12);
+  --orange: #FB923C;
+  --orange-soft: rgba(251, 146, 60, 0.12);
+  --text-primary: #F5F6FA;
+  --text-secondary: #A0A3B1;
+  --text-tertiary: #6B6F7D;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at top left, rgba(123, 109, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(123, 109, 255, 0.05) 0%, transparent 50%),
+    var(--bg-primary);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  justify-content: center;
+}
+
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.card h1 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.input.error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-soft);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.btn {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+  margin-top: 8px;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.ghost {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+}
+
+.btn.ghost:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--accent);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.toggle-mode {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.toggle-mode a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toggle-mode a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+/* Strength meter */
+.strength-meter {
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--red);
+  border-radius: 100px;
+  transition: all 0.3s;
+}
+
+.strength-label {
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* Alert */
+.alert {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.alert.error {
+  background: var(--red-soft);
+  color: var(--red);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+.alert.success {
+  background: var(--green-soft);
+  color: var(--green);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.alert.info {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid rgba(123, 109, 255, 0.2);
+}
+
+/* Steps indicator */
+.steps {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.step-dot {
+  flex: 1;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 100px;
+  transition: all 0.3s;
+}
+
+.step-dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.step-dot.completed {
+  background: var(--green);
+}
+
+/* Loading spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Hide/show */
+.hidden { display: none !important; }
+
+/* Important note about master password */
+.master-warning {
+  background: var(--orange-soft);
+  border: 1px solid rgba(251, 146, 60, 0.25);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.master-warning strong {
+  color: var(--orange);
+}
+
+footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.6;
+}
+
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+</style>
+</head>
+<body>
+
+<div class="logo">
+  resicodeo<span class="logo-dot"></span>
+</div>
+
+<!-- ============================== -->
+<!-- LOGIN MODE -->
+<!-- ============================== -->
+<div id="login-card" class="card">
+  <h1>Bienvenido de vuelta</h1>
+  <p class="subtitle">Inicia sesión para sincronizar tus datos.</p>
+
+  <div id="login-error" class="alert error hidden"></div>
+
+  <form id="login-form" autocomplete="on">
+    <div class="field">
+      <label for="login-email">Correo electrónico</label>
+      <input type="email" id="login-email" class="input" required autocomplete="email" placeholder="tu@correo.com">
+    </div>
+
+    <div class="field">
+      <label for="login-password">Contraseña</label>
+      <input type="password" id="login-password" class="input" required autocomplete="current-password" placeholder="Tu contraseña de cuenta">
+    </div>
+
+    <button type="submit" class="btn" id="login-btn">
+      Iniciar sesión
+    </button>
+  </form>
+
+  <div class="toggle-mode">
+    ¿Aún no tienes cuenta? <a onclick="showSignup()">Crea una</a>
+  </div>
+  <div class="toggle-mode" style="margin-top: 8px;">
+    <a onclick="showResetPassword()" style="color: var(--text-tertiary);">Olvidé mi contraseña</a>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- SIGNUP MODE -->
+<!-- ============================== -->
+<div id="signup-card" class="card hidden">
+  <div class="steps">
+    <div class="step-dot active" id="signup-step-1"></div>
+    <div class="step-dot" id="signup-step-2"></div>
+  </div>
+
+  <!-- Step 1: cuenta -->
+  <div id="signup-step-1-content">
+    <h1>Crea tu cuenta</h1>
+    <p class="subtitle">Te enviaremos un correo para confirmar.</p>
+
+    <div id="signup-error" class="alert error hidden"></div>
+
+    <form id="signup-form" autocomplete="on">
+      <div class="field">
+        <label for="signup-email">Correo electrónico</label>
+        <input type="email" id="signup-email" class="input" required autocomplete="email" placeholder="tu@correo.com">
+      </div>
+
+      <div class="field">
+        <label for="signup-password">Contraseña</label>
+        <input type="password" id="signup-password" class="input" required autocomplete="new-password" placeholder="Mínimo 8 caracteres" minlength="8">
+        <div class="hint">Esta es la contraseña para acceder a tu cuenta. La puedes recuperar si la olvidas.</div>
+      </div>
+
+      <div class="field">
+        <label for="signup-password-confirm">Confirmar contraseña</label>
+        <input type="password" id="signup-password-confirm" class="input" required minlength="8">
+      </div>
+
+      <button type="submit" class="btn" id="signup-btn">
+        Continuar
+      </button>
+    </form>
+
+    <div class="toggle-mode">
+      ¿Ya tienes cuenta? <a onclick="showLogin()">Inicia sesión</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- MASTER PASSWORD SETUP -->
+<!-- ============================== -->
+<div id="master-card" class="card hidden">
+  <div class="steps">
+    <div class="step-dot completed"></div>
+    <div class="step-dot active"></div>
+  </div>
+
+  <h1>Tu frase secreta</h1>
+  <p class="subtitle">Esta frase cifra tus datos. Nadie más, ni siquiera nosotros, puede leerlos sin ella.</p>
+
+  <div class="master-warning">
+    <strong>⚠️ Importante:</strong> esta frase es <strong>diferente</strong> a la contraseña de tu cuenta.
+    <ul style="margin: 8px 0 0 20px;">
+      <li>No se envía a ningún servidor</li>
+      <li>Si la olvidas, <strong>no podemos recuperarla</strong></li>
+      <li>Se usa para cifrar/descifrar tus datos</li>
+    </ul>
+  </div>
+
+  <div id="master-error" class="alert error hidden"></div>
+
+  <form id="master-form">
+    <div class="field">
+      <label for="master-password">Frase secreta</label>
+      <input type="password" id="master-password" class="input" required placeholder="Mínimo 12 caracteres" minlength="12">
+      <div class="strength-meter">
+        <div class="strength-bar" id="strength-bar"></div>
+      </div>
+      <div class="strength-label" id="strength-label" style="color: var(--text-tertiary);">Empieza a escribir</div>
+    </div>
+
+    <div class="field">
+      <label for="master-confirm">Confirmar frase secreta</label>
+      <input type="password" id="master-confirm" class="input" required minlength="12">
+    </div>
+
+    <div class="alert info">
+      💡 <div><strong>Tip:</strong> usa una frase larga que recuerdes pero difícil de adivinar. Por ejemplo: <em>"Mi-primera-camara-fue-Canon-en-2018"</em></div>
+    </div>
+
+    <button type="submit" class="btn" id="master-btn">
+      Crear frase secreta y continuar
+    </button>
+  </form>
+</div>
+
+<!-- ============================== -->
+<!-- MASTER PASSWORD LOGIN (cuando ya tiene cuenta pero está en otra sesión) -->
+<!-- ============================== -->
+<div id="master-unlock-card" class="card hidden">
+  <h1>Desbloquea tus datos</h1>
+  <p class="subtitle">Ingresa tu frase secreta para descifrar tu información.</p>
+
+  <div id="master-unlock-error" class="alert error hidden"></div>
+
+  <form id="master-unlock-form">
+    <div class="field">
+      <label for="master-unlock-password">Frase secreta</label>
+      <input type="password" id="master-unlock-password" class="input" required placeholder="Tu frase secreta">
+      <div class="hint">Esta es la frase que creaste cuando configuraste tu cuenta, no la contraseña de inicio de sesión.</div>
+    </div>
+
+    <button type="submit" class="btn" id="master-unlock-btn">
+      Desbloquear
+    </button>
+  </form>
+
+  <div class="toggle-mode">
+    <a onclick="signOut()" style="color: var(--text-tertiary);">Cerrar sesión</a>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- RESET PASSWORD -->
+<!-- ============================== -->
+<div id="reset-card" class="card hidden">
+  <h1>Recuperar contraseña</h1>
+  <p class="subtitle">Te enviaremos un enlace para resetear tu contraseña de acceso.</p>
+
+  <div class="alert info" style="margin-bottom: 16px;">
+    💡 Esto solo recupera tu contraseña de <strong>cuenta</strong>. Tu <strong>frase secreta</strong> de cifrado NO se puede recuperar — si la olvidaste, los datos cifrados son irrecuperables.
+  </div>
+
+  <div id="reset-error" class="alert error hidden"></div>
+  <div id="reset-success" class="alert success hidden"></div>
+
+  <form id="reset-form">
+    <div class="field">
+      <label for="reset-email">Correo electrónico</label>
+      <input type="email" id="reset-email" class="input" required placeholder="tu@correo.com">
+    </div>
+
+    <button type="submit" class="btn" id="reset-btn">
+      Enviar enlace de recuperación
+    </button>
+  </form>
+
+  <div class="toggle-mode">
+    <a onclick="showLogin()">Volver a iniciar sesión</a>
+  </div>
+</div>
+
+<footer>
+  Protegido con cifrado de extremo a extremo · <a href="aviso-privacidad.html">Aviso de privacidad</a> · <a href="terminos.html">Términos</a>
+</footer>
+
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Configuración -->
+<script>
+// =============================================
+// CONFIGURACIÓN — Reemplaza con tus credenciales
+// =============================================
+const SUPABASE_URL = 'TU_PROJECT_URL_AQUI';
+const SUPABASE_ANON_KEY = 'TU_ANON_KEY_AQUI';
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
+
+<!-- Módulo de cifrado -->
+<script type="module">
+import {
+  setupNewUser,
+  loginUser,
+  encryptForUpload,
+  decryptFromServer,
+  estimatePasswordStrength
+} from './encryption.js';
+
+// Hacer disponible globalmente para los handlers
+window.crypto_setupNewUser = setupNewUser;
+window.crypto_loginUser = loginUser;
+window.crypto_encryptForUpload = encryptForUpload;
+window.crypto_decryptFromServer = decryptFromServer;
+window.crypto_estimateStrength = estimatePasswordStrength;
+</script>
+
+<script>
+// =============================================
+// NAVEGACIÓN ENTRE VISTAS
+// =============================================
+
+function hideAllCards() {
+  ['login-card', 'signup-card', 'master-card', 'master-unlock-card', 'reset-card']
+    .forEach(id => document.getElementById(id).classList.add('hidden'));
+}
+
+function showLogin() {
+  hideAllCards();
+  document.getElementById('login-card').classList.remove('hidden');
+}
+
+function showSignup() {
+  hideAllCards();
+  document.getElementById('signup-card').classList.remove('hidden');
+}
+
+function showMasterSetup() {
+  hideAllCards();
+  document.getElementById('master-card').classList.remove('hidden');
+}
+
+function showMasterUnlock() {
+  hideAllCards();
+  document.getElementById('master-unlock-card').classList.remove('hidden');
+}
+
+function showResetPassword() {
+  hideAllCards();
+  document.getElementById('reset-card').classList.remove('hidden');
+}
+
+function showError(elementId, message) {
+  const el = document.getElementById(elementId);
+  el.textContent = message;
+  el.classList.remove('hidden');
+}
+
+function hideError(elementId) {
+  document.getElementById(elementId).classList.add('hidden');
+}
+
+function setLoading(btnId, loading, originalText) {
+  const btn = document.getElementById(btnId);
+  if (loading) {
+    btn.disabled = true;
+    btn.dataset.originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="spinner"></span> Cargando...';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = btn.dataset.originalText || originalText;
+  }
+}
+
+// =============================================
+// FORTALEZA DE PASSWORD EN VIVO
+// =============================================
+document.getElementById('master-password').addEventListener('input', (e) => {
+  const password = e.target.value;
+  if (!window.crypto_estimateStrength) return;
+
+  const strength = window.crypto_estimateStrength(password);
+  const bar = document.getElementById('strength-bar');
+  const label = document.getElementById('strength-label');
+
+  bar.style.width = ((strength.score + 1) * 20) + '%';
+  bar.style.background = strength.color;
+  label.textContent = strength.label;
+  label.style.color = strength.color;
+});
+
+// =============================================
+// LOGIN
+// =============================================
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideError('login-error');
+  setLoading('login-btn');
+
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    // Cargar perfil del usuario
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('encryption_salt, encryption_check')
+      .eq('id', data.user.id)
+      .single();
+
+    if (!profile || !profile.encryption_salt) {
+      // Primera vez del usuario, configurar frase secreta
+      sessionStorage.setItem('user_id', data.user.id);
+      showMasterSetup();
+    } else {
+      // Ya tiene frase, pedirla para desbloquear datos
+      sessionStorage.setItem('user_id', data.user.id);
+      sessionStorage.setItem('encryption_salt', profile.encryption_salt);
+      sessionStorage.setItem('encryption_check', profile.encryption_check);
+      showMasterUnlock();
+    }
+  } catch (e) {
+    showError('login-error', e.message || 'Error al iniciar sesión');
+  } finally {
+    setLoading('login-btn', false, 'Iniciar sesión');
+  }
+});
+
+// =============================================
+// SIGNUP
+// =============================================
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideError('signup-error');
+
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirm = document.getElementById('signup-password-confirm').value;
+
+  if (password !== confirm) {
+    showError('signup-error', 'Las contraseñas no coinciden');
+    return;
+  }
+
+  setLoading('signup-btn');
+
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin + '/login.html'
+      }
+    });
+
+    if (error) throw error;
+
+    // Si requiere confirmación de email, mostrarlo
+    if (data.user && !data.session) {
+      alert('¡Listo! Te enviamos un correo para confirmar tu cuenta. Después podrás iniciar sesión.');
+      showLogin();
+    } else if (data.session) {
+      // Auto-login (solo si email confirm está deshabilitado)
+      sessionStorage.setItem('user_id', data.user.id);
+      showMasterSetup();
+    }
+  } catch (e) {
+    showError('signup-error', e.message || 'Error al crear cuenta');
+  } finally {
+    setLoading('signup-btn', false, 'Continuar');
+  }
+});
+
+// =============================================
+// MASTER PASSWORD SETUP (primera vez)
+// =============================================
+document.getElementById('master-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideError('master-error');
+
+  const password = document.getElementById('master-password').value;
+  const confirm = document.getElementById('master-confirm').value;
+
+  if (password !== confirm) {
+    showError('master-error', 'Las frases no coinciden');
+    return;
+  }
+
+  if (password.length < 12) {
+    showError('master-error', 'La frase debe tener al menos 12 caracteres');
+    return;
+  }
+
+  setLoading('master-btn');
+
+  try {
+    const setup = await window.crypto_setupNewUser(password);
+
+    // Guardar salt y check en el perfil
+    const userId = sessionStorage.getItem('user_id');
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        encryption_salt: setup.salt,
+        encryption_check: setup.check
+      })
+      .eq('id', userId);
+
+    if (error) throw error;
+
+    // Guardar la llave EN MEMORIA solo (no en localStorage por seguridad)
+    sessionStorage.setItem('encryption_unlocked', 'true');
+
+    // Redirigir a la app
+    window.location.href = 'index.html';
+  } catch (e) {
+    showError('master-error', e.message || 'Error al configurar frase secreta');
+  } finally {
+    setLoading('master-btn', false, 'Crear frase secreta y continuar');
+  }
+});
+
+// =============================================
+// MASTER PASSWORD UNLOCK (siguientes veces)
+// =============================================
+document.getElementById('master-unlock-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideError('master-unlock-error');
+  setLoading('master-unlock-btn');
+
+  const password = document.getElementById('master-unlock-password').value;
+  const salt = sessionStorage.getItem('encryption_salt');
+  const check = sessionStorage.getItem('encryption_check');
+
+  try {
+    const key = await window.crypto_loginUser(password, salt, check);
+
+    // Llave válida — guardar señal de desbloqueado en sessionStorage
+    // (la llave en sí queda en memoria, no se persiste)
+    sessionStorage.setItem('encryption_unlocked', 'true');
+    window._encryptionKey = key; // Solo en memoria de la sesión
+
+    // Redirigir a la app
+    window.location.href = 'index.html';
+  } catch (e) {
+    showError('master-unlock-error', e.message || 'Frase secreta incorrecta');
+  } finally {
+    setLoading('master-unlock-btn', false, 'Desbloquear');
+  }
+});
+
+// =============================================
+// RESET PASSWORD
+// =============================================
+document.getElementById('reset-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideError('reset-error');
+  document.getElementById('reset-success').classList.add('hidden');
+  setLoading('reset-btn');
+
+  const email = document.getElementById('reset-email').value.trim();
+
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/login.html'
+    });
+
+    if (error) throw error;
+
+    const successEl = document.getElementById('reset-success');
+    successEl.textContent = 'Te enviamos un correo con instrucciones. Revisa tu bandeja de entrada.';
+    successEl.classList.remove('hidden');
+    document.getElementById('reset-form').reset();
+  } catch (e) {
+    showError('reset-error', e.message || 'Error al enviar correo');
+  } finally {
+    setLoading('reset-btn', false, 'Enviar enlace de recuperación');
+  }
+});
+
+// =============================================
+// SIGN OUT
+// =============================================
+async function signOut() {
+  await supabase.auth.signOut();
+  sessionStorage.clear();
+  delete window._encryptionKey;
+  showLogin();
+}
+window.signOut = signOut;
+
+// =============================================
+// VERIFICAR SESIÓN AL CARGAR
+// =============================================
+window.addEventListener('load', async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (session) {
+    // Ya tiene sesión activa, ir a la app o pedir master password
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('encryption_salt, encryption_check')
+      .eq('id', session.user.id)
+      .single();
+
+    if (profile && profile.encryption_salt) {
+      sessionStorage.setItem('user_id', session.user.id);
+      sessionStorage.setItem('encryption_salt', profile.encryption_salt);
+      sessionStorage.setItem('encryption_check', profile.encryption_check);
+
+      // Si la sesión ya tenía la llave desbloqueada, ir directo
+      if (sessionStorage.getItem('encryption_unlocked') === 'true' && window._encryptionKey) {
+        window.location.href = 'index.html';
+      } else {
+        showMasterUnlock();
+      }
+    } else {
+      sessionStorage.setItem('user_id', session.user.id);
+      showMasterSetup();
+    }
+  }
+});
+</script>
+
+</body>
+</html>

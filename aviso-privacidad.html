@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviso de Privacidad · resicodeo</title>
+<style>
+:root {
+  --bg: #0F1115;
+  --bg-card: #1C1F26;
+  --accent: #7B6DFF;
+  --text: #F5F6FA;
+  --text-secondary: #A0A3B1;
+  --text-tertiary: #6B6F7D;
+  --border: rgba(255, 255, 255, 0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding: 40px 24px 80px;
+}
+.container { max-width: 760px; margin: 0 auto; }
+header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.logo-dot { color: var(--accent); }
+h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.meta { color: var(--text-tertiary); font-size: 13px; }
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  color: var(--accent);
+}
+h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 24px 0 8px;
+}
+p { margin-bottom: 14px; color: var(--text-secondary); }
+strong { color: var(--text); font-weight: 700; }
+ul, ol { margin: 0 0 16px 24px; color: var(--text-secondary); }
+li { margin-bottom: 6px; }
+a { color: var(--accent); }
+.summary-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin: 24px 0;
+}
+.summary-box h3 { margin-top: 0; }
+.tl-dr {
+  background: linear-gradient(135deg, rgba(123, 109, 255, 0.1), rgba(123, 109, 255, 0.02));
+  border: 1px solid rgba(123, 109, 255, 0.25);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+.tl-dr h3 { color: var(--accent); margin-top: 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 13px;
+}
+th {
+  background: var(--bg-card);
+  font-weight: 700;
+}
+footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="logo">resicodeo<span class="logo-dot">●</span></div>
+  <h1>Aviso de Privacidad</h1>
+  <div class="meta">Última actualización: ___ de _________ de 2026</div>
+</header>
+
+<div class="tl-dr">
+  <h3>📌 Lo importante en 30 segundos</h3>
+  <ul style="margin-bottom: 0;">
+    <li>Solo guardamos tu <strong>email</strong> y un <strong>blob cifrado</strong> con tus datos</li>
+    <li>El blob está cifrado con tu <strong>frase secreta personal</strong> que nunca enviamos al servidor</li>
+    <li><strong>Ni nosotros ni nadie</strong> puede leer tus datos sin tu frase secreta</li>
+    <li>Si pierdes tu frase, los datos son <strong>irrecuperables</strong> (esa es la parte segura)</li>
+    <li>Tus datos viven en servidores en <strong>Estados Unidos</strong> (Supabase / Vercel)</li>
+    <li>Puedes pedir borrar tu cuenta en cualquier momento</li>
+  </ul>
+</div>
+
+<h2>1. Identidad del Responsable</h2>
+
+<p>
+Este Aviso de Privacidad da cumplimiento a lo establecido en la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)</strong>, su Reglamento, y los Lineamientos del Aviso de Privacidad emitidos por el INAI.
+</p>
+
+<p>
+<strong>[NOMBRE COMPLETO O RAZÓN SOCIAL]</strong> (en adelante, "<strong>resicodeo</strong>" o "el Responsable"), con domicilio en <strong>[DIRECCIÓN COMPLETA]</strong>, México, es responsable del tratamiento de tus datos personales conforme al presente Aviso.
+</p>
+
+<p>Para cualquier asunto relacionado con tus datos personales, contáctanos en: <strong>[email@resicodeo.com]</strong></p>
+
+<h2>2. Datos personales que recabamos</h2>
+
+<p>resicodeo recaba <strong>la mínima información necesaria</strong> para operar el servicio:</p>
+
+<table>
+<thead><tr><th>Dato</th><th>Cuándo lo obtenemos</th><th>Para qué</th></tr></thead>
+<tbody>
+<tr><td><strong>Correo electrónico</strong></td><td>Al registrarte</td><td>Identificarte y enviar comunicaciones del servicio</td></tr>
+<tr><td><strong>Contraseña</strong> (cifrada con bcrypt)</td><td>Al registrarte</td><td>Autenticar tu acceso a la cuenta</td></tr>
+<tr><td><strong>Blob de datos cifrado</strong></td><td>Cuando guardas información en la app</td><td>Almacenar tus datos para sincronizar entre dispositivos</td></tr>
+<tr><td><strong>Dirección IP</strong> y <strong>User-Agent</strong></td><td>En cada inicio de sesión</td><td>Seguridad y prevención de fraudes</td></tr>
+<tr><td><strong>Información de pago</strong></td><td>Solo si compras un plan Pro</td><td>Procesada por Stripe; nosotros no almacenamos datos de tarjetas</td></tr>
+</tbody>
+</table>
+
+<div class="summary-box">
+<h3>🔐 Sobre el "blob de datos cifrado"</h3>
+<p style="margin-bottom: 8px;"><strong>Esto es lo más importante de entender:</strong></p>
+<p>Cuando registras un cobro, gasto o cliente, esa información se cifra <strong>en tu propio dispositivo</strong> con una <strong>frase secreta que solo tú conoces</strong> antes de enviarse a nuestros servidores.</p>
+<p>Lo que llega a nuestros servidores es texto ilegible (un "blob"). Sin tu frase secreta, ese blob es matemáticamente imposible de descifrar — ni por nosotros, ni por hackers, ni por autoridades.</p>
+<p style="margin-bottom: 0;">Técnicamente, esto se llama <strong>arquitectura zero-knowledge</strong>. Nosotros operamos como un casillero ciego: guardamos tu caja sellada pero nunca podemos abrirla.</p>
+</div>
+
+<h2>3. Datos personales sensibles</h2>
+
+<p>
+La información que tú almacenas dentro de la app (RFCs de clientes, montos, datos fiscales) <strong>se considera información sensible</strong> según la LFPDPPP.
+</p>
+
+<p>
+Sin embargo, debido a nuestra arquitectura de cifrado de extremo a extremo, <strong>resicodeo no tiene acceso técnico a estos datos sensibles</strong>. Solo tú, mediante tu frase secreta, puedes acceder a ellos.
+</p>
+
+<p>
+Esto significa que, aunque legalmente eres tú quien introduce los datos, nuestro rol es exclusivamente el de <strong>almacenamiento opaco</strong>.
+</p>
+
+<h2>4. Finalidades del tratamiento</h2>
+
+<h3>4.1 Finalidades primarias (necesarias para el servicio)</h3>
+<ul>
+<li>Crear y administrar tu cuenta</li>
+<li>Almacenar y sincronizar tu información cifrada entre dispositivos</li>
+<li>Autenticar tu identidad al iniciar sesión</li>
+<li>Enviarte comunicaciones esenciales (recuperación de contraseña, alertas de seguridad)</li>
+<li>Procesar pagos si contratas planes de pago</li>
+<li>Cumplir con obligaciones fiscales y legales</li>
+</ul>
+
+<h3>4.2 Finalidades secundarias (puedes oponerte)</h3>
+<ul>
+<li>Enviarte novedades sobre el producto y tips fiscales</li>
+<li>Análisis estadístico anónimo del uso de la plataforma (sin acceder a datos cifrados)</li>
+<li>Investigación y desarrollo de nuevas funciones</li>
+</ul>
+
+<p>Si <strong>no deseas</strong> que tus datos sean tratados para finalidades secundarias, puedes manifestarlo escribiéndonos a <strong>[email@resicodeo.com]</strong>. Esto no afectará tu uso del servicio.</p>
+
+<h2>5. Transferencias de datos</h2>
+
+<p>resicodeo opera utilizando los siguientes proveedores de infraestructura, considerados <strong>"Encargados"</strong> bajo la LFPDPPP:</p>
+
+<table>
+<thead><tr><th>Proveedor</th><th>Función</th><th>Ubicación</th></tr></thead>
+<tbody>
+<tr><td><strong>Supabase Inc.</strong></td><td>Autenticación y almacenamiento de blobs cifrados</td><td>Estados Unidos</td></tr>
+<tr><td><strong>Vercel Inc.</strong></td><td>Hosting de la aplicación</td><td>Estados Unidos</td></tr>
+<tr><td><strong>Resend</strong> (opcional)</td><td>Envío de correos transaccionales</td><td>Estados Unidos</td></tr>
+<tr><td><strong>Stripe</strong> (si pagas Pro)</td><td>Procesamiento de pagos</td><td>Estados Unidos / Irlanda</td></tr>
+</tbody>
+</table>
+
+<p>Todos estos proveedores cumplen con estándares internacionales de privacidad (SOC 2, ISO 27001) y han sido seleccionados por su robustez técnica y compromiso con la privacidad.</p>
+
+<p><strong>resicodeo NO comparte ni vende</strong> tu información personal a terceros con fines comerciales o publicitarios.</p>
+
+<h2>6. Tus derechos ARCO</h2>
+
+<p>Conforme a la LFPDPPP, tienes derecho a ejercer los siguientes derechos en cualquier momento:</p>
+
+<ul>
+<li><strong>Acceso:</strong> conocer qué datos tuyos tenemos</li>
+<li><strong>Rectificación:</strong> corregir datos inexactos</li>
+<li><strong>Cancelación:</strong> eliminar tu cuenta y todos tus datos</li>
+<li><strong>Oposición:</strong> negarte a que usemos tus datos para finalidades secundarias</li>
+</ul>
+
+<p>Para ejercer cualquier derecho, envíanos un correo a <strong>[email@resicodeo.com]</strong> indicando:</p>
+<ol>
+<li>Tu nombre y correo electrónico registrado</li>
+<li>El derecho que deseas ejercer</li>
+<li>Documentos que acrediten tu identidad</li>
+</ol>
+
+<p>Te responderemos en un plazo máximo de <strong>20 días hábiles</strong>.</p>
+
+<h2>7. Conservación de datos</h2>
+
+<ul>
+<li>Mantenemos tu cuenta y datos cifrados mientras esté activa</li>
+<li>Si solicitas eliminar tu cuenta, borraremos tus datos en un plazo máximo de <strong>30 días</strong></li>
+<li>Logs de actividad (IP, user-agent) se conservan por <strong>90 días</strong></li>
+<li>Datos relacionados con pagos: <strong>5 años</strong> por obligaciones fiscales</li>
+</ul>
+
+<h2>8. Seguridad</h2>
+
+<p>Implementamos medidas técnicas y administrativas para proteger tus datos:</p>
+
+<ul>
+<li><strong>Cifrado en tránsito:</strong> TLS 1.3 obligatorio</li>
+<li><strong>Cifrado en reposo:</strong> AES-256-GCM (claves derivadas con PBKDF2 600K iteraciones)</li>
+<li><strong>Autenticación:</strong> bcrypt para passwords + tokens JWT</li>
+<li><strong>Aislamiento:</strong> Row-Level Security a nivel de base de datos</li>
+<li><strong>Backups:</strong> diarios, también cifrados</li>
+<li><strong>Monitoreo:</strong> alertas automáticas de actividad sospechosa</li>
+</ul>
+
+<p>A pesar de estas medidas, ningún sistema es 100% inmune a brechas. Si detectamos una vulneración que afecte tus datos, te lo comunicaremos en un plazo máximo de <strong>72 horas</strong> conforme a la LFPDPPP.</p>
+
+<h2>9. Cookies y tecnologías similares</h2>
+
+<p>resicodeo utiliza:</p>
+<ul>
+<li><strong>Cookies de sesión esenciales</strong> para mantenerte autenticado</li>
+<li><strong>localStorage</strong> para guardar tus datos cifrados localmente</li>
+</ul>
+
+<p><strong>NO usamos:</strong></p>
+<ul>
+<li>Cookies de terceros para publicidad</li>
+<li>Trackers como Google Analytics o Facebook Pixel</li>
+<li>Cualquier tecnología que permita perfilar usuarios</li>
+</ul>
+
+<h2>10. Menores de edad</h2>
+
+<p>
+resicodeo está dirigido a personas mayores de 18 años. No recabamos intencionalmente datos de menores. Si crees que un menor nos ha proporcionado datos, contáctanos para eliminarlos.
+</p>
+
+<h2>11. Cambios a este Aviso</h2>
+
+<p>
+Podemos actualizar este Aviso ocasionalmente. Cualquier cambio relevante te será notificado por correo electrónico al menos <strong>30 días antes</strong> de su entrada en vigor. La fecha de la última actualización aparece al inicio de este documento.
+</p>
+
+<h2>12. INAI</h2>
+
+<p>
+Si consideras que tus derechos no han sido respetados, puedes acudir al Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI):
+</p>
+
+<ul>
+<li>Sitio web: <a href="https://home.inai.org.mx" target="_blank">home.inai.org.mx</a></li>
+<li>Tel: 800 835 4324</li>
+</ul>
+
+<h2>13. Contacto</h2>
+
+<p>Para cualquier duda sobre este Aviso o el tratamiento de tus datos:</p>
+
+<p>
+<strong>Correo:</strong> [email@resicodeo.com]<br>
+<strong>Domicilio:</strong> [Dirección completa]
+</p>
+
+<footer>
+  © 2026 resicodeo · Aviso de Privacidad v1.0
+</footer>
+
+</div>
+
+</body>
+</html>
