@@ -34,6 +34,66 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:16px 2
 .btn-ghost{background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
 .btn-ghost:hover{background:var(--ink2);border-color:var(--purple)}
 .btn-lg{font-size:15px;padding:13px 24px;border-radius:12px}
+.btn-ghost:hover{background:var(--ink2);border-color:var(--purple)}
+.btn-nav-cta {
+  position: relative;
+  background: linear-gradient(135deg, #7B6DFF 0%, #A89BFF 50%, #7B6DFF 100%);
+  background-size: 200% 200%;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  animation: navBtnGradient 3s ease infinite, navBtnPulse 2.5s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(123,109,255,0.5);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn-nav-cta::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: navBtnShimmer 2.5s ease-in-out infinite;
+}
+
+.btn-nav-cta:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 28px rgba(123,109,255,0.55);
+}
+
+.nav-cta-spark {
+  animation: sparkSpin 2s linear infinite;
+  display: inline-block;
+}
+
+@keyframes navBtnGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes navBtnPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(123,109,255,0.5), 0 2px 16px rgba(123,109,255,0.3); }
+  50% { box-shadow: 0 0 0 6px rgba(123,109,255,0), 0 4px 24px rgba(123,109,255,0.5); }
+}
+
+@keyframes navBtnShimmer {
+  0% { left: -100%; }
+  60%, 100% { left: 100%; }
+}
+
+@keyframes sparkSpin {
+  0%, 80%, 100% { transform: rotate(0deg) scale(1); }
+  90% { transform: rotate(20deg) scale(1.3); }
+}
 
 /* HERO */
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:1100px;margin:0 auto;padding:60px 28px 52px}
@@ -102,7 +162,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:16px 2
 @media(max-width:500px){.feats{grid-template-columns:1fr}}
 .feat{background:var(--ink2);border:1px solid var(--border);border-radius:14px;padding:22px;transition:all .22s}
 .feat:hover{border-color:rgba(123,109,255,0.25);background:var(--ink3);transform:translateY(-3px)}
-.feat-icon{font-size:24px;margin-bottom:12px}
+.feat-icon{width:40px;height:40px;background:rgba(123,109,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--purple-light)}
 .feat-title{font-family:var(--display);font-size:14px;font-weight:700;margin-bottom:6px;letter-spacing:-.02em}
 .feat-desc{font-size:12px;color:var(--muted);line-height:1.6}
 
@@ -182,28 +242,36 @@ footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0
   <div class="nav-right">
     <a href="#features" class="nav-link">Funciones</a>
     <a href="#acceso" class="nav-link">Entrar</a>
-    <a href="#oferta" class="btn btn-purple">Curso + 3 meses — $599</a>
+  <a href="#oferta" class="btn btn-nav-cta">
+    <svg class="nav-cta-spark" viewBox="0 0 16 16" fill="none" width="14" height="14"><path d="M8 1v14M1 8h14M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Curso + 3 meses — $599
+  </a>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-content">
-    <div class="hero-tag"><span style="width:5px;height:5px;border-radius:50%;background:var(--purple);display:inline-block"></span> Para videógrafos en RESICO · México</div>
-    <h1>Menos estrés fiscal,<br><em>más historias</em><br>que contar.</h1>
-    <p class="hero-sub">Registra cobros, calcula impuestos, factura en 2 minutos. Todo tu RESICO sin necesitar contador.</p>
+    <div class="hero-tag"><span style="width:5px;height:5px;border-radius:50%;background:var(--purple);display:inline-block"></span> Para creativos freelance en RESICO · México</div>
+    <h1>Aprende a pagar<br>impuestos siendo<br><em>un creativo.</em></h1>
+    <p class="hero-sub">Registra cobros, calcula impuestos, factura en 2 minutos. Todo tu RESICO sin necesitar ser contador.</p>
     <div class="hero-actions">
-      <a href="#acceso" class="btn btn-purple btn-lg">Usar gratis →</a>
+      <a href="#acceso" class="btn btn-purple btn-lg">Probar gratis →</a>
       <a href="#oferta" class="btn btn-ghost btn-lg">Ver oferta del curso</a>
     </div>
-    <div class="hero-proof"><span class="proof-dot"></span> Gratis · Sin registro · Funciona en celular</div>
+    <div class="hero-proof">
+      <span class="proof-dot"></span> Gratis · Sin registro · Funciona en celular
+      <span style="color:var(--muted2);margin:0 4px">·</span>
+      <svg viewBox="0 0 16 16" fill="none" width="12" height="12" style="color:var(--green)"><rect x="2" y="7" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span>Sin recopilar tus datos</span>
+    </div>
   </div>
 
   <div class="hero-visual">
     <div class="app-preview">
       <div class="app-topbar">
         <div class="app-dots"><div class="app-dot"></div><div class="app-dot"></div><div class="app-dot"></div></div>
-        <div class="app-url">niolearning.github.io/resicodeo</div>
+        <div class="app-url">resicodeo.app</div>
       </div>
       <div class="app-body">
         <div class="app-tabs">
@@ -229,16 +297,16 @@ footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0
 <div class="wrap" id="oferta" style="padding-bottom:48px">
   <div class="oferta-card reveal">
     <div>
-      <div class="oferta-badge">⭐ Oferta de lanzamiento</div>
+      <div class="oferta-badge"><svg viewBox="0 0 16 16" fill="none" width="12" height="12"><path d="M8 1L9.8 6.2H15L10.6 9.4L12.4 14.6L8 11.4L3.6 14.6L5.4 9.4L1 6.2H6.2L8 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Oferta de lanzamiento</div>
       <h2 class="oferta-title">Curso RESICO para videógrafos<br>+ 3 meses de app Pro</h2>
       <p class="oferta-desc">Aprende tu RESICO de raíz en 2 días intensivos y sincroniza tus datos entre todos tus dispositivos. Después solo $150/mes si deseas continuar el Pro, sin contratos.</p>
       <div class="oferta-pills">
-        <span class="opill">✓ 9 módulos de RESICO</span>
-        <span class="opill">✓ Casos reales de videógrafos</span>
-        <span class="opill">✓ 3 meses sync en la nube</span>
-        <span class="opill">✓ Todos los dispositivos</span>
-        <span class="opill">✓ Soporte prioritario</span>
-        <span class="opill">✓ Garantía 14 días</span>
+        <span class="opill"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 9 módulos de RESICO</span>
+        <span class="opill"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Casos reales de creativos freelance</span>
+        <span class="opill"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 meses sync en la nube</span>
+        <span class="opill"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Todos los dispositivos</span>
+        <span class="opill"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Soporte prioritario</span>
+        <span class="opill"><svg viewBox="0 0 12 12" fill="none" width="10" height="10"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Sin contratos</span>
       </div>
     </div>
     <div class="price-block">
@@ -246,7 +314,7 @@ footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0
       <div class="price-big"><sup>$</sup>599</div>
       <div class="price-period">MXN · pago único<br>después $150/mes si continúas Pro</div>
       <a href="curso.html" class="oferta-cta" target="_blank">Quiero el curso + Pro →</a>
-      <div class="oferta-guarantee">🔒 Garantía 14 días · Sin contratos</div>
+      <div class="oferta-guarantee"><svg viewBox="0 0 16 16" fill="none" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px"><rect x="3" y="7" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Sin contratos · Cancela cuando quieras</div>
     </div>
   </div>
 </div>
@@ -261,12 +329,12 @@ footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0
     <p class="section-sub">Sin hojas de Excel, sin apps complicadas, sin necesitar ser contador.</p>
   </div>
   <div class="feats reveal">
-    <div class="feat"><div class="feat-icon">💰</div><div class="feat-title">Cobros con estado</div><div class="feat-desc">Pendiente o cobrado — solo los cobrados cuentan para impuestos. Así funciona RESICO.</div></div>
-    <div class="feat"><div class="feat-icon">🧮</div><div class="feat-title">Calculadora de cotización</div><div class="feat-desc">¿Quieres ganar $25K limpios? Te dice exactamente cuánto cobrarle al cliente con IVA y retenciones.</div></div>
-    <div class="feat"><div class="feat-icon">📄</div><div class="feat-title">Asistente de facturación</div><div class="feat-desc">Datos de tu CFDI pre-llenados. Solo copia y pega en el portal SAT. De 10 minutos a 2.</div></div>
-    <div class="feat"><div class="feat-icon">🗓️</div><div class="feat-title">Calendario fiscal</div><div class="feat-desc">Día 5, día 17, fin de mes — alertas automáticas 7 días antes. Nunca más una multa.</div></div>
-    <div class="feat"><div class="feat-icon">📦</div><div class="feat-title">Paquetes de servicios</div><div class="feat-desc">Guarda "Boda Oro $25K" y aplícala en 1 click. Cotiza por WhatsApp en 10 segundos.</div></div>
-    <div class="feat"><div class="feat-icon">🔍</div><div class="feat-title">Importar XML del SAT</div><div class="feat-desc">Arrastra el XML de tu factura y la app lo registra solo. Sin captura manual, sin errores.</div></div>
+    <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div><div class="feat-title">Cobros con estado</div><div class="feat-desc">Pendiente o cobrado — solo los cobrados cuentan para impuestos. Así funciona RESICO.</div></div>
+    <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h.01M8 14h2M12 14h2M16 14h.01M8 18h2M12 18h2M16 18h.01"/></svg></div><div class="feat-title">Calculadora de cotización</div><div class="feat-desc">¿Quieres ganar $25K limpios? Te dice exactamente cuánto cobrarle al cliente con IVA y retenciones.</div></div>
+    <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div><div class="feat-title">Asistente de facturación</div><div class="feat-desc">Datos de tu CFDI pre-llenados. Solo copia y pega en el portal SAT. De 10 minutos a 2.</div></div>
+    <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></div><div class="feat-title">Calendario fiscal</div><div class="feat-desc">Día 5, día 17, fin de mes — alertas automáticas 7 días antes. Nunca más una multa.</div></div>
+    <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg></div><div class="feat-title">Paquetes de servicios</div><div class="feat-desc">Guarda "Boda Oro $25K" y aplícala en 1 click. Cotiza por WhatsApp en 10 segundos.</div></div>
+    <div class="feat"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg></div><div class="feat-title">Importar XML del SAT</div><div class="feat-desc">Arrastra el XML de tu factura y la app lo registra solo. Sin captura manual, sin errores.</div></div>
   </div>
 </div>
 
@@ -290,15 +358,38 @@ footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0
 
 <!-- LOGIN -->
 <div class="section" id="acceso">
-  <div class="login-grid">
+  
+  <!-- TRUST BAR -->
+  <div style="background:rgba(29,185,84,0.06);border:1px solid rgba(29,185,84,0.15);border-radius:14px;padding:20px 28px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;margin-bottom:48px">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="var(--green)" stroke-width="1.4" stroke-linecap="round" width="16" height="16"><rect x="2" y="9" width="16" height="10" rx="1.5"/><path d="M6 9V6a4 4 0 018 0v3"/></svg>
+      <strong style="color:var(--white)">Cero recopilación de datos</strong>
+    </div>
+    <div style="width:1px;height:20px;background:rgba(255,255,255,0.08)"></div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="var(--green)" stroke-width="1.4" stroke-linecap="round" width="16" height="16"><path d="M10 2l2.4 5 5.6.8-4 3.9.9 5.5L10 14.5l-4.9 2.7.9-5.5-4-3.9 5.6-.8z"/></svg>
+      <strong style="color:var(--white)">Sin e.firma ni CSD</strong>
+    </div>
+    <div style="width:1px;height:20px;background:rgba(255,255,255,0.08)"></div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="var(--green)" stroke-width="1.4" stroke-linecap="round" width="16" height="16"><path d="M10 18s7-3.5 7-8.75V4.5L10 2 3 4.5v4.75C3 14.5 10 18 10 18z"/></svg>
+      <strong style="color:var(--white)">Más seguro que otros softwares</strong>
+    </div>
+    <div style="width:1px;height:20px;background:rgba(255,255,255,0.08)"></div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)">
+      <svg viewBox="0 0 20 20" fill="none" stroke="var(--green)" stroke-width="1.4" stroke-linecap="round" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 3"/></svg>
+      <strong style="color:var(--white)">Funciona sin internet</strong>
+    </div>
+  </div>
+<div class="login-grid">
     <div class="reveal">
       <div class="section-label">Acceso</div>
       <h2 class="section-title">Empieza ahora,<br>sin complicaciones</h2>
       <p class="section-sub">Crea tu cuenta o entra directo a la app sin registrarte. Gratis.</p>
       <div class="login-perks">
-        <div class="lperk"><div class="lperk-icon">🔒</div><span>Cifrado de extremo a extremo — ni nosotros leemos tus datos</span></div>
-        <div class="lperk"><div class="lperk-icon">📱</div><span>Funciona en celular, tablet y computadora</span></div>
-        <div class="lperk"><div class="lperk-icon">⚡</div><span>Sin internet una vez cargada. Tus datos siempre disponibles.</span></div>
+        <div class="lperk"><div class="lperk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><span>Cifrado de extremo a extremo — ni nosotros leemos tus datos</span></div>
+        <div class="lperk"><div class="lperk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div><span>Funciona en celular, tablet y computadora</span></div>
+        <div class="lperk"><div class="lperk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="14" height="14"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><span>Sin internet una vez cargada. Tus datos siempre disponibles.</span></div>
       </div>
     </div>
     <div class="reveal">
@@ -313,7 +404,7 @@ footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0
           <div class="field"><label>Contraseña</label><input type="password" id="lPass" placeholder="Tu contraseña" autocomplete="current-password"></div>
           <button class="submit-btn" onclick="doLogin()">Iniciar sesión</button>
           <div class="or-div">o entra sin cuenta</div>
-          <a href="index.html" class="direct-btn">Usar la app sin registrarse →</a>
+          <a href="index.html" class="direct-btn">Probar gratis sin registrarse →</a>
           <div class="form-note"><a href="#" onclick="doReset()">Olvidé mi contraseña</a></div>
         </div>
         <div id="pSignup" style="display:none">
