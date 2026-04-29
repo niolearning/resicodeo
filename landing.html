@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>resicodeo — Control fiscal para videógrafos</title>
+<meta name="description" content="La herramienta fiscal para videógrafos mexicanos en RESICO. Calcula impuestos, factura en minutos, nunca te pierdas una fecha del SAT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0D0E12;--ink2:#1A1C24;--ink3:#272A35;
+  --purple:#7B6DFF;--purple-light:#A89BFF;--purple-glow:rgba(123,109,255,0.18);
+  --green:#1DB954;--amber:#F5A623;
+  --white:#F8F8FC;--muted:#8A8FA8;--muted2:#4A4F66;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+  --display:'Bricolage Grotesque',sans-serif;--body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;position:sticky;top:0;z-index:100;background:rgba(13,14,18,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--display);font-size:20px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:5px}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--purple);box-shadow:0 0 10px var(--purple);animation:glow 2.5s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 8px var(--purple)}50%{box-shadow:0 0 20px var(--purple),0 0 40px var(--purple-glow)}}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-link{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;padding:7px 12px;border-radius:8px;transition:all .18s}
+.nav-link:hover{color:var(--white);background:var(--ink3)}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--body);font-weight:600;font-size:14px;padding:9px 18px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;white-space:nowrap}
+.btn-purple{background:var(--purple);color:white;box-shadow:0 2px 16px rgba(123,109,255,0.3)}
+.btn-purple:hover{background:var(--purple-light);transform:translateY(-1px);box-shadow:0 6px 24px rgba(123,109,255,0.45)}
+.btn-ghost{background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--ink2);border-color:var(--purple)}
+.btn-lg{font-size:15px;padding:13px 24px;border-radius:12px}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:1100px;margin:0 auto;padding:60px 28px 52px}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:44px 20px 36px}.hero-visual{display:none}}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--purple-light);background:rgba(123,109,255,0.1);border:1px solid rgba(123,109,255,0.2);border-radius:100px;padding:5px 12px;margin-bottom:18px}
+.hero h1{font-family:var(--display);font-size:clamp(36px,5.5vw,62px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:16px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--purple) 0%,var(--purple-light) 60%,#C4B5FD 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);line-height:1.65;margin-bottom:28px;max-width:440px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.hero-proof{font-size:12px;color:var(--muted2);display:flex;align-items:center;gap:8px}
+.proof-dot{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+/* APP PREVIEW */
+.app-preview{background:var(--ink2);border:1px solid var(--border2);border-radius:16px;overflow:hidden;box-shadow:0 24px 56px rgba(0,0,0,0.5),0 0 0 1px rgba(123,109,255,0.1)}
+.app-topbar{background:var(--ink3);padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.app-dots{display:flex;gap:5px}
+.app-dot{width:9px;height:9px;border-radius:50%}
+.app-dot:nth-child(1){background:#FF5F57}.app-dot:nth-child(2){background:#FFBD2E}.app-dot:nth-child(3){background:#28CA42}
+.app-url{flex:1;background:var(--ink2);border-radius:5px;padding:4px 10px;font-size:10px;color:var(--muted2)}
+.app-body{padding:14px}
+.app-tabs{display:flex;gap:3px;background:var(--ink);border-radius:7px;padding:3px;margin-bottom:12px;overflow-x:auto}
+.app-tab{padding:5px 9px;border-radius:5px;font-size:9px;font-weight:600;color:var(--muted2);white-space:nowrap}
+.app-tab.on{background:var(--purple);color:white}
+.app-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.app-stat{background:var(--ink);border-radius:9px;padding:10px;border-left:3px solid transparent}
+.app-stat.g{border-color:var(--green)}.app-stat.p{border-color:var(--purple)}.app-stat.a{border-color:var(--amber)}.app-stat.r{border-color:#F87171}
+.app-stat-label{font-size:8px;color:var(--muted2);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.app-stat-val{font-family:var(--display);font-size:16px;font-weight:800}
+.app-stat.g .app-stat-val{color:var(--green)}.app-stat.p .app-stat-val{color:var(--purple-light)}.app-stat.a .app-stat-val{color:var(--amber)}.app-stat.r .app-stat-val{color:#F87171}
+.app-bars{display:flex;align-items:flex-end;gap:4px;height:48px;background:var(--ink);border-radius:9px;padding:8px}
+.app-bar{flex:1;border-radius:3px 3px 0 0;background:rgba(123,109,255,0.15)}
+.app-bar.hi{background:var(--purple)}
+
+/* OFERTA */
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+.oferta-card{background:linear-gradient(135deg,#1A1545 0%,#1E1B4B 40%,#0D0E12 100%);border:1px solid rgba(123,109,255,0.3);border-radius:22px;padding:36px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(123,109,255,0.12),inset 0 1px 0 rgba(255,255,255,0.05)}
+@media(max-width:680px){.oferta-card{grid-template-columns:1fr}}
+.oferta-card::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(123,109,255,0.2) 0%,transparent 70%);pointer-events:none}
+.oferta-badge{display:inline-flex;align-items:center;gap:6px;background:var(--amber);color:#1A0A00;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:14px}
+.oferta-title{font-family:var(--display);font-size:clamp(22px,3.5vw,36px);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:12px}
+.oferta-desc{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:18px;max-width:500px}
+.oferta-pills{display:flex;flex-wrap:wrap;gap:7px}
+.opill{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 11px;font-size:12px;font-weight:500}
+.price-block{text-align:center;min-width:170px}
+.price-before{font-size:12px;color:var(--muted2);text-decoration:line-through;margin-bottom:3px}
+.price-big{font-family:var(--display);font-size:54px;font-weight:800;letter-spacing:-0.04em;line-height:1;margin-bottom:2px}
+.price-big sup{font-size:20px;vertical-align:super}
+.price-period{font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.4}
+.oferta-cta{width:100%;background:var(--purple);color:white;border:none;padding:13px;border-radius:11px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .18s;box-shadow:0 3px 18px rgba(123,109,255,0.4);margin-bottom:8px}
+.oferta-cta:hover{background:var(--purple-light);transform:translateY(-2px);box-shadow:0 7px 26px rgba(123,109,255,0.55)}
+.oferta-guarantee{font-size:10px;color:var(--muted2);text-align:center}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);max-width:1100px;margin:0 auto}
+
+/* SECTION */
+.section{max-width:1100px;margin:0 auto;padding:52px 28px}
+@media(max-width:800px){.section{padding:36px 20px}}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple-light);margin-bottom:10px}
+.section-title{font-family:var(--display);font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-0.04em;line-height:1.1;margin-bottom:12px}
+.section-sub{font-size:15px;color:var(--muted);line-height:1.6;max-width:460px;margin-bottom:36px}
+
+/* FEATURES */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:800px){.feats{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.feats{grid-template-columns:1fr}}
+.feat{background:var(--ink2);border:1px solid var(--border);border-radius:14px;padding:22px;transition:all .22s}
+.feat:hover{border-color:rgba(123,109,255,0.25);background:var(--ink3);transform:translateY(-3px)}
+.feat-icon{font-size:24px;margin-bottom:12px}
+.feat-title{font-family:var(--display);font-size:14px;font-weight:700;margin-bottom:6px;letter-spacing:-.02em}
+.feat-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+@media(max-width:700px){.steps{grid-template-columns:1fr 1fr}}
+.steps::before{content:'';position:absolute;top:21px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(123,109,255,0.3),transparent)}
+.step-item{text-align:center;padding:0 10px}
+.step-num{width:42px;height:42px;border-radius:50%;background:var(--ink3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:15px;font-weight:800;color:var(--purple-light);margin:0 auto 14px;position:relative;z-index:1}
+.step-title{font-family:var(--display);font-size:13px;font-weight:700;margin-bottom:5px}
+.step-desc{font-size:11px;color:var(--muted);line-height:1.55}
+
+/* LOGIN */
+.login-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+@media(max-width:800px){.login-grid{grid-template-columns:1fr;gap:32px}}
+.login-perks{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.lperk{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted)}
+.lperk-icon{width:26px;height:26px;border-radius:7px;background:rgba(123,109,255,0.1);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.login-card{background:var(--ink2);border:1px solid var(--border2);border-radius:18px;padding:28px;box-shadow:0 16px 40px rgba(0,0,0,0.3)}
+.login-tabs{display:flex;background:var(--ink);border-radius:9px;padding:3px;margin-bottom:20px}
+.ltab{flex:1;padding:8px;text-align:center;font-size:13px;font-weight:600;border-radius:7px;cursor:pointer;transition:all .18s;color:var(--muted);border:none;background:transparent;font-family:var(--body)}
+.ltab.on{background:var(--purple);color:white}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:10px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.field input{width:100%;background:var(--ink);border:1px solid var(--border2);border-radius:9px;padding:11px 13px;color:var(--white);font-family:var(--body);font-size:14px;transition:all .18s}
+.field input:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(123,109,255,0.1)}
+.field input::placeholder{color:var(--muted2)}
+.submit-btn{width:100%;background:var(--purple);color:white;border:none;padding:12px;border-radius:9px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;transition:all .18s;margin-top:4px;box-shadow:0 3px 14px rgba(123,109,255,0.3)}
+.submit-btn:hover{background:var(--purple-light);transform:translateY(-1px)}
+.or-div{text-align:center;font-size:11px;color:var(--muted2);position:relative;margin:12px 0}
+.or-div::before,.or-div::after{content:'';position:absolute;top:50%;width:calc(50% - 20px);height:1px;background:var(--border)}
+.or-div::before{left:0}.or-div::after{right:0}
+.direct-btn{width:100%;background:var(--ink3);color:var(--white);border:1px solid var(--border2);padding:12px;border-radius:9px;font-family:var(--body);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .18s}
+.direct-btn:hover{border-color:var(--purple);background:rgba(123,109,255,0.06)}
+.form-note{font-size:11px;color:var(--muted2);text-align:center;margin-top:10px;line-height:1.5}
+.form-note a{color:var(--purple-light);text-decoration:none}
+.alert-msg{padding:9px 13px;border-radius:8px;font-size:12px;margin-bottom:12px;display:none}
+.alert-msg.err{background:rgba(248,113,113,0.1);color:#F87171;border:1px solid rgba(248,113,113,0.2);display:block}
+.alert-msg.ok{background:rgba(29,185,84,0.1);color:var(--green);border:1px solid rgba(29,185,84,0.2);display:block}
+
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:700px){.faq-grid{grid-template-columns:1fr}}
+.faq-item{background:var(--ink2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:rgba(123,109,255,0.2)}
+.faq-q{width:100%;text-align:left;background:none;border:none;color:var(--white);font-family:var(--body);font-size:13px;font-weight:600;padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.faq-plus{width:18px;height:18px;border-radius:50%;background:var(--ink3);color:var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .2s}
+.faq-item.open .faq-plus{background:var(--purple);color:white;transform:rotate(45deg)}
+.faq-a{font-size:12px;color:var(--muted);line-height:1.65;max-height:0;overflow:hidden;transition:all .3s;padding:0 18px}
+.faq-item.open .faq-a{max-height:160px;padding:0 18px 16px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:18px}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.footer-link{color:var(--muted2);font-size:12px;text-decoration:none;transition:color .18s}
+.footer-link:hover{color:var(--white)}
+.footer-legal{font-size:11px;color:var(--muted2);line-height:1.6;border-top:1px solid var(--border);padding-top:18px}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s cubic-bezier(.25,.46,.45,.94)}
+.reveal.in{opacity:1;transform:translateY(0)}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero-content>*{opacity:0;animation:slideIn .55s ease forwards}
+.hero-content>*:nth-child(1){animation-delay:.05s}
+.hero-content>*:nth-child(2){animation-delay:.15s}
+.hero-content>*:nth-child(3){animation-delay:.25s}
+.hero-content>*:nth-child(4){animation-delay:.35s}
+.hero-content>*:nth-child(5){animation-delay:.45s}
+.hero-visual{opacity:0;animation:slideIn .7s ease .3s forwards}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">Funciones</a>
+    <a href="#acceso" class="nav-link">Entrar</a>
+    <a href="#oferta" class="btn btn-purple">Curso + 3 meses — $599</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><span style="width:5px;height:5px;border-radius:50%;background:var(--purple);display:inline-block"></span> Para videógrafos en RESICO · México</div>
+    <h1>Menos estrés fiscal,<br><em>más historias</em><br>que contar.</h1>
+    <p class="hero-sub">Registra cobros, calcula impuestos, factura en 2 minutos. Todo tu RESICO sin necesitar contador.</p>
+    <div class="hero-actions">
+      <a href="#acceso" class="btn btn-purple btn-lg">Usar gratis →</a>
+      <a href="#oferta" class="btn btn-ghost btn-lg">Ver oferta del curso</a>
+    </div>
+    <div class="hero-proof"><span class="proof-dot"></span> Gratis · Sin registro · Funciona en celular</div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="app-preview">
+      <div class="app-topbar">
+        <div class="app-dots"><div class="app-dot"></div><div class="app-dot"></div><div class="app-dot"></div></div>
+        <div class="app-url">niolearning.github.io/resicodeo</div>
+      </div>
+      <div class="app-body">
+        <div class="app-tabs">
+          <div class="app-tab on">Resumen</div><div class="app-tab">Cobros</div><div class="app-tab">Gastos</div><div class="app-tab">Clientes</div><div class="app-tab">Calendario</div>
+        </div>
+        <div class="app-stats">
+          <div class="app-stat g"><div class="app-stat-label">Ingresos abril</div><div class="app-stat-val">$82,400</div></div>
+          <div class="app-stat a"><div class="app-stat-label">Gastos</div><div class="app-stat-val">$9,200</div></div>
+          <div class="app-stat p"><div class="app-stat-label">Utilidad</div><div class="app-stat-val">$73,200</div></div>
+          <div class="app-stat r"><div class="app-stat-label">A pagar SAT</div><div class="app-stat-val">$1,464</div></div>
+        </div>
+        <div class="app-bars">
+          <div class="app-bar" style="height:38%"></div><div class="app-bar" style="height:55%"></div>
+          <div class="app-bar" style="height:30%"></div><div class="app-bar" style="height:72%"></div>
+          <div class="app-bar" style="height:48%"></div><div class="app-bar hi" style="height:88%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OFERTA -->
+<div class="wrap" id="oferta" style="padding-bottom:48px">
+  <div class="oferta-card reveal">
+    <div>
+      <div class="oferta-badge">⭐ Oferta de lanzamiento</div>
+      <h2 class="oferta-title">Curso RESICO para videógrafos<br>+ 3 meses de app Pro</h2>
+      <p class="oferta-desc">Aprende tu RESICO de raíz en 2 días intensivos y sincroniza tus datos entre todos tus dispositivos. Después solo $150/mes si deseas continuar el Pro, sin contratos.</p>
+      <div class="oferta-pills">
+        <span class="opill">✓ 9 módulos de RESICO</span>
+        <span class="opill">✓ Casos reales de videógrafos</span>
+        <span class="opill">✓ 3 meses sync en la nube</span>
+        <span class="opill">✓ Todos los dispositivos</span>
+        <span class="opill">✓ Soporte prioritario</span>
+        <span class="opill">✓ Garantía 14 días</span>
+      </div>
+    </div>
+    <div class="price-block">
+      <div class="price-before">Antes $997</div>
+      <div class="price-big"><sup>$</sup>599</div>
+      <div class="price-period">MXN · pago único<br>después $150/mes si continúas Pro</div>
+      <a href="curso.html" class="oferta-cta" target="_blank">Quiero el curso + Pro →</a>
+      <div class="oferta-guarantee">🔒 Garantía 14 días · Sin contratos</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<div class="section" id="features">
+  <div class="reveal">
+    <div class="section-label">Funciones</div>
+    <h2 class="section-title">Todo lo que un videógrafo<br>necesita para su RESICO</h2>
+    <p class="section-sub">Sin hojas de Excel, sin apps complicadas, sin necesitar ser contador.</p>
+  </div>
+  <div class="feats reveal">
+    <div class="feat"><div class="feat-icon">💰</div><div class="feat-title">Cobros con estado</div><div class="feat-desc">Pendiente o cobrado — solo los cobrados cuentan para impuestos. Así funciona RESICO.</div></div>
+    <div class="feat"><div class="feat-icon">🧮</div><div class="feat-title">Calculadora de cotización</div><div class="feat-desc">¿Quieres ganar $25K limpios? Te dice exactamente cuánto cobrarle al cliente con IVA y retenciones.</div></div>
+    <div class="feat"><div class="feat-icon">📄</div><div class="feat-title">Asistente de facturación</div><div class="feat-desc">Datos de tu CFDI pre-llenados. Solo copia y pega en el portal SAT. De 10 minutos a 2.</div></div>
+    <div class="feat"><div class="feat-icon">🗓️</div><div class="feat-title">Calendario fiscal</div><div class="feat-desc">Día 5, día 17, fin de mes — alertas automáticas 7 días antes. Nunca más una multa.</div></div>
+    <div class="feat"><div class="feat-icon">📦</div><div class="feat-title">Paquetes de servicios</div><div class="feat-desc">Guarda "Boda Oro $25K" y aplícala en 1 click. Cotiza por WhatsApp en 10 segundos.</div></div>
+    <div class="feat"><div class="feat-icon">🔍</div><div class="feat-title">Importar XML del SAT</div><div class="feat-desc">Arrastra el XML de tu factura y la app lo registra solo. Sin captura manual, sin errores.</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CÓMO FUNCIONA -->
+<div class="section">
+  <div class="reveal" style="text-align:center;margin-bottom:36px">
+    <div class="section-label">Cómo funciona</div>
+    <h2 class="section-title">3 minutos al día,<br>cero sorpresas al mes</h2>
+  </div>
+  <div class="steps reveal">
+    <div class="step-item"><div class="step-num">1</div><div class="step-title">Registra cobros</div><div class="step-desc">Cada trabajo cobrado, 30 segundos en la app.</div></div>
+    <div class="step-item"><div class="step-num">2</div><div class="step-title">Registra gastos</div><div class="step-desc">El IVA de tus facturas de proveedor te lo regresa el SAT.</div></div>
+    <div class="step-item"><div class="step-num">3</div><div class="step-title">Ve tu resumen</div><div class="step-desc">Cuánto ganaste y cuánto le debes al SAT. Siempre claro.</div></div>
+    <div class="step-item"><div class="step-num">4</div><div class="step-title">Declara tranquilo</div><div class="step-desc">El día 17 ya sabes qué pagar. Sin carreras.</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- LOGIN -->
+<div class="section" id="acceso">
+  <div class="login-grid">
+    <div class="reveal">
+      <div class="section-label">Acceso</div>
+      <h2 class="section-title">Empieza ahora,<br>sin complicaciones</h2>
+      <p class="section-sub">Crea tu cuenta o entra directo a la app sin registrarte. Gratis.</p>
+      <div class="login-perks">
+        <div class="lperk"><div class="lperk-icon">🔒</div><span>Cifrado de extremo a extremo — ni nosotros leemos tus datos</span></div>
+        <div class="lperk"><div class="lperk-icon">📱</div><span>Funciona en celular, tablet y computadora</span></div>
+        <div class="lperk"><div class="lperk-icon">⚡</div><span>Sin internet una vez cargada. Tus datos siempre disponibles.</span></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="login-card">
+        <div class="login-tabs">
+          <button class="ltab on" onclick="switchTab('login',this)">Iniciar sesión</button>
+          <button class="ltab" onclick="switchTab('signup',this)">Crear cuenta</button>
+        </div>
+        <div id="alert" class="alert-msg"></div>
+        <div id="pLogin">
+          <div class="field"><label>Correo electrónico</label><input type="email" id="lEmail" placeholder="tu@correo.com" autocomplete="email"></div>
+          <div class="field"><label>Contraseña</label><input type="password" id="lPass" placeholder="Tu contraseña" autocomplete="current-password"></div>
+          <button class="submit-btn" onclick="doLogin()">Iniciar sesión</button>
+          <div class="or-div">o entra sin cuenta</div>
+          <a href="index.html" class="direct-btn">Usar la app sin registrarse →</a>
+          <div class="form-note"><a href="#" onclick="doReset()">Olvidé mi contraseña</a></div>
+        </div>
+        <div id="pSignup" style="display:none">
+          <div class="field"><label>Correo electrónico</label><input type="email" id="sEmail" placeholder="tu@correo.com" autocomplete="email"></div>
+          <div class="field"><label>Contraseña</label><input type="password" id="sPass" placeholder="Mínimo 8 caracteres" autocomplete="new-password"></div>
+          <div class="field"><label>Confirmar contraseña</label><input type="password" id="sPass2" placeholder="Repite tu contraseña"></div>
+          <button class="submit-btn" onclick="doSignup()">Crear cuenta gratis</button>
+          <div class="form-note">Al registrarte aceptas los <a href="terminos.html" target="_blank">Términos</a> y <a href="aviso-privacidad.html" target="_blank">Aviso de privacidad</a>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<div class="section">
+  <div class="reveal" style="text-align:center;margin-bottom:32px">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Preguntas frecuentes</h2>
+  </div>
+  <div class="faq-grid reveal">
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Necesito ser contador para usarla?<span class="faq-plus">+</span></button><div class="faq-a">Para nada. Está diseñada para videógrafos y creativos, no para contadores. Si sabes usar WhatsApp, puedes usar resicodeo.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿La app emite mis facturas?<span class="faq-plus">+</span></button><div class="faq-a">No directamente — el timbrado lo hace el SAT. La app te prepara todos los datos para que en el portal solo copies y pegues. De 10 minutos a 2.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Mis datos están seguros?<span class="faq-plus">+</span></button><div class="faq-a">Sí. La app funciona localmente en tu dispositivo. Con el plan Pro los datos se sincronizan cifrados — ni nosotros podemos leerlos. Mismo modelo que 1Password.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Sirve si cobro en USD?<span class="faq-plus">+</span></button><div class="faq-a">Sí. Al seleccionar "Cliente extranjero" la app calcula IVA al 0% automáticamente y te guía con el método correcto de facturación.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si paso de $3.5M anuales?<span class="faq-plus">+</span></button><div class="faq-a">La app te avisa al 80%, 90% y 100% del límite. Si lo superas, debes cambiarte de régimen — resicodeo te alerta pero el cambio lo haces tú en el SAT.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Puedo cancelar el Pro cuando quiera?<span class="faq-plus">+</span></button><div class="faq-a">Sí, cuando quieras. Sin penalización. El acceso Pro dura hasta el fin del período pagado y tus datos siempre son tuyos para exportar.</div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <a href="#" class="logo">resicodeo<span class="logo-dot"></span></a>
+    <div class="footer-links">
+      <a href="guia.html" class="footer-link" target="_blank">Guía de uso</a>
+      <a href="curso.html" class="footer-link" target="_blank">Curso RESICO</a>
+      <a href="aviso-privacidad.html" class="footer-link" target="_blank">Aviso de privacidad</a>
+      <a href="terminos.html" class="footer-link" target="_blank">Términos</a>
+    </div>
+  </div>
+  <div class="footer-legal">resicodeo es una herramienta de organización y cálculo. No sustituye los servicios de un Contador Público certificado ni constituye asesoría fiscal profesional. Los cálculos son orientativos — la responsabilidad sobre tus declaraciones es exclusivamente tuya. Dudas fiscales: PRODECON 55 1205 9000 (gratis).</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SB_URL='TU_URL_AQUI',SB_KEY='TU_KEY_AQUI';
+let sb=null;
+try{if(SB_URL!=='TU_URL_AQUI')sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}
+
+function switchTab(tab,el){
+  document.querySelectorAll('.ltab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('pLogin').style.display=tab==='login'?'block':'none';
+  document.getElementById('pSignup').style.display=tab==='signup'?'block':'none';
+  clearAlert();
+}
+
+function setAlert(msg,type){const el=document.getElementById('alert');el.textContent=msg;el.className='alert-msg '+type}
+function clearAlert(){document.getElementById('alert').className='alert-msg'}
+
+async function doLogin(){
+  const email=document.getElementById('lEmail').value.trim(),pass=document.getElementById('lPass').value;
+  if(!email||!pass)return setAlert('Ingresa tu correo y contraseña','err');
+  if(!sb){window.location.href='index.html';return}
+  try{const{error}=await sb.auth.signInWithPassword({email,password:pass});if(error)throw error;window.location.href='login.html'}
+  catch(e){setAlert('Correo o contraseña incorrectos','err')}
+}
+
+async function doSignup(){
+  const email=document.getElementById('sEmail').value.trim(),pass=document.getElementById('sPass').value,pass2=document.getElementById('sPass2').value;
+  if(!email||!pass)return setAlert('Completa todos los campos','err');
+  if(pass.length<8)return setAlert('La contraseña debe tener al menos 8 caracteres','err');
+  if(pass!==pass2)return setAlert('Las contraseñas no coinciden','err');
+  if(!sb)return setAlert('Configuración de cuentas pendiente. Usa la app sin cuenta.','err');
+  try{const{error}=await sb.auth.signUp({email,password:pass});if(error)throw error;setAlert('¡Listo! Revisa tu correo para confirmar tu cuenta.','ok')}
+  catch(e){setAlert(e.message||'Error al crear cuenta','err')}
+}
+
+function doReset(){
+  const email=document.getElementById('lEmail').value.trim();
+  if(!email)return setAlert('Ingresa tu correo primero','err');
+  if(!sb)return;
+  sb.auth.resetPasswordForEmail(email).then(()=>setAlert('Enlace de recuperación enviado','ok')).catch(e=>setAlert(e.message,'err'));
+}
+
+function toggleFaq(btn){
+  const item=btn.parentElement,wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen)item.classList.add('open');
+}
+
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
