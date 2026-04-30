@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Copywriters y Redactores · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#10B981;--accent2:#6EE7B7;--accent-glow:rgba(16,185,129,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Copywriting & Contenido</div>
+  <h1><em>RESICO para Copywriters y Redactores</em></h1>
+  <p class="hero-sub">Maneja tu régimen fiscal con ejemplos reales de proyectos de contenido, copywriting, ghostwriting y estrategia de contenidos. Para quienes viven de las palabras.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar servicios de escritura</div>
+    <div class="toc-item"><span class="toc-num">3</span>Contratos y entregas por partes</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles del copywriter</div>
+    <div class="toc-item"><span class="toc-num">5</span>Retainers y contenido recurrente</div>
+    <div class="toc-item"><span class="toc-num">6</span>Clientes extranjeros y plataformas de contenido</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales del copywriter</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Claves SAT y tipos de ingreso del escritor freelance</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad ante el SAT</h3>
+<ul>
+  <li><strong>Copywriter / redactor:</strong> Servicios de redacción (80111604)</li>
+  <li><strong>Estratega de contenidos:</strong> Servicios de consultoría en marketing (80141600)</li>
+  <li><strong>Ghostwriter:</strong> Servicios de redacción (80111604)</li>
+  <li><strong>SEO Copywriter:</strong> Servicios de optimización web (81112101)</li>
+  <li><strong>Traductor:</strong> Servicios de traducción (80111604)</li>
+</ul>
+
+<h3>Tipos de ingreso del copywriter</h3>
+<table>
+  <thead><tr><th>Tipo de proyecto</th><th>Cliente típico</th><th>Notas fiscales</th></tr></thead>
+  <tbody>
+    <tr><td>Copywriting para campaña publicitaria</td><td>Agencia / persona moral</td><td>Retenciones ISR + IVA</td></tr>
+    <tr><td>Contenido mensual para redes o blog</td><td>Persona moral o física</td><td>Retainer — predecible</td></tr>
+    <tr><td>Ghostwriting de libro o memoir</td><td>Persona física</td><td>Proyecto largo, pagos por capítulos</td></tr>
+    <tr><td>Contenido para cliente extranjero</td><td>Extranjero</td><td>IVA 0%, USD/EUR</td></tr>
+    <tr><td>Email marketing / secuencias</td><td>Persona moral</td><td>Retenciones, proyecto cerrado</td></tr>
+  </tbody>
+</table>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> los copywriters suelen mezclar clientes corporativos (con retenciones) y clientes individuales (sin retenciones). La app calcula automáticamente el tratamiento correcto para cada tipo.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar servicios de escritura</div>
+      <div class="mod-sub">Por palabra, por hora, por proyecto o retainer</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Los 4 modelos de cotización en copywriting</h3>
+<ul>
+  <li><strong>Por palabra:</strong> $X por palabra. Común en contenido SEO y artículos.</li>
+  <li><strong>Por hora:</strong> $X/hora. Para consultoría y estrategia.</li>
+  <li><strong>Por proyecto:</strong> $X por entregable completo. Para campañas, landing pages, secuencias.</li>
+  <li><strong>Retainer mensual:</strong> $X/mes por volumen definido de contenido.</li>
+</ul>
+
+<div class="example">
+  <div class="example-label">Retainer de contenido para agencia (persona moral)</div>
+  <p>Acuerdo: 8 artículos SEO/mes + captions redes = $12,000 + IVA</p>
+  <p>Factura: $12,000 + $1,920 = $13,920</p>
+  <p>Retenciones agencia: −$1,200 ISR − $1,280 IVA</p>
+  <p>Depósito: <strong>$11,440</strong></p>
+  <p>ISR a pagar (1%): $120 — cubierto por retenciones</p>
+</div>
+
+<h3>Derechos de autor vs servicio de redacción</h3>
+<p>Si cedes los derechos de tus textos (ghostwriting, contenido para marca), puede ser un concepto adicional en la factura:</p>
+<ul>
+  <li>Concepto 1: Servicios de redacción (80111604)</li>
+  <li>Concepto 2: Cesión de derechos de autor (clave 81162200)</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Para ghostwriting:</strong> aunque el texto lleve el nombre de otra persona, el ingreso es tuyo y debes declararlo normalmente. El "secreto" del ghostwriting es entre tú y tu cliente, no con el SAT.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> la calculadora de cotización te dice exactamente cuánto cobrarle al cliente para que después de impuestos y retenciones te quede el monto que necesitas. Muy útil para cotizar retainers con agencias.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Contratos y entregas por partes</div>
+      <div class="mod-sub">Ghostwriting, proyectos largos y pagos por capítulos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Proyectos de ghostwriting — el más complejo</h3>
+<p>Un libro de 60,000 palabras puede tomar 4-8 meses. La estructura de pagos más común:</p>
+<ol>
+  <li>Anticipo al firmar: 25-33%</li>
+  <li>Al entregar outline y capítulos 1-5: 25%</li>
+  <li>Al entregar capítulos 6-último: 25%</li>
+  <li>Al aprobar el manuscrito final: 25%</li>
+</ol>
+
+<h3>Cómo facturar cada entrega</h3>
+<ul>
+  <li>Factura cada pago por separado cuando lo recibes</li>
+  <li>Distribución el ingreso a lo largo de los meses del proyecto</li>
+  <li>Evitas tener un ingreso enorme en un solo mes</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Acuerdos de confidencialidad y el SAT:</strong> aunque tu NDA con el cliente prohíbe revelar que escribiste el libro, ante el SAT sí debes declarar el ingreso. El SAT no es parte del NDA. Declara siempre.</div>
+</div>
+
+<h3>Contenido mensual para blog o redes</h3>
+<p>Para retainers de contenido mensual:</p>
+<ol>
+  <li>Define con el cliente la fecha de facturación (ej: día 1 o día 28)</li>
+  <li>Si el cliente paga en la primera quincena → PUE</li>
+  <li>Si el cliente paga mes siguiente → PPD + REP</li>
+</ol>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada pago de ghostwriting como cobro en el mes que lo recibes. El sistema de "pendiente / cobrado" te ayuda a rastrear qué entregas ya se pagaron y cuáles siguen pendientes.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles del copywriter</div>
+      <div class="mod-sub">Herramientas de escritura y productividad con IVA acreditable</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Gastos del copywriter con IVA acreditable</h3>
+<table>
+  <thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Computadora / laptop</td><td>Sí</td><td>Equipo principal de trabajo</td></tr>
+    <tr><td>Suscripción Grammarly Business</td><td>No</td><td>Empresa extranjera sin presencia en MX</td></tr>
+    <tr><td>Jasper AI / herramientas de IA para escritura</td><td>No</td><td>Sin presencia fiscal en MX generalmente</td></tr>
+    <tr><td>Google Workspace (G Suite)</td><td>Sí</td><td>Google factura con IVA en MX</td></tr>
+    <tr><td>Notion (plan Team)</td><td>No</td><td>Sin presencia fiscal en MX</td></tr>
+    <tr><td>Cursos de copywriting (Platzi, plataforma MX)</td><td>Sí</td><td>Plataforma con presencia en MX</td></tr>
+    <tr><td>Libros físicos para investigación</td><td>No</td><td>Libros están exentos de IVA en MX</td></tr>
+    <tr><td>Internet (Telmex / Izzi)</td><td>Sí</td><td>Facturado a tu RFC</td></tr>
+    <tr><td>Cafeína / espacio de coworking</td><td>Sí</td><td>Si el coworking factura a tu RFC</td></tr>
+  </tbody>
+</table>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Dato curioso:</strong> los libros en México están exentos de IVA (tasa 0%), así que aunque compres cientos de libros para investigación, no hay IVA que acreditar. Sin embargo, si compras libros digitales de plataformas mexicanas, algunos sí cobran IVA.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> categoriza tus gastos entre Software, Capacitación, Equipo y Transporte. Aunque el IVA acreditable del copywriter suele ser menor que el de videógrafos o fotógrafos, suma a lo largo del año.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Retainers y contenido recurrente</div>
+      <div class="mod-sub">El modelo ideal para el copywriter estable</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Por qué el retainer es el rey en copywriting</h3>
+<p>Un copywriter con 2-3 clientes en retainer tiene:</p>
+<ul>
+  <li>Ingresos predecibles mes a mes</li>
+  <li>ISR calculable sin sorpresas</li>
+  <li>Menos tiempo vendiendo, más tiempo escribiendo</li>
+</ul>
+
+<div class="example">
+  <div class="example-label">Copywriter con 3 clientes en retainer</div>
+  <p>Cliente A (agencia): $10,000 + IVA/mes → deposita $9,173 tras retenciones</p>
+  <p>Cliente B (empresa): $8,000 + IVA/mes → deposita $7,338 tras retenciones</p>
+  <p>Cliente C (persona física sin factura): $5,000/mes → sin retenciones</p>
+  <p>Total ingresos mes: <strong>$23,000</strong></p>
+  <p>ISR: $23,000 × 1.1% = <strong>$253</strong></p>
+  <p>ISR ya cubierto por retenciones de A y B: ~$1,800 (saldo a favor)</p>
+</div>
+
+<h3>Combinar retainer con proyectos puntuales</h3>
+<p>Una campaña de email marketing de $25,000 en el mismo mes que tus retainers de $23,000 = $48,000 totales. Esto sube tu tasa a 1.1%. La diferencia es pequeña pero vale saberlo.</p>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Tip para crecer sin perder RESICO:</strong> si estás cerca del límite de $3.5M anuales, considera si conviene escalar con subcontratistas (y que ellos también facturen) en lugar de ingresar todo bajo tu RFC. Consulta esta estrategia con un contador antes de implementarla.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el resumen mensual te muestra exactamente cuánto llevas del año y a qué ritmo vas llegando al límite de RESICO. Si en octubre ya llevas $2.8M, la app te alertará que estás cerca del límite anual.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Clientes extranjeros y plataformas de contenido</div>
+      <div class="mod-sub">Contenido en inglés, Medium Partner y marketplaces</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Copywriting para clientes extranjeros</h3>
+<p>Si escribes en inglés (o cualquier idioma) para clientes fuera de México:</p>
+<ul>
+  <li>IVA: <strong>0%</strong> (exportación de servicios)</li>
+  <li>RFC receptor: <strong>XEXX010101000</strong></li>
+  <li>Tipo de cambio: DOF del día del cobro</li>
+  <li>Ingreso: declara en MXN convertido</li>
+</ul>
+
+<h3>Plataformas de contenido — casos especiales</h3>
+
+<p><strong>Medium Partner Program:</strong> si monetizas tu blog en Medium, los pagos son regalías. Convierte a MXN con tipo de cambio DOF del día del depósito y decláralos.</p>
+
+<p><strong>Substack:</strong> si tienes newsletter de pago, los ingresos son directamente de tus suscriptores. Si son mexicanos: IVA 16%. Si son extranjeros: IVA 0%.</p>
+
+<p><strong>Fiverr / Upwork:</strong> servicios de redacción en plataformas internacionales = exportación = IVA 0%. Convierte cada depósito al tipo de cambio DOF.</p>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Newsletter con suscriptores mixtos:</strong> si tienes 60% suscriptores mexicanos y 40% extranjeros, técnicamente deberías separar el IVA. En la práctica, muchos declaran todo como exportación si la mayoría de suscriptores es extranjera. Consulta tu caso específico con un contador.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra los ingresos de cada plataforma como cobro separado con la descripción de la fuente. "Medium Partner Program — marzo" o "Substack — suscripciones marzo". Así tienes el historial claro.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales del copywriter</div>
+      <div class="mod-sub">Lo que más le cuesta a los redactores freelance</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Error #1: No declarar ingresos de Fiverr o Upwork</h3>
+<p>Proyectos de copywriting en inglés para clientes extranjeros a través de plataformas. "Son dólares, nadie lo sabe." El SAT tiene acceso a declaraciones de divisas y puede cruzar los datos.</p>
+<p><strong>Solución:</strong> declara cada depósito recibido de plataformas internacionales.</p>
+
+<h3>Error #2: No facturar proyectos de ghostwriting "porque el cliente quiere discreción"</h3>
+<p>El cliente te pide escribir su libro, te paga en efectivo para "no dejar rastro". El ingreso es tuyo y debes declararlo aunque el cliente prefiera discreción.</p>
+<p><strong>Solución:</strong> el NDA aplica para revelar la autoría real del libro — no para omitir el ingreso al SAT. Son dos cosas completamente separadas.</p>
+
+<h3>Error #3: Mezclar el cobro por palabras con el cobro por estrategia</h3>
+<p>Facturas "servicios de copywriting" cuando en realidad cobraste por la estrategia de contenido y también por la producción. Si el SAT audita, puede cuestionar por qué el mismo concepto tiene valores tan distintos mes a mes.</p>
+<p><strong>Solución:</strong> en la factura, especifica: "Estrategia de contenidos: $X" y "Redacción de N piezas: $Y".</p>
+
+<h3>Error #4: No hacer la factura global si tienes proyectos de clientes pequeños en efectivo</h3>
+<p>Proyectos de $2,000-3,000 para emprendedores o personas físicas que pagan en efectivo y no piden factura. Si no los acumulas en factura global, son ingresos sin declarar.</p>
+<p><strong>Solución:</strong> factura global mensual por todos los cobros sin factura individual.</p>
+
+<h3>Error #5: Cobrar "fees" de investigación sin declararlos</h3>
+<p>Para algunos proyectos cobras extra por investigación profunda, entrevistas o acceso a bases de datos. Si ese ingreso extra no aparece en la factura, es ingreso no declarado.</p>
+<p><strong>Solución:</strong> incluye todos los conceptos cobrados en la factura, incluso si son rubros pequeños.</p>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada cobro, sin importar el monto o si el cliente pidió o no factura. El resumen te muestra el total real de ingresos del mes — eso es lo que debes declarar.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">La rutina mensual del copywriter organizado</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu rutina fiscal en 4 momentos</h3>
+
+<h3>Al momento de cada transacción</h3>
+<ul>
+  <li><strong>Al recibir anticipo de proyecto:</strong> registra el cobro como "cobrado"</li>
+  <li><strong>Al recibir pago de plataforma extranjera:</strong> convierte con tipo de cambio DOF del día y registra</li>
+  <li><strong>Al pagar Google Workspace o herramientas:</strong> registra el gasto con CFDI</li>
+  <li><strong>Al terminar capítulo / entrega parcial y cobrar:</strong> registra el pago recibido</li>
+</ul>
+
+<h3>Primeros 5 días del mes</h3>
+<ul>
+  <li>Revisar cobros PPD del mes anterior → REP si aplica</li>
+  <li>Revisar depósitos de Fiverr, Upwork, Medium, Substack → registrar</li>
+</ul>
+
+<h3>Del 10 al 17</h3>
+<ul>
+  <li>Resumen en resicodeo → comparar con portal SAT</li>
+  <li>Declarar y pagar ISR + IVA</li>
+</ul>
+
+<h3>Último día del mes</h3>
+<ul>
+  <li>Factura global por proyectos en efectivo o sin factura individual</li>
+  <li>Respaldo de datos</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Para copywriters con múltiples fuentes de ingreso:</strong> lleva una hoja de cálculo o nota simple donde registres todas las fuentes del mes antes de cerrar el mes (Fiverr, cliente A retainer, cliente B proyecto, Substack). Eso es tu checklist de que nada se queda sin registrar en resicodeo.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> la pestaña de Reportes anuales te permite ver cuánto generó cada cliente durante el año. Útil para identificar qué clientes son los más rentables y planear tu cartera de retainers para el siguiente año.</div>
+</div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT para servicios de redacción y copywriting?",
+      "opts": [
+        "81111601 - Consultoría en TI",
+        "80141600 - Consultoría en marketing",
+        "80111604 - Servicios de redacción",
+        "82141500 - Diseño gráfico"
+      ],
+      "correct": 2,
+      "hint": "El módulo 1 tiene la tabla de claves SAT para diferentes especialidades de escritura."
+    },
+    {
+      "q": "Un copywriter que escribe contenido para una agencia de publicidad, ¿qué tipo de cliente es la agencia?",
+      "opts": [
+        "Público en general sin factura",
+        "Cliente extranjero con IVA 0%",
+        "Persona física sin retenciones",
+        "Persona moral con retenciones de ISR e IVA"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 clasifica las agencias y empresas como personas morales con retenciones."
+    },
+    {
+      "q": "Si un copywriter escribe contenido para una marca estadounidense de forma remota, ¿qué IVA aplica?",
+      "opts": [
+        "16% porque trabaja desde México",
+        "8% tasa preferencial para servicios digitales",
+        "0% porque es exportación de servicios",
+        "Depende del idioma en que escribe"
+      ],
+      "correct": 2,
+      "hint": "El módulo 1 clasifica el contenido para clientes extranjeros como exportación con IVA 0%."
+    }
+  ],
+  "m2": [
+    {
+      "q": "¿Por qué el ghostwriting debe declararse aunque el cliente quiera 'discreción total'?",
+      "opts": [
+        "Solo si el pago supera $50,000 MXN",
+        "Solo se declara si el libro se publica comercialmente",
+        "El ingreso es del copywriter y debe declararse independientemente del NDA con el cliente",
+        "No debe declararse si hay NDA firmado"
+      ],
+      "correct": 2,
+      "hint": "El módulo 2 explica en el tip de ghostwriting: el NDA aplica para la autoría, no para omitir el ingreso al SAT."
+    },
+    {
+      "q": "Para un retainer de contenido con agencia de $12,000 + IVA, ¿cuánto recibe el copywriter en depósito aproximadamente?",
+      "opts": [
+        "$13,920 completos",
+        "$12,000 exactos",
+        "Aproximadamente $11,440",
+        "$10,000 tras impuestos"
+      ],
+      "correct": 2,
+      "hint": "El módulo 2 tiene el ejemplo: factura $13,920, agencia retiene $1,200 ISR + $1,280 IVA = depósito de $11,440."
+    },
+    {
+      "q": "¿Qué conceptos SAT recomienda el módulo 2 para un proyecto de ghostwriting donde se ceden los derechos?",
+      "opts": [
+        "Solo cesión de derechos 81162200",
+        "Servicios de redacción 80111604 + Cesión de derechos 81162200 como conceptos separados",
+        "Servicios profesionales genéricos 80111600",
+        "Solo servicios de redacción 80111604"
+      ],
+      "correct": 1,
+      "hint": "El módulo 2 explica que se pueden incluir dos conceptos en la misma factura para documentar correctamente."
+    }
+  ],
+  "m3": [
+    {
+      "q": "¿Cuántas etapas de pago recomienda el módulo 3 para un proyecto de ghostwriting largo?",
+      "opts": [
+        "Un solo pago al entregar el manuscrito",
+        "Pagos semanales proporcionales al trabajo",
+        "Cuatro pagos: anticipo, capítulos intermedios, capítulos finales y aprobación",
+        "Dos pagos: anticipo y saldo final"
+      ],
+      "correct": 2,
+      "hint": "El módulo 3 describe la estructura de 4 milestones: anticipo, capítulos 1-5, capítulos restantes y aprobación final."
+    },
+    {
+      "q": "¿Qué pasa con el NDA del ghostwriting y el SAT?",
+      "opts": [
+        "El SAT respeta los NDAs si están notariados",
+        "El SAT no es parte del NDA — el ingreso debe declararse independientemente",
+        "El ghostwriting está exento de impuestos por ser trabajo creativo",
+        "El NDA también aplica ante el SAT y el ingreso puede omitirse"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 advierte explícitamente: 'el SAT no es parte del NDA' — declara siempre."
+    },
+    {
+      "q": "Para retainers de contenido mensual donde el cliente paga el mes siguiente, ¿qué método usa?",
+      "opts": [
+        "PUE porque el trabajo ya fue entregado",
+        "PPD porque el pago llega después de emitir la factura",
+        "No importa el método para retainers de contenido",
+        "Efectivo porque es más simple"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 especifica: si el cliente paga el mes siguiente, el método es PPD y requiere REP."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿Por qué los libros físicos de investigación no generan IVA acreditable en México?",
+      "opts": [
+        "Porque los libros en México están exentos de IVA (tasa 0%)",
+        "Porque son gastos personales, no de negocio",
+        "Porque el SAT no permite deducir libros",
+        "Porque los libros no tienen clave SAT"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 menciona este dato: los libros físicos en México tienen IVA 0% por ley, así que no hay IVA que acreditar."
+    },
+    {
+      "q": "¿Grammarly Business genera IVA acreditable para un copywriter en México?",
+      "opts": [
+        "No, Grammarly es empresa extranjera sin presencia fiscal en México",
+        "Sí, es software de productividad necesario",
+        "Sí si se paga con tarjeta de crédito mexicana",
+        "Solo el plan Business, no el personal"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 lista Grammarly como empresa extranjera sin presencia en MX — sin IVA acreditable."
+    },
+    {
+      "q": "¿El espacio de coworking genera IVA acreditable para un copywriter?",
+      "opts": [
+        "Solo los coworkings con más de 100 socios",
+        "Sí, si el coworking emite CFDI a tu RFC",
+        "No, es un espacio compartido no dedicado al trabajo",
+        "Solo si trabajas ahí más de 20 horas semanales"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 incluye coworking en la tabla con la condición: si facturan a tu RFC."
+    }
+  ],
+  "m5": [
+    {
+      "q": "En el ejemplo del módulo 5 con 3 clientes en retainer, ¿cuánto ISR resulta pagar tras las retenciones de las agencias?",
+      "opts": [
+        "Saldo a favor — las retenciones ya cubrieron el ISR y más",
+        "Cero porque los retainers están exentos",
+        "$1,800 adicionales",
+        "$253 adicionales a lo retenido"
+      ],
+      "correct": 0,
+      "hint": "El módulo 5 muestra el ejemplo: las retenciones de clientes A y B (~$1,800) superan el ISR total ($253), generando saldo a favor."
+    },
+    {
+      "q": "¿Qué recomienda el módulo 5 si un copywriter está cerca del límite de $3.5M de RESICO?",
+      "opts": [
+        "Aumentar los precios para reducir el número de proyectos",
+        "Cambiar a régimen 612 inmediatamente",
+        "Dejar de facturar hasta el siguiente año",
+        "Considerar subcontratistas y consultar con un contador antes de implementar"
+      ],
+      "correct": 3,
+      "hint": "El módulo 5 menciona la estrategia de subcontratistas como opción a consultar con contador — no hacerlo sin asesoría."
+    },
+    {
+      "q": "¿Cuánto ISR paga en RESICO un copywriter con $23,000 de ingresos en el mes?",
+      "opts": [
+        "$230 (1%)",
+        "$253 (1.1%)",
+        "$460 (2%)",
+        "$345 (1.5%)"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 tiene el ejemplo: $23,000 × 1.1% = $253. El rango $25,001-$50,000 tiene tasa 1.1%."
+    }
+  ],
+  "m6": [
+    {
+      "q": "¿Cómo debe declarar un copywriter los pagos del Medium Partner Program?",
+      "opts": [
+        "Solo si superan $5,000 MXN al mes",
+        "Como regalías: convierte a MXN con tipo de cambio DOF del día del depósito y declara",
+        "Solo se declaran en la declaración anual",
+        "No se declaran porque son regalías literarias exentas"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6 explica que los pagos de Medium son regalías que deben declararse convirtiéndolos al tipo de cambio DOF."
+    },
+    {
+      "q": "¿Qué RFC debes usar para facturar servicios de copywriting a una empresa en España?",
+      "opts": [
+        "XAXX010101000",
+        "XEXX010101000",
+        "No se necesita RFC para servicios en español al extranjero",
+        "El RFC fiscal español de la empresa"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6 especifica XEXX010101000 para todos los clientes extranjeros."
+    },
+    {
+      "q": "Para un newsletter de pago con suscriptores mixtos (mexicanos y extranjeros), ¿qué recomienda el módulo 6?",
+      "opts": [
+        "Cobrar IVA 16% a todos por simplicidad",
+        "Solo declarar ingresos de suscriptores extranjeros",
+        "Cobrar IVA 0% a todos para simplificar",
+        "Separar el IVA por tipo de suscriptor o consultar caso específico con contador"
+      ],
+      "correct": 3,
+      "hint": "El módulo 6 advierte que los suscriptores mixtos pueden complicar el IVA y recomienda consultar con un contador."
+    }
+  ],
+  "m7": [
+    {
+      "q": "¿Por qué el ghostwriting pagado en efectivo 'para mayor discreción' sigue siendo ingreso declarable?",
+      "opts": [
+        "Solo si el libro se vende en México",
+        "No aplica, el ghostwriting está exento",
+        "No lo es si hay NDA firmado",
+        "Porque el NDA aplica para la autoría del libro, no para ocultar el ingreso al SAT"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #2) aclara explícitamente esta confusión: NDA y obligaciones fiscales son completamente independientes."
+    },
+    {
+      "q": "¿Por qué facturar 'servicios de copywriting' como concepto genérico puede ser problemático?",
+      "opts": [
+        "Porque el SAT puede cuestionar por qué el mismo concepto tiene valores muy distintos mes a mes",
+        "Porque esa clave SAT no existe",
+        "Porque el concepto debe estar en inglés",
+        "No hay problema, es una descripción válida"
+      ],
+      "correct": 0,
+      "hint": "El módulo 7 (Error #3) recomienda especificar los rubros: estrategia + redacción de N piezas, para justificar variaciones de precio."
+    },
+    {
+      "q": "¿Qué son los 'fees de investigación' mencionados en el módulo 7 y por qué deben declararse?",
+      "opts": [
+        "Solo se declaran si supera el 20% del proyecto total",
+        "Son gastos reembolsables que no son ingreso",
+        "Son cobros adicionales por investigación profunda — son ingreso y deben incluirse en la factura",
+        "Están exentos de IVA por ser servicios de investigación"
+      ],
+      "correct": 2,
+      "hint": "El módulo 7 (Error #5) explica que cualquier cobro, incluidos los fees de investigación, es ingreso y debe facturarse."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Para qué sirve la sección de Reportes anuales de resicodeo según el módulo 8?",
+      "opts": [
+        "Para calcular el incremento de precios del siguiente año",
+        "Para generar la declaración anual automáticamente",
+        "Para ver cuánto generó cada cliente durante el año e identificar los más rentables",
+        "Para compartir datos con la agencia contratante"
+      ],
+      "correct": 2,
+      "hint": "El módulo 8 menciona Reportes anuales para identificar clientes más rentables y planear la cartera de retainers."
+    },
+    {
+      "q": "¿Qué recomienda el módulo 8 para no olvidar registrar ninguna fuente de ingreso en el mes?",
+      "opts": [
+        "Revisar el portal del SAT diariamente",
+        "Llevar una nota o checklist de todas las fuentes del mes antes de cerrar",
+        "Registrar solo los cobros mayores a $5,000",
+        "Esperar al día de la declaración para revisar todo junto"
+      ],
+      "correct": 1,
+      "hint": "El módulo 8 recomienda tener un checklist de fuentes (Fiverr, retainers, Substack, etc.) para verificar que nada se queda sin registrar."
+    },
+    {
+      "q": "¿Cuándo debes emitir la factura global de proyectos en efectivo?",
+      "opts": [
+        "El día 17 junto con la declaración",
+        "El último día del mes por los cobros sin factura de ese mismo mes",
+        "El primer día del mes siguiente",
+        "Cualquier día del mes anterior a la declaración"
+      ],
+      "correct": 1,
+      "hint": "El módulo 8 especifica en 'Último día del mes': factura global por proyectos en efectivo o sin factura individual de ese mes."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>

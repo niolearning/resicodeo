@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Actores y Performers · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#6366F1;--accent2:#C7D2FE;--accent-glow:rgba(99,102,241,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Actuación & Performance</div>
+  <h1><em>RESICO para Actores y Performers</em></h1>
+  <p class="hero-sub">Domina tu régimen fiscal con ejemplos reales de teatro, cine, televisión, doblaje, publicidad y actuación comercial. Para artistas escénicos independientes.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cobrar y cotizar tus servicios</div>
+    <div class="toc-item"><span class="toc-num">3</span>Contratos en la industria del espectáculo</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles del actor</div>
+    <div class="toc-item"><span class="toc-num">5</span>Teatro independiente y producciones propias</div>
+    <div class="toc-item"><span class="toc-num">6</span>Regalías de imagen y uso de actuaciones</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales del actor freelance</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Claves SAT para actores, performers y artistas escénicos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad ante el SAT</h3>
+<table>
+  <thead><tr><th>Actividad</th><th>Clave SAT</th></tr></thead>
+  <tbody>
+    <tr><td>Actor (cine, TV, teatro)</td><td>90111500 — Servicios de artistas intérpretes</td></tr>
+    <tr><td>Actor de doblaje / voice actor</td><td>90111500 — Servicios de locución y doblaje</td></tr>
+    <tr><td>Actor de publicidad / comerciales</td><td>90111500 — Servicios de artistas intérpretes</td></tr>
+    <tr><td>Bailarín / performer escénico</td><td>90111501 — Servicios de artistas de espectáculos</td></tr>
+    <tr><td>Comediante / standup</td><td>90111501 — Servicios de entretenimiento</td></tr>
+    <tr><td>Modelo / influencer comercial</td><td>90111500 — Servicios de imagen y representación</td></tr>
+  </tbody>
+</table>
+
+<h3>Los tipos de ingreso del actor freelance</h3>
+<table>
+  <thead><tr><th>Tipo de ingreso</th><th>Cliente típico</th><th>Notas fiscales</th></tr></thead>
+  <tbody>
+    <tr><td>Cine / producción cinematográfica</td><td>Productora (persona moral)</td><td>Retenciones ISR + IVA, contratos largos</td></tr>
+    <tr><td>Televisión / series</td><td>Televisora o streaming (persona moral)</td><td>Retenciones, puede ser por episodio</td></tr>
+    <tr><td>Teatro independiente</td><td>Compañía teatral (PM o PF)</td><td>Depende del tipo de compañía</td></tr>
+    <tr><td>Publicidad / comerciales</td><td>Agencia o productora (persona moral)</td><td>Retenciones + posibles regalías de uso</td></tr>
+    <tr><td>Doblaje / voice acting</td><td>Estudio de doblaje (persona moral)</td><td>Retenciones ISR + IVA</td></tr>
+    <tr><td>Standup / shows propios</td><td>Venue, empresa, persona física</td><td>Variable según quien contrata</td></tr>
+  </tbody>
+</table>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> los actores suelen tener proyectos de duración variable — desde un día de rodaje hasta una temporada completa. Registra cada proyecto como cliente separado con sus datos de facturación para tener el historial por producción.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cobrar y cotizar tus servicios</div>
+      <div class="mod-sub">Day rates, por proyecto, cachets y regalías de publicidad</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Los modelos de pago en la actuación</h3>
+<ul>
+  <li><strong>Day rate:</strong> pago por día de trabajo en set o foro. Común en cine y publicidad.</li>
+  <li><strong>Por proyecto / temporada:</strong> fee fijo para toda una obra de teatro o producción.</li>
+  <li><strong>Por episodio:</strong> pago fijo por cada episodio grabado. Común en TV y streaming.</li>
+  <li><strong>Cachet + regalías:</strong> pago inicial más porcentaje o monto adicional por uso del material. Común en publicidad.</li>
+</ul>
+
+<div class="example">
+  <div class="example-label">Comercial de TV con cachet + regalías (persona moral)</div>
+  <p>Cachet por día de grabación (2 días): $20,000</p>
+  <p>Regalías por uso nacional 6 meses: $15,000</p>
+  <p>Total: $35,000 + IVA = $40,600</p>
+  <p>Retenciones agencia: −$3,500 ISR − $3,733 IVA</p>
+  <p>Depósito: <strong>$33,367</strong></p>
+</div>
+
+<h3>La importancia de separar el cachet de las regalías</h3>
+<p>En un contrato de publicidad, el cachet (pago por grabar) y las regalías (pago por uso) son conceptos diferentes. Pueden facturarse:</p>
+<ul>
+  <li>En una sola factura con dos conceptos</li>
+  <li>En facturas separadas cuando llega cada pago (el cachet al grabar, las regalías periódicamente)</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Negocia las regalías por uso:</strong> en publicidad, el uso de tu imagen tiene valor. Si el comercial se transmite por 1 año a nivel nacional, eso vale más que 6 meses regionales. El contrato debe especificar: territorio, duración, medios y monto de regalías por cada período de uso.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra el cachet como un cobro y las regalías como cobros separados cuando lleguen. El resumen mensual muestra cuánto viene de trabajo activo vs ingresos por uso de imagen.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Contratos en la industria del espectáculo</div>
+      <div class="mod-sub">Lo que tu contrato debe decir para protegerte fiscalmente</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Contratos de actuación — elementos fiscales clave</h3>
+<ul>
+  <li><strong>Descripción del servicio:</strong> debe coincidir con el concepto de tu factura (ej: "Servicios de actuación — Personaje X en producción Y")</li>
+  <li><strong>Fee y forma de pago:</strong> especifica si incluye o excluye IVA</li>
+  <li><strong>Calendario de pagos:</strong> cuándo y cómo llega cada pago</li>
+  <li><strong>Derechos de imagen:</strong> qué puede hacer el cliente con tu imagen y durante cuánto tiempo</li>
+  <li><strong>Regalías:</strong> si aplican, cómo se calculan y cuándo se pagan</li>
+  <li><strong>Exclusividad:</strong> si te impide trabajar para competidores (esto tiene valor económico que debe reflejarse en el fee)</li>
+</ul>
+
+<h3>El contrato sindical (ANDA, STIC)</h3>
+<p>Si trabajas bajo contrato sindical (ANDA — Asociación Nacional de Actores, STIC — Sindicato de Trabajadores de la Industria Cinematográfica), hay consideraciones adicionales:</p>
+<ul>
+  <li>Las cuotas sindicales son un gasto tuyo — pide recibo o CFDI del sindicato</li>
+  <li>Algunos contratos sindicales implican relación laboral, no honorarios — en ese caso no aplica RESICO para esos ingresos</li>
+  <li>Si recibes un W-2 o equivalente de una producción, esos ingresos son de nómina, no de honorarios</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>¿Nómina o honorarios?:</strong> si una producción te paga via nómina (con CFDI de nómina y retenciones de trabajador), esos ingresos no entran en RESICO como servicios profesionales. Si te pagan contra factura, sí son honorarios de RESICO. Muchas producciones mezclan ambos. Revisa cada contrato.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra solo los ingresos que recibes contra factura (honorarios). Los ingresos de nómina van en tu declaración anual como ingresos por salarios, separados de tus ingresos por servicios profesionales.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles del actor</div>
+      <div class="mod-sub">Preparación, agentes, headshots y equipo con IVA acreditable</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Gastos del actor con IVA acreditable</h3>
+<table>
+  <thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Clases de actuación / coaching</td><td>Sí</td><td>Si el coach o escuela factura</td></tr>
+    <tr><td>Headshots profesionales</td><td>Sí</td><td>El fotógrafo debe facturarte</td></tr>
+    <tr><td>Agencia de representación (si factura)</td><td>Sí</td><td>La comisión de la agencia como gasto</td></tr>
+    <tr><td>Clases de idiomas para roles</td><td>Sí</td><td>Si la academia factura</td></tr>
+    <tr><td>Clases de canto, baile, movimiento</td><td>Sí</td><td>Si el maestro o estudio factura</td></tr>
+    <tr><td>Vestuario específico de personaje</td><td>Sí</td><td>Solo si es exclusivo para el trabajo</td></tr>
+    <tr><td>Maquillaje profesional para audiciones</td><td>Sí</td><td>Si el maquillista factura</td></tr>
+    <tr><td>Suscripción a plataformas de casting (Casting Networks)</td><td>No</td><td>Empresa extranjera sin presencia en MX</td></tr>
+    <tr><td>Transporte a audiciones y sets</td><td>Sí</td><td>Uber factura con IVA en MX</td></tr>
+    <tr><td>Equipo de home studio (para doblaje/voice acting)</td><td>Sí</td><td>Micrófono, interfaz, acondicionamiento acústico</td></tr>
+  </tbody>
+</table>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Los headshots:</strong> una sesión de headshots profesionales puede costar $3,000-8,000 MXN. El IVA ($480-$1,280) es acreditable si el fotógrafo te emite CFDI. Es un gasto de inversión en tu carrera que el SAT reconoce como gasto de negocio.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> categoriza tus gastos de preparación en "Capacitación", los de imagen en "Marketing/Presentación" y el equipo técnico (para voice acting) en "Equipo". El desglose te muestra cuánto inviertes en cada área de tu carrera.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Teatro independiente y producciones propias</div>
+      <div class="mod-sub">Cómo manejar la fiscalidad cuando también eres productor</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El actor-productor — el caso más complejo</h3>
+<p>Muchos actores independientes también producen su propio material: obras de teatro, shows de standup, podcasts, contenido para redes. Cuando eres tanto el creador como el intérprete, tu ingreso puede venir de fuentes distintas en el mismo proyecto.</p>
+
+<h3>Teatro con boletaje propio</h3>
+<p>Si produces una obra y vendes boletos directamente:</p>
+<ul>
+  <li>El ingreso de boletos es tuyo como productor/artista</li>
+  <li>Si vendes a través de Ticketmaster o SuperBoletos (persona moral), ellos pueden retenerte</li>
+  <li>Si vendes directamente en taquilla (persona física / público general), sin retenciones pero con factura global</li>
+  <li>Los gastos de la producción (diseño, luz, sonido, crew técnico) tienen IVA acreditable si te facturan</li>
+</ul>
+
+<h3>Shows de standup</h3>
+<p>El venue o promotor puede pagarte de diferentes formas:</p>
+<ul>
+  <li><strong>Cachet fijo:</strong> te pagan un monto acordado sin importar la asistencia</li>
+  <li><strong>Porcentaje de boletería:</strong> tu ingreso depende del total vendido</li>
+  <li><strong>Consumo mínimo:</strong> en bares, a veces el pago es informal — cuidado, ese ingreso sí debe declararse</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Ingresos de "consumo mínimo" en bares:</strong> si un bar te paga con efectivo de la barra o te "invita consumo" a cambio de tu show, el SAT no lo ve así. Si recibes un beneficio económico por tu actuación, es ingreso gravable. Siempre solicita pago formal y emite factura.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> para producciones propias, registra tanto los ingresos (boletería, patrocinios) como los gastos de la producción. El resumen te muestra si el proyecto fue rentable después de impuestos.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Regalías de imagen y uso de actuaciones</div>
+      <div class="mod-sub">Cuándo tu imagen sigue generando ingresos después del trabajo</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Derechos de imagen vs derechos conexos</h3>
+<p>Como actor tienes dos tipos de derechos sobre tu trabajo:</p>
+<ul>
+  <li><strong>Derechos de imagen:</strong> el uso de tu fotografía, nombre o apariencia en publicidad. Se negocian por período y territorio.</li>
+  <li><strong>Derechos conexos:</strong> los derechos sobre tu interpretación artística. Diferentes a los derechos de autor del guionista o director.</li>
+</ul>
+
+<h3>Regalías de publicidad — la fuente de ingreso más importante</h3>
+<p>Cuando grabas un comercial, el cliente no solo paga por el día de grabación — paga por usar tu imagen. Las regalías por uso tienen estas características:</p>
+<ul>
+  <li>Se pagan periódicamente mientras el comercial esté al aire</li>
+  <li>Varían por territorio (local, nacional, internacional) y medio (TV abierta, cable, digital)</li>
+  <li>Cada pago de regalías es un ingreso del mes en que se recibe</li>
+  <li>Si la empresa que paga es persona moral: retenciones de ISR e IVA en cada pago</li>
+</ul>
+
+<div class="example">
+  <div class="example-label">Regalías trimestrales por uso de imagen en TV</div>
+  <p>Acuerdo: $8,000 por trimestre de uso nacional en TV abierta</p>
+  <p>Cliente: empresa de consumo (persona moral)</p>
+  <p>Factura trimestral: $8,000 + $1,280 IVA = $9,280</p>
+  <p>Retenciones: −$800 ISR − $853 IVA</p>
+  <p>Depósito trimestral: <strong>$7,627</strong></p>
+</div>
+
+<h3>Streaming y plataformas internacionales</h3>
+<p>Si actúas en una producción que se distribuye en plataformas como Netflix, Amazon o Apple TV+:</p>
+<ul>
+  <li>Tu fee inicial ya está pagado (el que negociaste con la productora)</li>
+  <li>Si hay residuals o regalías por distribución internacional, consulta tu contrato sindical o de ANDA</li>
+  <li>Si la plataforma te paga directamente (poco común), aplican reglas de cliente extranjero</li>
+</ul>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> para regalías periódicas de publicidad, guarda el cliente de la agencia y el proyecto. Cada trimestre o período, aplica el cobro con un click desde "Mis paquetes". El historial muestra cuánto sigue generando cada producción.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales del actor freelance</div>
+      <div class="mod-sub">Los más comunes en la industria del espectáculo</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Error #1: No facturar porque "la producción dice que no es necesario"</h3>
+<p>Algunas producciones pequeñas o independientes dicen "no necesitamos factura, te pagamos en efectivo." Ese ingreso existe aunque no haya factura. Si no lo declaras, es evasión fiscal.</p>
+<p><strong>Solución:</strong> siempre solicita pago formal. Si el cliente no quiere factura, igual registra el cobro en resicodeo e inclúyelo en la factura global mensual.</p>
+
+<h3>Error #2: Confundir nómina con honorarios</h3>
+<p>Una producción te da CFDI de nómina (eres trabajador temporal). Al año, tratas todo como si fueran honorarios y declaras en RESICO. Error: los ingresos de nómina son de régimen de salarios, no de servicios profesionales.</p>
+<p><strong>Solución:</strong> revisa el tipo de CFDI que te emiten. Nómina = asalariado (no va en RESICO). Factura contra honorarios = servicios profesionales (sí va en RESICO).</p>
+
+<h3>Error #3: No cobrar IVA en shows propios de standup o teatro</h3>
+<p>Vendes boletos directamente sin IVA. Si el total de tus ventas supera cierto nivel, el SAT puede cuestionar por qué no cobrabas IVA en tus boletos.</p>
+<p><strong>Solución:</strong> los boletos a eventos artísticos con fines de lucro sí causan IVA 16%. Incluye el IVA en el precio del boleto o especifícalo por separado.</p>
+
+<h3>Error #4: Olvidar las regalías de comerciales antiguos</h3>
+<p>Grabaste un comercial hace 3 años. Cada trimestre llega un pago de regalías pero ya no le prestas atención y dejas de declararlo.</p>
+<p><strong>Solución:</strong> lleva un registro de todos los contratos de publicidad activos con sus períodos de uso. Cada pago de regalías debe registrarse en resicodeo en el mes que llega.</p>
+
+<h3>Error #5: No pedir CFDI a la agencia por su comisión</h3>
+<p>Tu agente cobra 10-15% de comisión. Si no te emiten CFDI, esa comisión no existe fiscalmente — pierdes el IVA acreditable de ese gasto.</p>
+<p><strong>Solución:</strong> exige a tu agencia que te facture su comisión. El IVA de la comisión de agente es acreditable contra tu IVA a pagar.</p>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el historial de cobros por proyecto te permite rastrear qué producciones siguen generando ingresos por regalías. Nunca más se te olvidará que ese comercial de 2022 sigue pagando.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">Tu rutina mensual como actor y performer independiente</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El reto del actor: ingresos muy irregulares con picos y vacíos</h3>
+<p>Un mes pueden entrar $80,000 de un comercial, y el siguiente $0. La clave de RESICO es que solo pagas sobre lo que cobras cada mes — sin mínimos ni promediaciones.</p>
+
+<h3>Durante el mes</h3>
+<ul>
+  <li><strong>Al firmar contrato / empezar producción:</strong> crea el proyecto en resicodeo</li>
+  <li><strong>Al recibir anticipo o pago parcial:</strong> registra el cobro con descripción del proyecto</li>
+  <li><strong>Al recibir regalías de publicidad:</strong> registra el cobro con período de uso</li>
+  <li><strong>Al pagar clases, coach o headshots:</strong> registra el gasto con CFDI</li>
+  <li><strong>Al cobrar shows propios:</strong> registra cada función con su boletería</li>
+</ul>
+
+<h3>Primeros 5 días del mes</h3>
+<ul>
+  <li>Revisar cobros PPD → REP si aplica</li>
+  <li>Verificar si llegaron regalías periódicas → registrar</li>
+</ul>
+
+<h3>Del 10 al 17</h3>
+<ul>
+  <li>Resumen en resicodeo → comparar con SAT</li>
+  <li>Declarar y pagar</li>
+</ul>
+
+<h3>Último día del mes</h3>
+<ul>
+  <li>Factura global por shows en efectivo, funciones sin factura individual</li>
+  <li>Respaldo de datos</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Para actores con ingresos muy irregulares:</strong> en los meses de alto ingreso (ese comercial grande), guarda entre el 5-10% en una cuenta separada. En los meses de cero ingresos no pagas ISR en RESICO, pero sí IVA si tenías cobros previos pendientes. El fondo de emergencia fiscal te salva en esos meses.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> los Reportes anuales te muestran el ritmo real de tus ingresos mes a mes. Útil para identificar cuándo son tus mejores meses y planear gastos de inversión (clases, headshots) para compensar el IVA en meses de alta facturación.</div>
+</div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT para un actor de doblaje y voice acting?",
+      "opts": [
+        "85101600 — Cuidado personal",
+        "90111501 — Artistas de espectáculos",
+        "82141501 — Ilustración",
+        "90111500 — Servicios de artistas intérpretes y locución"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 incluye 'actor de doblaje / voice actor' en la tabla con la clave 90111500."
+    },
+    {
+      "q": "Una televisora (persona moral) te paga por episodio en una serie. ¿Qué aplica?",
+      "opts": [
+        "Sin retenciones porque es trabajo artístico",
+        "IVA 0% para producción de contenido nacional",
+        "Con retenciones de ISR e IVA en cada pago por episodio",
+        "Solo retención de IVA, no ISR"
+      ],
+      "correct": 2,
+      "hint": "El módulo 1 clasifica televisoras como personas morales con retenciones completas de ISR e IVA."
+    },
+    {
+      "q": "¿Qué diferencia hay entre el cachet y las regalías en un contrato de publicidad?",
+      "opts": [
+        "Son lo mismo, solo nombres diferentes en la industria",
+        "El cachet se paga al inicio y las regalías al final del proyecto",
+        "Las regalías son para actores sindicalizados y el cachet para no sindicalizados",
+        "El cachet es el pago por grabar; las regalías son pagos periódicos por el uso del material grabado"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 tabla menciona 'cachet + regalías' como estructura de pago en publicidad. El módulo 2 lo desarrolla."
+    }
+  ],
+  "m2": [
+    {
+      "q": "En el ejemplo del módulo 2, ¿cuánto recibe en depósito el actor por un comercial con cachet $20,000 + regalías $15,000?",
+      "opts": [
+        "Aproximadamente $33,367",
+        "$40,600 completos",
+        "$29,000 después de impuestos",
+        "$35,000 exactos"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 tiene el ejemplo completo: $40,600 factura − $3,500 ISR − $3,733 IVA retenidos = $33,367 depositados."
+    },
+    {
+      "q": "¿Qué debe especificar el contrato de publicidad respecto a las regalías por uso de imagen?",
+      "opts": [
+        "Solo el monto total de regalías sin más detalle",
+        "Territorio, duración, medios de transmisión y monto por cada período de uso",
+        "El porcentaje de audiencia que verá el comercial",
+        "Solo si las regalías superan el cachet inicial"
+      ],
+      "correct": 1,
+      "hint": "El módulo 2 en el tip de regalías lista los elementos que debe especificar el contrato: territorio, duración, medios y montos."
+    },
+    {
+      "q": "¿Cómo se registran el cachet y las regalías en resicodeo?",
+      "opts": [
+        "Depende de cómo lo prefiera el cliente",
+        "Como un solo cobro al final del proyecto",
+        "Como un cobro anual consolidado para simplificar",
+        "El cachet al grabar y cada pago de regalías como cobros separados cuando lleguen"
+      ],
+      "correct": 3,
+      "hint": "El módulo 2 recomienda registrar el cachet y las regalías como cobros separados en el mes que llega cada uno."
+    }
+  ],
+  "m3": [
+    {
+      "q": "Si una producción te paga con CFDI de nómina (no de honorarios), ¿ese ingreso va en RESICO?",
+      "opts": [
+        "Sí, todo ingreso de actuación va en RESICO",
+        "No, los ingresos de nómina son del régimen de salarios y se declaran por separado",
+        "Depende si el proyecto es de más de 3 meses",
+        "Solo si supera $50,000 al mes"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 advierte que nómina = asalariado (no RESICO) y factura de honorarios = servicios profesionales (sí RESICO)."
+    },
+    {
+      "q": "¿Qué son las cuotas sindicales (ANDA, STIC) fiscalmente para el actor?",
+      "opts": [
+        "Ingresos adicionales que deben declararse",
+        "Retenciones obligatorias que el SAT ya conoce",
+        "No tienen relevancia fiscal para el actor",
+        "Un gasto del actor — pide recibo o CFDI del sindicato para el IVA acreditable"
+      ],
+      "correct": 3,
+      "hint": "El módulo 3 menciona que las cuotas sindicales son un gasto tuyo — pide CFDI del sindicato."
+    },
+    {
+      "q": "¿Qué elemento del contrato de actuación tiene impacto fiscal en la cláusula de exclusividad?",
+      "opts": [
+        "Impide trabajar para competidores — ese valor económico debe reflejarse en el fee acordado",
+        "La exclusividad permite facturar a tasa reducida",
+        "La exclusividad no tiene impacto fiscal",
+        "Solo impacta si la exclusividad dura más de 1 año"
+      ],
+      "correct": 0,
+      "hint": "El módulo 3 menciona que la exclusividad tiene valor económico que debe verse reflejado en el fee contratado."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿Los headshots fotográficos generan IVA acreditable para un actor?",
+      "opts": [
+        "Solo si el fotógrafo es persona moral",
+        "Solo si los headshots se usan directamente en producción",
+        "No, son gastos de imagen personal",
+        "Sí, siempre que el fotógrafo emita CFDI al RFC del actor"
+      ],
+      "correct": 3,
+      "hint": "El módulo 4 lista headshots en la tabla de gastos acreditables con la condición de que el fotógrafo te facture."
+    },
+    {
+      "q": "¿La suscripción a Casting Networks genera IVA acreditable en México?",
+      "opts": [
+        "Sí, es una herramienta de trabajo necesaria para el actor",
+        "Sí si la suscripción se contrata desde México",
+        "Solo el plan profesional es acreditable",
+        "No, es empresa extranjera sin presencia fiscal en México"
+      ],
+      "correct": 3,
+      "hint": "El módulo 4 lista Casting Networks específicamente como empresa extranjera sin presencia en MX — sin IVA acreditable."
+    },
+    {
+      "q": "Para un voice actor con home studio, ¿qué equipo genera IVA acreditable?",
+      "opts": [
+        "Solo el micrófono, no el tratamiento acústico",
+        "Solo si el estudio está registrado como domicilio fiscal",
+        "El equipo de home studio nunca genera IVA acreditable en RESICO",
+        "Micrófono, interfaz de audio y materiales de acondicionamiento acústico — todo el equipo del home studio"
+      ],
+      "correct": 3,
+      "hint": "El módulo 4 incluye explícitamente 'equipo de home studio para doblaje/voice acting' en la tabla de gastos acreditables."
+    }
+  ],
+  "m5": [
+    {
+      "q": "Si produces una obra de teatro propia y vendes boletos en taquilla directamente al público, ¿aplica IVA?",
+      "opts": [
+        "No, las artes escénicas están exentas de IVA en México",
+        "Sí, los boletos a eventos artísticos con fines de lucro causan IVA 16%",
+        "Solo si el precio del boleto supera $500",
+        "Solo si tienes más de 200 butacas"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 en la sección de errores (Error #3) aclara que los boletos a eventos artísticos con fines de lucro sí causan IVA 16%."
+    },
+    {
+      "q": "Un comediante cobra su show en un bar con 'consumo mínimo' en lugar de cachet. ¿Qué debe hacer?",
+      "opts": [
+        "Solo si el consumo mínimo supera $2,000 en valor",
+        "No hay obligación fiscal porque no recibió dinero directamente",
+        "Declararlo como intercambio de servicios sin valor fiscal",
+        "El beneficio económico del consumo mínimo es ingreso gravable — solicitar pago formal y emitir factura"
+      ],
+      "correct": 3,
+      "hint": "El módulo 5 advierte que recibir un beneficio económico a cambio de tu actuación es ingreso gravable, independientemente de la forma."
+    },
+    {
+      "q": "Si produces una obra propia con gastos de producción (luz, sonido, diseño), ¿esos gastos generan IVA acreditable?",
+      "opts": [
+        "Solo si la obra tiene más de 10 funciones",
+        "Solo si la producción genera más de $50,000 en boletería",
+        "Sí, siempre que los proveedores (luz, sonido, diseño) te emitan CFDI",
+        "No, los gastos de producciones propias no son acreditables"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5 menciona que los gastos de producción propia (crew técnico, diseño) tienen IVA acreditable si te facturan."
+    }
+  ],
+  "m6": [
+    {
+      "q": "¿Con qué frecuencia se pagan típicamente las regalías de un comercial de TV?",
+      "opts": [
+        "Solo cuando el actor lo solicita expresamente",
+        "Periódicamente — trimestral, semestral o anual — mientras el comercial esté activo",
+        "Se pagan de golpe al inicio con el cachet",
+        "Una sola vez al terminar el contrato de uso"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6 explica que las regalías se pagan periódicamente mientras el comercial esté al aire."
+    },
+    {
+      "q": "Si Netflix te paga directamente por actuar en su serie (contrato directo con ellos), ¿qué IVA aplica?",
+      "opts": [
+        "16% porque el trabajo se realizó en México",
+        "Depende si el contrato es en pesos o dólares",
+        "0% porque Netflix es cliente extranjero",
+        "8% tasa especial para streaming"
+      ],
+      "correct": 2,
+      "hint": "El módulo 6 menciona que si la plataforma extranjera paga directamente al actor, aplican reglas de cliente extranjero con IVA 0%."
+    },
+    {
+      "q": "¿Qué son los derechos conexos del actor y en qué se diferencian de los derechos de autor?",
+      "opts": [
+        "Los derechos conexos solo aplican en teatro, no en cine o TV",
+        "Los actores no tienen derechos conexos en México",
+        "Son lo mismo — actor y guionista tienen los mismos derechos",
+        "Los derechos conexos son sobre la interpretación del actor; los de autor son del guionista o director — son derechos distintos"
+      ],
+      "correct": 3,
+      "hint": "El módulo 6 explica la diferencia: derechos de imagen (uso de apariencia) y derechos conexos (sobre la interpretación artística)."
+    }
+  ],
+  "m7": [
+    {
+      "q": "Una producción independiente paga al actor en efectivo 'sin factura'. ¿Qué debe hacer el actor?",
+      "opts": [
+        "Esperar a que la producción regularice su situación fiscal",
+        "Registrar el cobro en resicodeo e incluirlo en la factura global mensual — ese ingreso sí debe declararse",
+        "No hay obligación si el cliente no pide factura",
+        "Solo declararlo si supera $10,000"
+      ],
+      "correct": 1,
+      "hint": "El módulo 7 (Error #1) es claro: el ingreso existe aunque no haya factura. Va en factura global mensual."
+    },
+    {
+      "q": "¿Qué pasa si olvidas declarar las regalías trimestrales de un comercial grabado hace 3 años?",
+      "opts": [
+        "Solo hay consecuencia si el monto supera $50,000 al año",
+        "No hay consecuencia porque el SAT no puede rastrear pagos tan antiguos",
+        "Son ingresos no declarados — el SAT puede detectarlo y aplicar recargos y multas por los períodos omitidos",
+        "Las regalías de más de 2 años están prescritas fiscalmente"
+      ],
+      "correct": 2,
+      "hint": "El módulo 7 (Error #4) advierte que cada pago de regalías debe registrarse en resicodeo en el mes que llega, sin importar cuándo se grabó el comercial."
+    },
+    {
+      "q": "¿Por qué es importante exigir CFDI a la agencia de representación por su comisión?",
+      "opts": [
+        "Para tener respaldo legal en caso de disputa con la agencia",
+        "Porque el SAT exige que las agencias facturen sus comisiones",
+        "Solo importa si la comisión supera $10,000",
+        "Para que el IVA de la comisión de agencia sea acreditable contra el IVA que debes al SAT"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #5) explica que el IVA de la comisión de agente es acreditable — sin CFDI se pierde ese beneficio."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Por qué RESICO es especialmente ventajoso para actores con ingresos muy irregulares?",
+      "opts": [
+        "Porque en meses de cero ingresos se paga cero ISR — solo pagas sobre lo que realmente cobras cada mes",
+        "Porque los actores tienen tasa de ISR preferencial",
+        "Porque pueden diferir el ISR a los meses de mayor ingreso",
+        "Porque los actores tienen exención de IVA en sus servicios"
+      ],
+      "correct": 0,
+      "hint": "El módulo 8 destaca que en meses de cero ingresos no se paga ISR en RESICO — solo pagas sobre lo cobrado."
+    },
+    {
+      "q": "¿Para qué sirve el fondo de ahorro fiscal del 5-10% que recomienda el módulo 8?",
+      "opts": [
+        "Para invertir en cursos y preparación profesional",
+        "Para pagar la declaración anual",
+        "Para tener dinero disponible para el ISR en meses de alta facturación y no desembolsar de golpe",
+        "Para cubrir las cuotas sindicales mensuales"
+      ],
+      "correct": 2,
+      "hint": "El módulo 8 recomienda guardar 5-10% de cada cobro para no sorprenderse cuando llega la declaración en meses de alta actividad."
+    },
+    {
+      "q": "¿Para qué sirven los Reportes anuales de resicodeo para un actor?",
+      "opts": [
+        "Para presentar ante el SAT como comprobante de ingresos",
+        "Para saber cuántos proyectos se completaron en el año",
+        "Para identificar los meses de mayor ingreso y planear gastos de inversión en clases y headshots",
+        "Para calcular el porcentaje de comisión correcto para la agencia"
+      ],
+      "correct": 2,
+      "hint": "El módulo 8 menciona que los Reportes anuales ayudan a identificar meses de alta facturación para planear inversiones de carrera que compensen el IVA."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>

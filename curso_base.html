@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso RESICO Base · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --purple:#7B6DFF;--purple2:#A89BFF;--purple-glow:rgba(123,109,255,0.15);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);box-shadow:0 0 10px var(--purple)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s}
+.nav-btn.ghost{background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn.ghost:hover{border-color:var(--purple);background:var(--ink2)}
+.nav-btn.purple{background:var(--purple);color:white}
+.nav-btn.purple:hover{background:var(--purple2)}
+
+/* ── PROGRESS ── */
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--purple2));transition:width .3s;box-shadow:0 0 10px var(--purple-glow)}
+
+/* ── CONTAINER ── */
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--purple2);background:rgba(123,109,255,0.08);border:1px solid rgba(123,109,255,0.2);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--purple),var(--purple2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+
+/* ── DAY DIVIDER ── */
+.day-div{text-align:center;padding:48px 24px 32px;border-top:1px solid var(--border);margin-top:48px}
+.day-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:100px;padding:5px 14px;margin-bottom:14px}
+.day-title{font-family:var(--display);font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-0.03em;line-height:1.1}
+
+/* ── MODULE ── */
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--purple-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+
+/* CALLOUTS */
+.tip{background:rgba(123,109,255,0.07);border:1px solid rgba(123,109,255,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--purple2)}
+.tip strong{color:var(--purple2)}
+
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+
+/* TABLES */
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+
+/* FORMULAS */
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--purple2);text-align:center;letter-spacing:.02em}
+
+/* EXAMPLE */
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--purple)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--purple2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+
+/* TOC */
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);text-decoration:none;cursor:default;pointer-events:none;}
+
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(123,109,255,0.12);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+
+/* CTA */
+.cta-final{background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--purple-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:cta-shimmer 3.5s ease-in-out infinite}
+@keyframes cta-shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-final .nav-btn{background:white;color:var(--purple);font-size:15px;padding:12px 24px;position:relative}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+
+/* PRINT */
+@media print{
+  nav,.progress,.cta-final,.nav-right{display:none!important}
+  body{background:white;color:black}
+  .mod-body{border:1px solid #ddd;background:#f9f9f9}
+  .tip,.warn,.danger,.app-callout{border:1px solid #ccc;background:#f5f5f5}
+}
+
+/* ── QUIZ SYSTEM ── */
+.quiz-trigger { display: block; height: 8px; width: 100%; margin: 4px 0; opacity: 0; pointer-events: none; }
+
+.quiz-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(8, 9, 12, 0);
+  backdrop-filter: blur(0px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.quiz-overlay.active {
+  background: rgba(8, 9, 12, 0.88);
+  backdrop-filter: blur(8px);
+  pointer-events: all;
+  opacity: 1;
+}
+
+.quiz-modal {
+  background: #1A1D28;
+  border: 1px solid rgba(123, 109, 255, 0.25);
+  border-radius: 22px;
+  padding: 36px;
+  max-width: 540px;
+  width: 100%;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(123,109,255,0.12);
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-overlay.active .quiz-modal {
+  transform: scale(1) translateY(0);
+}
+
+.quiz-modal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7B6DFF, #A89BFF, #7B6DFF);
+  background-size: 200%;
+  animation: quiz-bar 2s linear infinite;
+}
+
+@keyframes quiz-bar {
+  0% { background-position: 0% } 100% { background-position: 200% }
+}
+
+.quiz-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #A89BFF;
+  background: rgba(123,109,255,0.1);
+  border: 1px solid rgba(123,109,255,0.2);
+  border-radius: 100px;
+  padding: 4px 12px;
+  margin-bottom: 16px;
+}
+
+.quiz-eyebrow-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #7B6DFF;
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+.quiz-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  color: #F2F3F8;
+}
+
+.quiz-subtitle {
+  font-size: 13px;
+  color: #8E93AB;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.quiz-question {
+  font-size: 16px;
+  font-weight: 600;
+  color: #F2F3F8;
+  margin-bottom: 18px;
+  line-height: 1.5;
+  padding: 16px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  border-left: 3px solid #7B6DFF;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 0;
+}
+
+.quiz-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  color: #8E93AB;
+  font-weight: 500;
+  width: 100%;
+}
+
+.quiz-opt:hover:not(:disabled) {
+  background: rgba(123,109,255,0.08);
+  border-color: rgba(123,109,255,0.3);
+  color: #F2F3F8;
+  transform: translateX(3px);
+}
+
+.quiz-opt-letter {
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  color: #555A70;
+}
+
+.quiz-opt:hover .quiz-opt-letter {
+  background: rgba(123,109,255,0.2);
+  border-color: #7B6DFF;
+  color: #A89BFF;
+}
+
+.quiz-opt.correct {
+  background: rgba(34,197,94,0.1);
+  border-color: rgba(34,197,94,0.3);
+  color: #F2F3F8;
+  cursor: default;
+}
+
+.quiz-opt.correct .quiz-opt-letter {
+  background: rgba(34,197,94,0.2);
+  border-color: #22C55E;
+  color: #22C55E;
+}
+
+.quiz-opt.wrong {
+  background: rgba(248,113,113,0.08);
+  border-color: rgba(248,113,113,0.2);
+  color: #8E93AB;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.quiz-opt.wrong .quiz-opt-letter {
+  background: rgba(248,113,113,0.15);
+  border-color: #F87171;
+  color: #F87171;
+}
+
+.quiz-opt:disabled { cursor: default; }
+
+.quiz-feedback {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.quiz-feedback.show { display: flex; }
+
+.quiz-feedback.ok {
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.2);
+  color: #22C55E;
+}
+
+.quiz-feedback.fail {
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.15);
+  color: #F87171;
+}
+
+.quiz-feedback-text strong { font-weight: 700; display: block; margin-bottom: 3px; }
+.quiz-feedback-text span { color: #8E93AB; }
+
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.quiz-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7B6DFF, #A89BFF);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.quiz-progress-label {
+  font-size: 11px;
+  color: #555A70;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.quiz-scroll-blocked { overflow: hidden !important; }
+
+.quiz-body-lock {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <div class="nav-right">
+    <a href="/resicodeo/" class="nav-btn ghost">Abrir app →</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Curso Base RESICO · 2026</div>
+  <h1>Todo sobre <em>RESICO</em><br>para freelancers</h1>
+  <p class="hero-sub">Aprende desde cero cómo funciona tu régimen fiscal, cómo facturar, cómo declarar y cómo pagar exactamente lo que debes. Sin contador, sin estrés.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 2 días intensivos</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="3" y="2" width="10" height="13" rx="1.5"/><path d="M6 5h4M6 8h4M6 11h2"/></svg> 10 módulos</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~4 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Vigente abril 2026</div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Qué es RESICO y por qué te conviene</div>
+    <div class="toc-item"><span class="toc-num">2</span>Tus 4 herramientas obligatorias</div>
+    <div class="toc-item"><span class="toc-num">3</span>Tu Constancia de Situación Fiscal</div>
+    <div class="toc-item"><span class="toc-num">4</span>Cómo emitir tu primera factura</div>
+    <div class="toc-item"><span class="toc-num">5</span>Tipos de clientes y formas de cobrar</div>
+    <div class="toc-item"><span class="toc-num">6</span>Cómo se calculan tus impuestos</div>
+    <div class="toc-item"><span class="toc-num">7</span>Tu declaración mensual paso a paso</div>
+    <div class="toc-item"><span class="toc-num">8</span>Retenciones de personas morales</div>
+    <div class="toc-item"><span class="toc-num">9</span>Gastos, IVA acreditable y complementos</div>
+    <div class="toc-item"><span class="toc-num">10</span>Calendario fiscal y errores caros</div>
+  </div>
+</div>
+
+<!-- ═══════════ DÍA 1 ═══════════ -->
+<div class="day-div">
+  <div class="day-label">Día 1</div>
+  <h2 class="day-title">Fundamentos y<br>orden de la casa</h2>
+</div>
+
+<!-- ═══ MÓDULO 1 ═══ -->
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Qué es RESICO y por qué te conviene</div>
+      <div class="mod-sub">El régimen más simple para freelancers en México</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <h3>¿Qué es RESICO?</h3>
+    <p>El <strong>Régimen Simplificado de Confianza</strong> es un régimen fiscal del SAT creado en 2022 diseñado especialmente para personas físicas con ingresos anuales menores a $3,500,000 MXN.</p>
+    <p>Lo que lo hace único: <strong>pagas entre 1% y 2.5% de ISR</strong> sobre tus ingresos cobrados. Nada más. No hay deducciones, no hay cálculos complicados, no hay contabilidad doble.</p>
+
+    <h3>¿Quién puede estar en RESICO?</h3>
+<div class="quiz-trigger" data-mod="m1" data-q="0" style="height:1px;opacity:0"></div>
+
+    <ul>
+      <li>Personas físicas con actividad empresarial o servicios profesionales</li>
+      <li>Ingresos anuales de hasta <strong>$3,500,000 MXN</strong></li>
+      <li>Que no sean socios o accionistas de empresas</li>
+      <li>Que emitan facturas a clientes nacionales (y extranjeros)</li>
+    </ul>
+
+    <h3>Freelancers que aplican</h3>
+    <p>Videógrafos, fotógrafos, diseñadores, desarrolladores, músicos, editores, arquitectos, copywriters, consultores, coaches, community managers, traductores, ilustradores, animadores… <strong>cualquier creativo o profesional independiente</strong> que facture por sus servicios.</p>
+
+    <h3>RESICO vs otros regímenes</h3>
+<div class="quiz-trigger" data-mod="m1" data-q="1" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Aspecto</th><th>RESICO</th><th>Actividades Profesionales (612)</th></tr></thead>
+      <tbody>
+        <tr><td>Tasa ISR</td><td><strong>1% - 2.5%</strong></td><td>Hasta <strong>35%</strong></td></tr>
+        <tr><td>Deducciones</td><td>No aplican</td><td>Sí (complejo)</td></tr>
+        <tr><td>Contabilidad</td><td>Básica</td><td>Detallada</td></tr>
+        <tr><td>Límite de ingresos</td><td>$3.5M anuales</td><td>Sin límite</td></tr>
+        <tr><td>Declaración mensual</td><td>Simple (prellenada)</td><td>Compleja</td></tr>
+        <tr><td>¿Necesitas contador?</td><td>Generalmente no</td><td>Casi siempre sí</td></tr>
+      </tbody>
+    </table>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> resicodeo está diseñada exclusivamente para RESICO. Todos los cálculos, tasas y fórmulas que verás en los módulos siguientes ya están programados. Solo registras tus cobros y la app hace los números.</div>
+    </div>
+
+    <div class="warn">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+      <div><strong>Si ganas más de $3.5M al año:</strong> no puedes estar en RESICO. Y si te pasas del límite estando en RESICO, el SAT te cambia automáticamente al régimen general. La app te avisa cuando llegas al 80%, 90% y 100% del límite.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 2 ═══ -->
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tus 4 herramientas obligatorias</div>
+      <div class="mod-sub">Sin estas, no puedes facturar ni declarar</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <p>Antes de emitir tu primera factura, necesitas tener 4 cosas listas. Si ya las tienes, salta al módulo 3.</p>
+
+    <h3>1. RFC (Registro Federal de Contribuyentes)</h3>
+<div class="quiz-trigger" data-mod="m2" data-q="0" style="height:1px;opacity:0"></div>
+
+<div class="quiz-trigger" data-mod="m1" data-q="2" style="height:1px;opacity:0"></div>
+
+    <p>Es tu identificación fiscal. Si nunca has trabajado formalmente, puede que ya tengas uno si alguna vez te registraste por tu CURP. Si no lo tienes, debes ir al SAT y tramitarlo presencialmente.</p>
+    <ul>
+      <li>Formato: 4 letras + 6 dígitos + 3 caracteres de homoclave</li>
+      <li>Ejemplo: <strong>GOME860215ABC</strong></li>
+      <li>Lo necesitas para absolutamente todo</li>
+    </ul>
+
+    <h3>2. e.firma (Firma electrónica avanzada)</h3>
+    <p>Es tu firma digital. Son dos archivos: un <strong>.cer</strong> (certificado) y un <strong>.key</strong> (llave privada), más una contraseña.</p>
+    <ul>
+      <li>Se tramita presencialmente en oficinas del SAT</li>
+      <li>Vigencia: <strong>4 años</strong>, después la renuevas</li>
+      <li>Con ella puedes hacer trámites importantes en el portal del SAT</li>
+      <li>Es <strong>tu identidad legal digital</strong> — protégela como tu INE</li>
+    </ul>
+
+    <h3>3. CSD (Certificado de Sello Digital)</h3>
+<div class="quiz-trigger" data-mod="m2" data-q="1" style="height:1px;opacity:0"></div>
+
+    <p>Es lo que firma tus facturas digitalmente. Sin CSD, no puedes emitir CFDI.</p>
+    <ul>
+      <li>Se tramita <strong>en línea</strong> desde el portal del SAT con tu e.firma</li>
+      <li>Son dos archivos (.cer y .key) diferentes a los de la e.firma</li>
+      <li>Vigencia: <strong>4 años</strong></li>
+    </ul>
+
+    <h3>4. Buzón Tributario</h3>
+    <p>Es tu bandeja de correo oficial con el SAT. Es obligatorio tenerlo activo.</p>
+    <ul>
+      <li>Se activa en el portal del SAT con tu e.firma</li>
+      <li>Registras un correo real y un celular</li>
+      <li>Ahí recibes notificaciones oficiales, requerimientos y cartas invitación</li>
+      <li><strong>Si no lo activas, hay multa</strong> — de $3,420 a $10,260 MXN</li>
+    </ul>
+
+    <div class="danger">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+      <div><strong>Cuidado con tu e.firma y CSD:</strong> nunca compartas los archivos .key ni las contraseñas con nadie que no sea absolutamente de confianza. Si alguien tiene tu e.firma puede hacer trámites legales a tu nombre. Guárdalos en un USB seguro o en un gestor de contraseñas.</div>
+    </div>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><path d="M10 18s7-3.5 7-8.75V4.5L10 2 3 4.5v4.75C3 14.5 10 18 10 18z"/></svg>
+      <div><strong>resicodeo nunca te pide tu e.firma ni CSD.</strong> A diferencia de otros softwares fiscales que te piden subir estos archivos para facturar por ti, nosotros solo organizamos tus datos. La emisión la haces tú directamente en el portal del SAT. Más seguro, sin riesgos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 3 ═══ -->
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu Constancia de Situación Fiscal</div>
+      <div class="mod-sub">El documento que tus clientes te van a pedir</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <p>La <strong>Constancia de Situación Fiscal (CSF)</strong> es un PDF que emite el SAT con tus datos fiscales. Tus clientes — sobre todo empresas — te la piden antes de pagarte para verificar que tu RFC, régimen y actividad sean correctos.</p>
+
+    <h3>Qué contiene</h3>
+<div class="quiz-trigger" data-mod="m3" data-q="0" style="height:1px;opacity:0"></div>
+
+<div class="quiz-trigger" data-mod="m2" data-q="2" style="height:1px;opacity:0"></div>
+
+    <ul>
+      <li>Tu nombre completo y RFC</li>
+      <li>Tu domicilio fiscal (código postal)</li>
+      <li>Tu régimen fiscal (debe decir "Régimen Simplificado de Confianza")</li>
+      <li>Tus actividades económicas registradas</li>
+      <li>Tus obligaciones fiscales vigentes</li>
+    </ul>
+
+    <h3>Cómo obtenerla</h3>
+    <ol>
+      <li>Entra a <strong>sat.gob.mx</strong></li>
+      <li>Login con RFC y contraseña (o e.firma)</li>
+      <li>Ve a "Otros trámites y servicios" → "Genera tu Constancia de Situación Fiscal"</li>
+      <li>Click en "Generar constancia" y descarga el PDF</li>
+    </ol>
+
+    <h3>Cómo verificar que está correcta</h3>
+<div class="quiz-trigger" data-mod="m3" data-q="1" style="height:1px;opacity:0"></div>
+
+    <p>Abre el PDF y verifica que diga:</p>
+    <ul>
+      <li><strong>Régimen:</strong> "Régimen Simplificado de Confianza" (626)</li>
+      <li><strong>Actividad:</strong> la que registraste para tu profesión</li>
+      <li><strong>Obligaciones:</strong> deben incluir ISR e IVA mensuales</li>
+    </ul>
+
+    <div class="warn">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+      <div><strong>Si tu actividad o régimen están mal:</strong> entra a sat.gob.mx → "Presenta el aviso de actualización de actividades económicas" → corrige tu régimen a 626 y tu actividad correcta. Si no se deja hacer en línea, agenda cita presencial.</div>
+    </div>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> cuando creas un cliente, puedes arrastrar su PDF de Constancia Fiscal y la app autocompleta RFC, razón social, código postal y régimen. Todo procesado localmente en tu navegador, sin subirlo a internet.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 4 ═══ -->
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo emitir tu primera factura</div>
+      <div class="mod-sub">CFDI 4.0 paso a paso en el portal del SAT</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <p>La factura electrónica en México se llama <strong>CFDI</strong> (Comprobante Fiscal Digital por Internet). Versión actual: <strong>4.0</strong>. Es el documento que te da validez legal sobre cada cobro.</p>
+
+    <h3>Los datos que necesitas para facturar</h3>
+<div class="quiz-trigger" data-mod="m3" data-q="2" style="height:1px;opacity:0"></div>
+
+    <ul>
+      <li><strong>Del cliente:</strong> RFC, razón social, régimen fiscal, código postal, uso del CFDI</li>
+      <li><strong>Del servicio:</strong> descripción, clave del SAT, cantidad, precio unitario</li>
+      <li><strong>Del pago:</strong> forma de pago (transferencia, efectivo, etc.), método (PUE o PPD), moneda</li>
+    </ul>
+
+    <h3>PUE vs PPD — la diferencia más importante</h3>
+<div class="quiz-trigger" data-mod="m4" data-q="0" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Método</th><th>Cuándo usarlo</th><th>Qué implica</th></tr></thead>
+      <tbody>
+        <tr><td><strong>PUE</strong> (Pago en Una Exhibición)</td><td>El cliente pagó antes o al momento de facturar</td><td>Nada extra — la factura queda completa</td></tr>
+        <tr><td><strong>PPD</strong> (Pago en Parcialidades o Diferido)</td><td>El cliente pagará después de que factures</td><td>Necesitas emitir un <strong>Complemento de Pago (REP)</strong> cuando te paguen</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warn">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+      <div><strong>No olvides el REP:</strong> si facturas PPD, cuando el dinero entre debes emitir un Complemento de Pago antes del <strong>día 5 del mes siguiente</strong> al cobro. Si no lo emites, hay multa (~$400 a $13,000 MXN por cada CFDI). La app te recuerda automáticamente.</div>
+    </div>
+
+    <h3>Paso a paso en el portal del SAT</h3>
+<div class="quiz-trigger" data-mod="m9" data-q="2" style="height:1px;opacity:0"></div>
+
+<div class="quiz-trigger" data-mod="m7" data-q="1" style="height:1px;opacity:0"></div>
+
+<div class="quiz-trigger" data-mod="m4" data-q="1" style="height:1px;opacity:0"></div>
+
+    <ol>
+      <li>Entra a <strong>portal.sat.gob.mx</strong> → Inicia sesión con e.firma o CSD</li>
+      <li>Click en <strong>"Factura Electrónica"</strong> → <strong>"Genera tu factura electrónica"</strong></li>
+      <li>Selecciona <strong>"Factura"</strong> como tipo de comprobante</li>
+      <li>Captura los datos del receptor (RFC, nombre, CP, régimen, uso CFDI del cliente)</li>
+      <li>Agrega el concepto: clave SAT, descripción, cantidad, precio unitario</li>
+      <li>Selecciona la forma de pago (03=transferencia, 01=efectivo, etc.)</li>
+      <li>Selecciona el método: PUE o PPD</li>
+      <li>Verifica IVA y retenciones (el portal te ayuda a calcularlos)</li>
+      <li>Revisa el total y click en <strong>"Sellar"</strong></li>
+      <li>Descarga <strong>XML + PDF</strong> — guarda ambos</li>
+    </ol>
+
+    <h3>Claves del SAT comunes para freelancers</h3>
+<div class="quiz-trigger" data-mod="m4" data-q="2" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Servicio</th><th>Clave SAT</th></tr></thead>
+      <tbody>
+        <tr><td>Servicios profesionales (genérico)</td><td><strong>80111600</strong></td></tr>
+        <tr><td>Producción de video</td><td><strong>82111804</strong></td></tr>
+        <tr><td>Edición de video/audio</td><td><strong>82111803</strong></td></tr>
+        <tr><td>Fotografía</td><td><strong>82121500</strong></td></tr>
+        <tr><td>Diseño gráfico</td><td><strong>82141500</strong></td></tr>
+        <tr><td>Desarrollo web/software</td><td><strong>81111500</strong></td></tr>
+        <tr><td>Servicios de publicidad</td><td><strong>80141600</strong></td></tr>
+        <tr><td>Consultoría general</td><td><strong>80111600</strong></td></tr>
+        <tr><td>Traducción / interpretación</td><td><strong>80111604</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> el asistente de facturación te pre-llena <strong>todos</strong> estos datos: receptor, concepto con clave SAT, impuestos, método de pago. Tú solo copias y pegas en el portal del SAT. De 10 minutos a 2.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 5 ═══ -->
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tipos de clientes y formas de cobrar</div>
+      <div class="mod-sub">Persona física, persona moral, extranjero — qué cambia</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <p>Según a quién le cobres, cambian los impuestos. Es crucial entender la diferencia porque afecta cuánto recibes realmente.</p>
+
+    <h3>Los 4 tipos de clientes</h3>
+<div class="quiz-trigger" data-mod="m5" data-q="0" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Tipo</th><th>Quién es</th><th>¿Retenciones?</th><th>IVA</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Persona física</strong> con factura</td><td>Un particular que te pide factura</td><td>No</td><td>16%</td></tr>
+        <tr><td><strong>Persona física</strong> sin factura</td><td>Un particular que no pide factura</td><td>No</td><td>16% (va a factura global)</td></tr>
+        <tr><td><strong>Persona moral</strong></td><td>Empresas, agencias, productoras, gobierno</td><td><strong>Sí: 10% ISR + 2/3 IVA</strong></td><td>16%</td></tr>
+        <tr><td><strong>Extranjero</strong></td><td>Clientes fuera de México</td><td>No</td><td><strong>0%</strong> (exportación)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Retenciones de persona moral — lo que más confunde</h3>
+    <p>Cuando cobras a una empresa (persona moral) por servicios profesionales, la empresa <strong>retiene</strong> parte de tus impuestos y los paga al SAT por ti. No te están quitando dinero — te están adelantando el pago de tus impuestos.</p>
+
+    <div class="example">
+      <div class="example-label">Ejemplo real</div>
+      <p>Le cobras <strong>$20,000 + IVA</strong> a una agencia (persona moral).</p>
+      <p>Subtotal: $20,000 · IVA: $3,200 · Total factura: $23,200</p>
+      <p>La agencia retiene: ISR $2,000 (10%) + IVA $2,133 (2/3 del IVA)</p>
+      <p><strong>Recibes en tu cuenta: $19,067</strong></p>
+      <p>Los $4,133 retenidos ya los pagó la agencia al SAT por ti.</p>
+    </div>
+
+    <h3>Factura global (público en general)</h3>
+<div class="quiz-trigger" data-mod="m5" data-q="1" style="height:1px;opacity:0"></div>
+
+    <p>Si cobras a personas que <strong>no te piden factura</strong>, no te salvas de facturar. Debes emitir una <strong>factura global</strong> al "Público en General" con RFC genérico <strong>XAXX010101000</strong> que acumule todos esos cobros del mes.</p>
+    <ul>
+      <li>Fecha límite: <strong>último día del mes</strong></li>
+      <li>RFC receptor: XAXX010101000</li>
+      <li>Nombre receptor: PUBLICO EN GENERAL</li>
+      <li>El IVA de estas ventas SÍ lo pagas tú al SAT</li>
+    </ul>
+
+    <h3>Clientes extranjeros</h3>
+<div class="quiz-trigger" data-mod="m5" data-q="2" style="height:1px;opacity:0"></div>
+
+    <p>Si tu cliente está fuera de México, tu servicio es una <strong>exportación</strong>:</p>
+    <ul>
+      <li>IVA: <strong>0%</strong> (no cobras IVA)</li>
+      <li>RFC del receptor: <strong>XEXX010101000</strong></li>
+      <li>El tipo de cambio para tu factura debe ser el del <strong>DOF del día del cobro</strong></li>
+    </ul>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> al seleccionar el tipo de cliente, los cálculos de retenciones e IVA se ajustan automáticamente. Si seleccionas "Persona moral" con "Servicio profesional", la app calcula 10% ISR + 2/3 IVA. Si seleccionas "Extranjero", IVA queda en 0%.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ DÍA 2 ═══════════ -->
+<div class="day-div">
+  <div class="day-label">Día 2</div>
+  <h2 class="day-title">Impuestos, declaraciones<br>y mantenimiento</h2>
+</div>
+
+<!-- ═══ MÓDULO 6 ═══ -->
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo se calculan tus impuestos</div>
+      <div class="mod-sub">ISR e IVA — las fórmulas reales con ejemplos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <p>En RESICO pagas dos impuestos: <strong>ISR</strong> (Impuesto Sobre la Renta) e <strong>IVA</strong> (Impuesto al Valor Agregado). Son completamente diferentes.</p>
+
+    <h3>ISR en RESICO — la parte buena</h3>
+<div class="quiz-trigger" data-mod="m6" data-q="0" style="height:1px;opacity:0"></div>
+
+    <p>El ISR se calcula como un porcentaje fijo de tus ingresos <strong>efectivamente cobrados</strong> del mes. Las tasas son:</p>
+
+    <table>
+      <thead><tr><th>Ingreso mensual</th><th>Tasa ISR</th></tr></thead>
+      <tbody>
+        <tr><td>Hasta $25,000</td><td><strong>1.00%</strong></td></tr>
+        <tr><td>$25,001 - $50,000</td><td><strong>1.10%</strong></td></tr>
+        <tr><td>$50,001 - $83,333</td><td><strong>1.50%</strong></td></tr>
+        <tr><td>$83,334 - $208,333</td><td><strong>2.00%</strong></td></tr>
+        <tr><td>$208,334 - $291,666</td><td><strong>2.50%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="formula">ISR = Ingresos cobrados del mes × Tasa según tabla</div>
+
+    <div class="example">
+      <div class="example-label">Ejemplo</div>
+      <p>En marzo cobraste <strong>$80,000</strong> → cae en rango $50,001-$83,333 → tasa <strong>1.50%</strong></p>
+      <p><strong>ISR a pagar = $80,000 × 1.50% = $1,200</strong></p>
+      <p>Si estuvieras en régimen 612 (Actividades Profesionales) pagarías ~$12,000-15,000 de ISR por los mismos $80K. RESICO te ahorra más del 90%.</p>
+    </div>
+
+    <div class="tip">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+      <div><strong>Palabra clave: "efectivamente cobrados".</strong> Si facturaste $100K pero solo te pagaron $60K, el ISR se calcula sobre los $60K. Las facturas pendientes de cobro no cuentan hasta que el dinero entre a tu cuenta.</div>
+    </div>
+
+    <h3>IVA — la parte que sí es igual para todos</h3>
+<div class="quiz-trigger" data-mod="m6" data-q="1" style="height:1px;opacity:0"></div>
+
+    <p>El IVA en RESICO funciona exactamente igual que en cualquier otro régimen:</p>
+
+    <div class="formula">IVA a pagar = IVA cobrado − IVA acreditable − IVA retenido</div>
+
+    <ul>
+      <li><strong>IVA cobrado:</strong> el 16% que le cobraste a tus clientes</li>
+      <li><strong>IVA acreditable:</strong> el 16% que pagaste en tus gastos con factura</li>
+      <li><strong>IVA retenido:</strong> el que las personas morales ya pagaron al SAT por ti</li>
+    </ul>
+
+    <div class="example">
+      <div class="example-label">Ejemplo completo del mes</div>
+      <p>Cobraste $80,000 a clientes → IVA cobrado: <strong>$12,800</strong></p>
+      <p>Tus gastos con factura fueron $10,000 → IVA acreditable: <strong>$1,600</strong></p>
+      <p>Una agencia te retuvo 2/3 de IVA sobre $30,000 → IVA retenido: <strong>$3,200</strong></p>
+      <p><strong>IVA a pagar = $12,800 − $1,600 − $3,200 = $8,000</strong></p>
+    </div>
+
+    <h3>Total a pagar al SAT</h3>
+<div class="quiz-trigger" data-mod="m6" data-q="2" style="height:1px;opacity:0"></div>
+
+    <div class="formula">Total = ISR ($1,200) + IVA ($8,000) = $9,200 del mes</div>
+
+    <p>Pero si las personas morales ya te retuvieron ISR, ese monto se resta del ISR a pagar. Si te retuvieron más de lo que debías, el excedente se acumula como saldo a favor.</p>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> la pestaña "Resumen" te muestra exactamente estos cálculos en automático. Solo registras tus cobros y gastos — la app aplica las tasas correctas, resta retenciones y te dice cuánto pagar.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 7 ═══ -->
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu declaración mensual paso a paso</div>
+      <div class="mod-sub">El portal del SAT te prellena casi todo</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <p>Cada mes debes presentar tu declaración mensual antes del <strong>día 17 del mes siguiente</strong>. Si el 17 cae sábado o domingo, la fecha se mueve al lunes siguiente.</p>
+
+    <h3>Cuándo declarar qué</h3>
+<div class="quiz-trigger" data-mod="m7" data-q="0" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Período</th><th>Fecha límite</th></tr></thead>
+      <tbody>
+        <tr><td>Enero</td><td>17 de febrero</td></tr>
+        <tr><td>Febrero</td><td>17 de marzo</td></tr>
+        <tr><td>Marzo</td><td>17 de abril</td></tr>
+        <tr><td>Abril</td><td>17 de mayo</td></tr>
+        <tr><td>... y así sucesivamente</td><td>Siempre el 17 del mes siguiente</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Paso a paso en el portal</h3>
+    <ol>
+      <li>Entra a <strong>sat.gob.mx</strong> → login</li>
+      <li>Ve a <strong>"Declaraciones"</strong> → <strong>"Presenta tu declaración"</strong></li>
+      <li>Selecciona el período (mes que estás declarando)</li>
+      <li>El portal te muestra los ingresos que ya conoce por tus facturas emitidas</li>
+      <li><strong>Verifica</strong> que coincidan con lo que registraste en la app</li>
+      <li>Revisa el ISR e IVA calculados</li>
+      <li>Si todo está correcto, click en <strong>"Enviar declaración"</strong></li>
+      <li>Si hay monto a pagar, te redirige al banco para pagar con transferencia o tarjeta</li>
+      <li>Guarda el acuse de recibo</li>
+    </ol>
+
+    <div class="tip">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+      <div><strong>En RESICO, el SAT te prellena la declaración.</strong> La buena noticia es que el portal ya sabe cuánto facturaste (por los CFDIs). La mayor parte del trabajo es solo verificar que los números estén bien.</div>
+    </div>
+
+    <h3>¿Qué pasa si no declaras a tiempo?</h3>
+<div class="quiz-trigger" data-mod="m7" data-q="2" style="height:1px;opacity:0"></div>
+
+    <ul>
+      <li><strong>1-3 días tarde:</strong> generalmente sin multa, pero se generan recargos mínimos</li>
+      <li><strong>Más de un mes tarde:</strong> multa de $1,810 a $22,400 MXN por cada declaración</li>
+      <li><strong>Omisión reiterada:</strong> el SAT puede sacarte de RESICO y mandarte al régimen general</li>
+    </ul>
+
+    <div class="danger">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+      <div><strong>Si dejas de declarar 3 meses seguidos:</strong> el SAT te puede cancelar tus CSD (ya no puedes facturar) y te cambia de régimen. Nunca dejes pasar un mes. Si no tuviste ingresos, presenta declaración en ceros.</div>
+    </div>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> antes de declarar, ve a "Resumen" del mes que vas a declarar. Compara los números de la app con los que muestra el portal del SAT. Si coinciden, ya la hiciste. La app también te muestra una alerta cuando se acerca el día 17.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 8 ═══ -->
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Retenciones de personas morales</div>
+      <div class="mod-sub">No te están quitando — te están adelantando</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <p>Este es el tema que más confunde a los freelancers. Cuando una empresa (persona moral) te contrata, está <strong>obligada por ley</strong> a retenerte una parte de tus impuestos y pagarlos al SAT directamente. No es que te estén cobrando — es un adelanto de lo que de todos modos ibas a pagar.</p>
+
+    <h3>¿Cuánto te retienen?</h3>
+<div class="quiz-trigger" data-mod="m8" data-q="0" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Concepto</th><th>Tasa</th><th>Base</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ISR retenido</strong></td><td>10%</td><td>Sobre el subtotal (sin IVA)</td></tr>
+        <tr><td><strong>IVA retenido</strong></td><td>2/3 del IVA</td><td>Sobre el IVA (10.667% del subtotal)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="example">
+      <div class="example-label">Desglose completo</div>
+      <p>Facturas <strong>$50,000 + IVA</strong> a una productora (persona moral).</p>
+      <p>Subtotal: $50,000</p>
+      <p>IVA (16%): $8,000</p>
+      <p>Total factura: $58,000</p>
+      <p>Retención ISR (10%): −$5,000</p>
+      <p>Retención IVA (2/3): −$5,333</p>
+      <p><strong>Te depositan: $47,667</strong></p>
+      <p style="margin-top:8px">Los $10,333 no desaparecen — la productora los pagó al SAT a tu nombre. Cuando declares el mes, esos montos aparecen como "retenciones a favor" y se restan de lo que debes.</p>
+    </div>
+
+    <h3>¿Puedo tener saldo a favor?</h3>
+<div class="quiz-trigger" data-mod="m8" data-q="1" style="height:1px;opacity:0"></div>
+
+    <p>Sí. Si la mayoría de tus clientes son personas morales, puede que las retenciones cubran más de lo que debías de ISR. Ese excedente se acumula como <strong>saldo a favor</strong> y puedes compensarlo en meses futuros o solicitar devolución.</p>
+
+    <div class="tip">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+      <div><strong>La constancia de retenciones:</strong> cada año (entre enero y febrero), las personas morales que te pagaron deben emitir una constancia de retenciones. Ese documento confirma cuánto te retuvieron y cuánto pagaron al SAT por ti. Guárdala — la necesitas para la declaración anual.</div>
+    </div>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> al registrar un cobro a persona moral con servicio profesional, las retenciones se calculan automáticamente. El resumen mensual muestra por separado: ISR bruto, ISR retenido, ISR a pagar — y lo mismo para IVA.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 9 ═══ -->
+<div class="mod" id="m9">
+  <div class="mod-header">
+    <div class="mod-num">09</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos, IVA acreditable y complementos</div>
+      <div class="mod-sub">Lo que te puedes "recuperar" de tus gastos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <h3>¿Los gastos reducen mis impuestos en RESICO?</h3>
+<div class="quiz-trigger" data-mod="m9" data-q="0" style="height:1px;opacity:0"></div>
+
+<div class="quiz-trigger" data-mod="m8" data-q="2" style="height:1px;opacity:0"></div>
+
+    <p><strong>El ISR no.</strong> En RESICO no existen las deducciones personales para ISR. Pagas tu porcentaje sobre ingresos cobrados, punto.</p>
+    <p><strong>El IVA sí.</strong> Si compraste equipo, software, gasolina, etc. <strong>con factura</strong>, el IVA de esos gastos se resta del IVA que debes pagar.</p>
+
+    <div class="formula">IVA a pagar = IVA cobrado a clientes − IVA de tus gastos con factura − IVA retenido</div>
+
+    <div class="example">
+      <div class="example-label">Ejemplo</div>
+      <p>Compraste un lente por $15,000 + IVA ($2,400). Tienes la factura del proveedor.</p>
+      <p>Ese mes cobraste $50,000 → IVA cobrado: $8,000</p>
+      <p>IVA a pagar sin gasto: $8,000</p>
+      <p>IVA a pagar con gasto: $8,000 − $2,400 = <strong>$5,600</strong></p>
+      <p><strong>Te ahorraste $2,400 de IVA.</strong></p>
+    </div>
+
+    <h3>Requisitos para acreditar IVA</h3>
+<div class="quiz-trigger" data-mod="m9" data-q="1" style="height:1px;opacity:0"></div>
+
+    <ul>
+      <li>El gasto debe tener <strong>CFDI vigente a tu nombre/RFC</strong></li>
+      <li>El gasto debe ser <strong>estrictamente indispensable</strong> para tu actividad</li>
+      <li>Debes pagar con <strong>medio bancarizado</strong> (transferencia, tarjeta) si es mayor a $2,000</li>
+      <li>Debes conservar el XML del CFDI por <strong>5 años</strong></li>
+    </ul>
+
+    <h3>Complemento de Pago (REP)</h3>
+    <p>Si emitiste una factura con método <strong>PPD</strong>, cuando el cliente te paga debes emitir un <strong>Complemento de Pago</strong>:</p>
+    <ul>
+      <li>Fecha límite: <strong>día 5 del mes siguiente al cobro</strong></li>
+      <li>Lo emites en el portal del SAT → Factura Electrónica → Complemento</li>
+      <li>Necesitas: UUID de la factura original, fecha del pago, monto, forma de pago</li>
+    </ul>
+
+    <div class="warn">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+      <div><strong>Pide factura por TODO lo que compres para tu trabajo.</strong> Aunque no reduce tu ISR, sí reduce tu IVA. Un freelancer que gasta $10K/mes en equipo y no pide factura está regalándole $1,600/mes al SAT.</div>
+    </div>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> registra cada gasto con factura marcando "Tiene CFDI" — la app resta automáticamente ese IVA del IVA que debes pagar. El resumen mensual te muestra tu IVA acreditable como línea separada. También te recuerda emitir los REP pendientes antes del día 5.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MÓDULO 10 ═══ -->
+<div class="mod" id="m10">
+  <div class="mod-header">
+    <div class="mod-num">10</div>
+    <div class="mod-meta">
+      <div class="mod-title">Calendario fiscal y errores caros</div>
+      <div class="mod-sub">El año en una vista — y lo que no debes hacer</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <h3>Tu calendario fiscal mensual</h3>
+<div class="quiz-trigger" data-mod="m10" data-q="0" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Fecha</th><th>Obligación</th><th>Consecuencia si no cumples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Día 5</strong></td><td>Emitir Complementos de Pago (REP)</td><td>Multa $400 - $13,000 por CFDI</td></tr>
+        <tr><td><strong>Día 17</strong></td><td>Presentar declaración mensual + pagar</td><td>Multa $1,810 - $22,400 + recargos</td></tr>
+        <tr><td><strong>Último día</strong></td><td>Emitir factura global (público en general)</td><td>Multa + ingresos no declarados</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Fechas anuales importantes</h3>
+<div class="quiz-trigger" data-mod="m10" data-q="1" style="height:1px;opacity:0"></div>
+
+    <table>
+      <thead><tr><th>Fecha</th><th>Qué hacer</th></tr></thead>
+      <tbody>
+        <tr><td><strong>31 enero</strong></td><td>Última fecha para cambio de régimen o actividades</td></tr>
+        <tr><td><strong>Enero-febrero</strong></td><td>Solicitar constancias de retenciones a personas morales</td></tr>
+        <tr><td><strong>Marzo-abril</strong></td><td>Declaración anual (si aplica en tu caso)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Los 7 errores más caros</h3>
+<div class="quiz-trigger" data-mod="m10" data-q="2" style="height:1px;opacity:0"></div>
+
+    <ol>
+      <li><strong>No declarar un mes</strong> — multa + si acumulas 3 meses, te sacan de RESICO</li>
+      <li><strong>Olvidar el REP</strong> — multa por cada CFDI en PPD sin complemento</li>
+      <li><strong>No emitir factura global</strong> — el SAT detecta ingresos sin facturar y te requiere</li>
+      <li><strong>Pasar el límite de $3.5M sin darte cuenta</strong> — cambio forzoso de régimen</li>
+      <li><strong>No tener Buzón Tributario activo</strong> — multa y te pierdes notificaciones</li>
+      <li><strong>Facturar con datos incorrectos del cliente</strong> — la factura puede ser rechazada o cancelada</li>
+      <li><strong>No guardar XMLs por 5 años</strong> — si te auditan, no tienes respaldo legal</li>
+    </ol>
+
+    <div class="app-callout">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="18" height="18"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+      <div><strong>En la app:</strong> el Calendario fiscal te muestra todas estas fechas mes a mes con alertas automáticas 7 días antes de cada una. Te avisa del REP, la declaración y la factura global. También te muestra el avance hacia el límite de $3.5M. Esencialmente, la app te protege de cometer los 7 errores caros de esta lista.</div>
+    </div>
+
+    <h3>¿Y la declaración anual?</h3>
+    <p>En RESICO, <strong>generalmente no</strong> tienes obligación de presentar declaración anual si solo tienes ingresos por actividad profesional. Sin embargo, si también tienes otros ingresos (salarios, arrendamiento), puede que sí aplique. Consulta con el SAT o un contador si tienes dudas sobre tu caso.</p>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <h2>Ya sabes lo básico. Ahora practica.</h2>
+  <p>Abre la app, registra tu primer cobro, y ve cómo los cálculos se hacen solos.</p>
+  <a href="/resicodeo/" class="nav-btn">Abrir resicodeo →</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo e informativo. No constituye asesoría fiscal profesional. Las tasas, fórmulas y procedimientos descritos reflejan las reglas vigentes a abril de 2026. La normativa fiscal puede cambiar — verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos, consulta a un Contador Público certificado o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  const s=window.scrollY||document.documentElement.scrollTop;
+  document.getElementById('prog').style.width=(s/h*100)+'%';
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+
+// Reveal
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+  <div class="quiz-modal" id="quizModal">
+    <div class="quiz-eyebrow">
+      <span class="quiz-eyebrow-dot"></span>
+      Pregunta Sorpresa
+    </div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title" id="quizTitle">¿Entendiste este bloque?</div>
+    <div class="quiz-subtitle" id="quizSubtitle">Para continuar, responde esta pregunta sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ════════════════════════════════════════════════════
+// SISTEMA DE VALIDACION DE APRENDIZAJE — resicodeo
+// Logica: progreso real de scroll por modulo (%)
+// Disparadores: 25%, 50%, 75% del contenido del modulo
+// Preguntas: estrictamente del modulo actual
+// ════════════════════════════════════════════════════
+
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "Segun lo que acabas de leer, cual es la tasa maxima de ISR en RESICO?",
+      "opts": [
+        "10%",
+        "2.5%",
+        "16%",
+        "35%"
+      ],
+      "correct": 1,
+      "hint": "RESICO tiene tasas muy bajas. La tabla que leiste muestra rangos de 1% a 2.5%."
+    },
+    {
+      "q": "Cual es el limite de ingresos anuales para permanecer en RESICO?",
+      "opts": [
+        "$2,000,000 MXN",
+        "$3,500,000 MXN",
+        "$1,000,000 MXN",
+        "$5,000,000 MXN"
+      ],
+      "correct": 1,
+      "hint": "El modulo 1 menciona este limite como uno de los requisitos principales."
+    },
+    {
+      "q": "Segun el modulo 1, sobre que base se calcula el ISR en RESICO?",
+      "opts": [
+        "Sobre los ingresos efectivamente cobrados del mes",
+        "Sobre el promedio anual de ingresos",
+        "Sobre el total de facturas emitidas sin importar si estan pagadas",
+        "Sobre las ganancias netas despues de gastos"
+      ],
+      "correct": 0,
+      "hint": "La diferencia clave: cobrado vs facturado. Solo cuenta el dinero que ya entro."
+    }
+  ],
+  "m2": [
+    {
+      "q": "Segun el modulo 2, cual es la diferencia principal entre e.firma y CSD?",
+      "opts": [
+        "La e.firma es tu identidad digital general y el CSD firma tus facturas especificamente",
+        "El CSD se usa para declarar y la e.firma para facturar",
+        "Son exactamente lo mismo",
+        "La e.firma caduca en 1 año y el CSD en 4"
+      ],
+      "correct": 0,
+      "hint": "El modulo 2 explica que ambos son archivos .cer y .key pero con propositos distintos."
+    },
+    {
+      "q": "Que consecuencia tiene NO activar tu Buzon Tributario segun lo que leiste?",
+      "opts": [
+        "Solo pierdes notificaciones del SAT",
+        "Hay multa de $3,420 a $10,260 MXN",
+        "Te cancela el RFC automaticamente",
+        "No pasa nada, es opcional"
+      ],
+      "correct": 1,
+      "hint": "El modulo 2 menciona la multa especifica por no activarlo."
+    },
+    {
+      "q": "A diferencia de la e.firma, donde se tramita el CSD?",
+      "opts": [
+        "En linea desde el portal del SAT usando tu e.firma",
+        "Se genera automaticamente con el RFC",
+        "En cualquier banco autorizado",
+        "Tambien presencialmente en el SAT"
+      ],
+      "correct": 0,
+      "hint": "El modulo 2 destaca que el CSD puedes obtenerlo sin ir al SAT fisicamente."
+    }
+  ],
+  "m3": [
+    {
+      "q": "Que clave de regimen debe aparecer en tu Constancia si estas en RESICO?",
+      "opts": [
+        "626",
+        "621",
+        "612",
+        "601"
+      ],
+      "correct": 0,
+      "hint": "El modulo 3 indica el numero que identifica al Regimen Simplificado de Confianza."
+    },
+    {
+      "q": "Segun el modulo 3, para que sirve principalmente la Constancia de Situacion Fiscal?",
+      "opts": [
+        "Para que tus clientes verifiquen tu RFC, regimen y actividad antes de pagarte",
+        "Es un comprobante de pago al SAT",
+        "Solo para tramitar el RFC por primera vez",
+        "Para pagar impuestos anuales"
+      ],
+      "correct": 0,
+      "hint": "El modulo 3 explica que tus clientes, especialmente empresas, la solicitan antes de pagarte."
+    },
+    {
+      "q": "En resicodeo, que sucede cuando subes el PDF de la Constancia Fiscal de un cliente?",
+      "opts": [
+        "Se sube al servidor de resicodeo para validacion",
+        "Se procesa en tu navegador y autocompleta RFC, nombre, CP y regimen",
+        "Se manda al SAT para verificacion",
+        "Se convierte en factura automaticamente"
+      ],
+      "correct": 1,
+      "hint": "El modulo 3 resalta que resicodeo procesa todo localmente, sin subir nada a internet."
+    }
+  ],
+  "m4": [
+    {
+      "q": "Segun el modulo 4, cuando debes usar el metodo PPD al facturar?",
+      "opts": [
+        "Cuando cobras en efectivo",
+        "Cuando el cliente es persona fisica",
+        "Cuando el cliente ya pago antes de que emitas la factura",
+        "Cuando el cliente pagara despues de que emitas la factura"
+      ],
+      "correct": 3,
+      "hint": "PPD significa Pago en Parcialidades o Diferido. El dinero llega despues de facturar."
+    },
+    {
+      "q": "Si facturas PPD y el cliente te paga en mayo, cual es el limite para emitir el REP?",
+      "opts": [
+        "5 de junio",
+        "17 de junio",
+        "30 dias habiles despues del pago",
+        "31 de mayo"
+      ],
+      "correct": 0,
+      "hint": "El modulo 4 especifica: antes del dia 5 del mes siguiente al cobro."
+    },
+    {
+      "q": "Cual es la clave SAT para Servicios profesionales generico segun la tabla del modulo 4?",
+      "opts": [
+        "81111500",
+        "80111600",
+        "80141600",
+        "82111804"
+      ],
+      "correct": 1,
+      "hint": "El modulo 4 incluye una tabla de claves. Esta es la mas comun para freelancers generales."
+    }
+  ],
+  "m5": [
+    {
+      "q": "Segun el modulo 5, que RFC debes usar para la factura global de clientes sin factura en Mexico?",
+      "opts": [
+        "El RFC del SAT central",
+        "XAXX010101000",
+        "XEXX010101000",
+        "Tu propio RFC"
+      ],
+      "correct": 1,
+      "hint": "El modulo 5 menciona dos RFC genericos distintos segun si el cliente es nacional o extranjero."
+    },
+    {
+      "q": "Que porcentaje de IVA cobras cuando tu cliente esta en el extranjero?",
+      "opts": [
+        "10%",
+        "0%",
+        "8%",
+        "16%"
+      ],
+      "correct": 1,
+      "hint": "El modulo 5 explica que los servicios al extranjero se consideran exportacion."
+    },
+    {
+      "q": "Segun el modulo 5, cuando una persona moral te contrata, que porcentaje de ISR te retiene?",
+      "opts": [
+        "16% sobre el total de la factura",
+        "10% sobre el subtotal sin IVA",
+        "1.5% segun la tabla RESICO",
+        "2 tercios del IVA total"
+      ],
+      "correct": 1,
+      "hint": "El modulo 5 tabla: ISR retenido es 10% sobre el subtotal, no sobre el total con IVA."
+    }
+  ],
+  "m6": [
+    {
+      "q": "Segun la tabla del modulo 6, si tus ingresos del mes fueron $60,000, que tasa de ISR aplica?",
+      "opts": [
+        "2.00%",
+        "1.00%",
+        "1.50%",
+        "1.10%"
+      ],
+      "correct": 2,
+      "hint": "El modulo 6 tiene una tabla de tasas. El rango de $50,001 a $83,333 tiene tasa de 1.50%."
+    },
+    {
+      "q": "Cual es la formula correcta del IVA a pagar segun el modulo 6?",
+      "opts": [
+        "IVA cobrado multiplicado por 16%",
+        "Total ingresos multiplicado por 16%",
+        "IVA cobrado menos IVA acreditable menos IVA retenido",
+        "IVA cobrado mas IVA gastos mas IVA retenido"
+      ],
+      "correct": 2,
+      "hint": "El modulo 6 muestra la formula. El acreditable y el retenido se restan, reducen lo que debes."
+    },
+    {
+      "q": "Segun el modulo 6, sobre que ingresos se calcula el ISR en RESICO?",
+      "opts": [
+        "Solo sobre los ingresos efectivamente cobrados ese mes",
+        "Sobre los ingresos menos los gastos del mes",
+        "Sobre todas las facturas emitidas aunque no esten cobradas",
+        "Sobre el promedio de los ultimos 12 meses"
+      ],
+      "correct": 0,
+      "hint": "El modulo 6 resalta esto como ventaja clave: pagas cuando cobras, no cuando facturas."
+    }
+  ],
+  "m7": [
+    {
+      "q": "Segun el modulo 7, cual es la fecha limite para declarar el mes de marzo?",
+      "opts": [
+        "5 de abril",
+        "17 de abril",
+        "17 de marzo",
+        "31 de marzo"
+      ],
+      "correct": 1,
+      "hint": "El modulo 7 explica la regla: declaras el mes siguiente, siempre el dia 17."
+    },
+    {
+      "q": "Que consecuencia grave puede ocurrir si no declaras 3 meses seguidos?",
+      "opts": [
+        "Solo acumulas recargos economicos",
+        "El SAT puede cancelar tu CSD y sacarte de RESICO",
+        "Te envian una carta y nada mas",
+        "La declaracion se presenta sola con tus XMLs"
+      ],
+      "correct": 1,
+      "hint": "El modulo 7 advierte que la omision repetida tiene consecuencias mas alla de las multas."
+    },
+    {
+      "q": "Que ventaja tiene RESICO al hacer la declaracion mensual segun el modulo 7?",
+      "opts": [
+        "No tienes que declarar nada",
+        "Solo declaras una vez al ano",
+        "Puedes declarar hasta 3 meses despues sin multa",
+        "El portal del SAT prellena la declaracion con base en tus facturas emitidas"
+      ],
+      "correct": 3,
+      "hint": "El modulo 7 explica que el SAT ya conoce tus facturas y puede prellenar la declaracion."
+    }
+  ],
+  "m8": [
+    {
+      "q": "Segun el ejemplo del modulo 8: te pagan $30,000 mas IVA con todas las retenciones. Cuanto recibes aproximadamente?",
+      "opts": [
+        "$34,800 completos",
+        "$24,000",
+        "Aproximadamente $28,600",
+        "$30,000 exactos"
+      ],
+      "correct": 2,
+      "hint": "El modulo 8 tiene el ejemplo: retienen 10% ISR ($3,000) mas 2/3 IVA ($3,200). Descuenta del total."
+    },
+    {
+      "q": "Segun el modulo 8, el dinero que te retiene una empresa a donde va realmente?",
+      "opts": [
+        "Lo paga la empresa al SAT a tu nombre como adelanto de tus impuestos",
+        "Se pierde si no lo reclamas en 30 dias",
+        "Se guarda en una cuenta hasta que declares",
+        "Se lo queda la empresa como comision"
+      ],
+      "correct": 0,
+      "hint": "El modulo 8 deja claro: no es un descuento, es un pago anticipado de tus impuestos al SAT."
+    },
+    {
+      "q": "Segun el modulo 8, que es la constancia de retenciones y cuando debes pedirla?",
+      "opts": [
+        "Una constancia de que ya pagaste todos tus impuestos",
+        "No existe en Mexico",
+        "Un documento del SAT que llega automaticamente en diciembre",
+        "Un documento que emite cada empresa que te pago, lo pides entre enero y febrero"
+      ],
+      "correct": 3,
+      "hint": "El modulo 8 menciona que las empresas la emiten entre enero y febrero de cada ano."
+    }
+  ],
+  "m9": [
+    {
+      "q": "Segun el modulo 9, los gastos con factura reducen tu ISR en RESICO?",
+      "opts": [
+        "Si, pero solo gastos mayores a $5,000",
+        "Si, como en cualquier otro regimen",
+        "No, en RESICO no hay deducciones de ISR pero si reducen el IVA a pagar",
+        "Solo si son gastos de equipo fisico"
+      ],
+      "correct": 2,
+      "hint": "El modulo 9 lo aclara al inicio: sin deducciones de ISR, pero el IVA de gastos si se acredita."
+    },
+    {
+      "q": "¿Cuántos años debes conservar los XMLs de tus facturas de gastos según el módulo 9?",
+      "opts": [
+        "3 años",
+        "10 años",
+        "1 año",
+        "5 años"
+      ],
+      "correct": 3,
+      "hint": "El modulo 9 menciona el plazo que marca el Codigo Fiscal de la Federacion."
+    },
+    {
+      "q": "Segun el modulo 9, si compraste equipo por $20,000 mas IVA con factura, que efecto tiene?",
+      "opts": [
+        "No tiene ningun efecto en RESICO",
+        "Reduces tanto ISR como IVA en $3,200 cada uno",
+        "Reduces el IVA que debes pagar en $3,200",
+        "Reduces tu ISR en $3,200"
+      ],
+      "correct": 2,
+      "hint": "El modulo 9 explica: el IVA de tus gastos ($3,200) se acredita contra el IVA que debes al SAT."
+    }
+  ],
+  "m10": [
+    {
+      "q": "Segun la tabla del modulo 10, cual es la fecha limite mensual para emitir los Complementos de Pago REP?",
+      "opts": [
+        "Ultimo dia del mes",
+        "Dia 10",
+        "Dia 17",
+        "Dia 5"
+      ],
+      "correct": 3,
+      "hint": "El modulo 10 tiene una tabla de fechas. El REP tiene su propia fecha, diferente a la declaracion."
+    },
+    {
+      "q": "Cual de estos es uno de los 7 errores mas caros listados en el modulo 10?",
+      "opts": [
+        "Tener mas de 5 clientes persona moral al mismo tiempo",
+        "No emitir la factura global del publico en general al fin de mes",
+        "Registrar gastos sin factura en la app",
+        "Usar el portal del SAT en lugar de un software externo"
+      ],
+      "correct": 1,
+      "hint": "El modulo 10 lista 7 errores. La factura global es obligatoria aunque los clientes no la pidan."
+    },
+    {
+      "q": "Segun el modulo 10, tienes obligacion de declaracion anual si solo tienes ingresos profesionales en RESICO?",
+      "opts": [
+        "Si, siempre es obligatoria para todos",
+        "No, generalmente no salvo que tengas otros tipos de ingresos",
+        "Solo si superaste $1 millon en el ano",
+        "Solo si cambiaste de regimen durante el ano"
+      ],
+      "correct": 1,
+      "hint": "El modulo 10 menciona esto como una simplificacion de RESICO frente a otros regimenes."
+    }
+  ]
+};
+
+// Estado global
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+// moduleState[modId] = { fired: [0,1], answered: 0 }
+
+// Inicializar estado de cada modulo
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    // Fisher-Yates shuffle
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = {
+      questions: qs,     // preguntas en orden mezclado
+      fired: [],         // indices de triggers ya disparados [0,1,2]
+      answered: 0        // cuantas respondio correctamente
+    };
+  }
+}
+
+// ════════════════════════════════════
+// CALCULO DE PROGRESO POR MODULO
+// Retorna 0-100 de cuanto del modulo
+// ya esta visible/scrolleado
+// ════════════════════════════════════
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const viewH = window.innerHeight;
+  const modH  = modEl.offsetHeight;
+
+  // Cuanto del modulo ya paso por el viewport
+  // rect.top: distancia del top del modulo al top del viewport
+  // Si rect.top < 0, significa que ya scrolleamos mas alla del inicio
+  const scrolled = Math.max(0, -rect.top);
+  const pct = Math.min(100, (scrolled / modH) * 100);
+  return pct;
+}
+
+// ════════════════════════════════════
+// CHECKPOINTS DE CADA MODULO
+// Se dispara en 25%, 50%, 75%
+// ════════════════════════════════════
+const CHECKPOINT = 90; // % del modulo para disparar las 3 preguntas juntas al final
+
+function checkModules() {
+  if (quizLocked) return;
+
+  const mods = document.querySelectorAll('.mod[id]');
+  mods.forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+
+    initModuleState(modId);
+    const state = moduleState[modId];
+    const pct   = getModuleProgress(mod);
+
+    // Solo un checkpoint: 90% del modulo
+    // Si ya se disparo o ya respondio todas, ignorar
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (pct < CHECKPOINT) return;
+
+    // Marcar como disparado e iniciar secuencia de las 3 preguntas
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+// ════════════════════════════════════
+// MOSTRAR PREGUNTA
+// ════════════════════════════════════
+function showQuestion(modId, q, checkpointIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+
+  // Guardar scroll y bloquear body
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top      = '-' + quizScrollY + 'px';
+  document.body.style.width    = '100%';
+  document.body.style.overflow = 'hidden';
+
+  // Mostrar overlay con animacion
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, checkpointIdx);
+  }));
+}
+
+function renderQuestion(modId, q, checkpointIdx) {
+  // Progress indicator
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+
+  // Contenido
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+
+  // Opciones con animacion de entrada
+  const letters = ['A', 'B', 'C', 'D'];
+  const optsEl  = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, checkpointIdx));
+    optsEl.appendChild(btn);
+  });
+  // Fade in suave de las opciones
+  requestAnimationFrame(() => {
+    optsEl.style.transition = 'opacity 0.3s ease';
+    optsEl.style.opacity = '1';
+  });
+}
+
+// ════════════════════════════════════
+// MANEJAR RESPUESTA
+// ════════════════════════════════════
+function handleAnswer(selected, correct, hint, modId, checkpointIdx) {
+  const optBtns = document.querySelectorAll('.quiz-opt');
+  optBtns.forEach(b => b.disabled = true);
+
+  const isCorrect = selected === correct;
+  optBtns[selected].classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) optBtns[correct].classList.add('correct');
+
+  const fb    = document.getElementById('quizFeedback');
+  const title = document.getElementById('quizFeedbackTitle');
+  const msg   = document.getElementById('quizFeedbackMsg');
+
+  if (isCorrect) {
+    // ✅ CORRECTO — siguiente pregunta del mismo módulo o cerrar
+    fb.className = 'quiz-feedback ok show';
+    moduleState[modId].answered++;
+    const remaining = QUESTIONS[modId].length - moduleState[modId].answered;
+
+    if (remaining > 0) {
+      title.textContent = '¡Correcto!';
+      msg.textContent   = 'Siguiente pregunta del módulo...';
+      setTimeout(() => {
+        // Mostrar siguiente pregunta sin desbloquear scroll
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, checkpointIdx);
+      }, 1200);
+    } else {
+      title.textContent = '¡Módulo completado!';
+      msg.textContent   = 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. Puedes continuar.';
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+
+  } else {
+    // ❌ INCORRECTO — regresar al inicio del modulo
+    fb.className = 'quiz-feedback fail show';
+    title.textContent = 'Respuesta incorrecta.';
+    msg.textContent   = 'Pista: ' + hint + ' Regresaras al inicio del modulo para releer el contenido.';
+
+    // Reset completo: quitar fired para que vuelva a dispararse cuando relean
+    moduleState[modId].fired = [];
+
+    setTimeout(() => {
+      closeQuiz(false, modId);
+    }, 2800);
+  }
+}
+
+// ════════════════════════════════════
+// CERRAR QUIZ
+// ════════════════════════════════════
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+
+  setTimeout(() => {
+    overlay.style.display = 'none';
+
+    // Restaurar body
+    document.body.style.position = '';
+    document.body.style.top      = '';
+    document.body.style.width    = '';
+    document.body.style.overflow = '';
+
+    if (success) {
+      // CORRECTO: restaurar exactamente donde estaba
+      window.scrollTo(0, quizScrollY);
+    } else {
+      // INCORRECTO: ir al inicio del modulo
+      const el = document.getElementById(modIdToReset);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
+    }
+
+    quizLocked = false;
+  }, 380);
+}
+
+// ════════════════════════════════════
+// BLOQUEO DE SCROLL MIENTRAS MODAL
+// ════════════════════════════════════
+window.addEventListener('wheel',     e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown',   e => {
+  if (!quizLocked) return;
+  if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault();
+});
+
+// ════════════════════════════════════
+// LISTENER DE SCROLL — revisar progreso
+// Throttled a 120ms para no sobrecargar
+// ════════════════════════════════════
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => {
+    checkModules();
+    scrollThrottle = null;
+  }, 120);
+}, { passive: true });
+
+// Init al cargar
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Quiz system listo. Modulos:', Object.keys(QUESTIONS).length);
+  checkModules();
+});
+</script>
+</body>

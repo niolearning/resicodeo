@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Desarrolladores Freelance · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#06B6D4;--accent2:#A5F3FC;--accent-glow:rgba(6,182,212,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Desarrollo de Software</div>
+  <h1><em>RESICO para Desarrolladores Freelance</em></h1>
+  <p class="hero-sub">Maneja tu régimen fiscal con ejemplos reales de proyectos web, apps, SaaS, APIs y trabajo remoto internacional. Hecho para devs que prefieren el código a los papeles.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar proyectos de desarrollo</div>
+    <div class="toc-item"><span class="toc-num">3</span>Contratos y milestones en proyectos tech</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles del desarrollador</div>
+    <div class="toc-item"><span class="toc-num">5</span>Trabajo remoto para empresas extranjeras</div>
+    <div class="toc-item"><span class="toc-num">6</span>SaaS y productos propios en RESICO</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales del desarrollador</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Claves SAT para desarrollo y cómo encajas en el régimen</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad ante el SAT</h3>
+<ul>
+  <li><strong>Desarrollo web / backend:</strong> Servicios de desarrollo de software (81111500)</li>
+  <li><strong>Desarrollo móvil:</strong> Servicios de desarrollo de aplicaciones (81111502)</li>
+  <li><strong>DevOps / infraestructura:</strong> Servicios de tecnología de información (81111600)</li>
+  <li><strong>QA / Testing:</strong> Servicios de pruebas de software (81111503)</li>
+  <li><strong>Consultoría técnica:</strong> Consultoría en TI (81111601)</li>
+</ul>
+
+<h3>Tipos de ingreso del desarrollador</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Cliente</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td>Proyecto web fijo (landing, e-commerce)</td><td>Persona física o moral</td><td>Precio cerrado por entregable</td></tr>
+    <tr><td>Desarrollo por horas (hour-rate)</td><td>Persona moral o extranjero</td><td>Factura mensual por horas</td></tr>
+    <tr><td>Mantenimiento mensual (retainer)</td><td>Persona moral</td><td>Recurrente — ideal para RESICO</td></tr>
+    <tr><td>Trabajo remoto para empresa extranjera</td><td>Extranjero</td><td>IVA 0%, dólares/euros</td></tr>
+    <tr><td>SaaS o producto propio</td><td>Mixto</td><td>Puede ser persona moral o extranjero</td></tr>
+  </tbody>
+</table>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> los desarrolladores suelen tener clientes de diferentes tipos en el mismo mes. La app calcula las retenciones e IVA correctamente para cada tipo sin que tengas que recordar las reglas.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar proyectos de desarrollo</div>
+      <div class="mod-sub">Precio fijo, por hora y retainer con impuestos correctos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Los 3 modelos de cotización en desarrollo</h3>
+<ul>
+  <li><strong>Precio fijo:</strong> $X por el proyecto completo. El cliente sabe el costo desde el inicio.</li>
+  <li><strong>Por hora:</strong> $X/hora. Facturas mensualmente las horas trabajadas.</li>
+  <li><strong>Retainer:</strong> $X/mes por disponibilidad y trabajo definido.</li>
+</ul>
+
+<div class="example">
+  <div class="example-label">App móvil para empresa (persona moral) — precio fijo</div>
+  <p>Quieres ganar limpios: <strong>$80,000</strong> por el proyecto</p>
+  <p>Cotización: ~$100,000 + IVA = $116,000 total factura</p>
+  <p>Retenciones: −$10,000 ISR − $10,667 IVA</p>
+  <p>Recibes: $95,333 → menos ISR directo → neto ~$80,000</p>
+</div>
+
+<h3>Hora rate con cliente extranjero</h3>
+<p>Si trabajas por horas para una empresa en USA o Europa:</p>
+<ul>
+  <li>Acordar el rate en USD (ej: $45 USD/hora)</li>
+  <li>Al fin del mes, calcular horas × rate = total en USD</li>
+  <li>Convertir a MXN con tipo de cambio DOF del último día del mes</li>
+  <li>Emitir factura en MXN con IVA 0% (exportación)</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Rate en dólares + RESICO = combinación poderosa:</strong> si facturas $40 USD/hora y trabajas 120 horas al mes, son $4,800 USD = ~$82,000 MXN. ISR: 1.5% = $1,230 MXN. Con régimen 612 pagarías $15,000+ de ISR por los mismos ingresos.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> guarda tu paquete de retainer mensual con el rate acordado. Para proyectos por horas, registra el cobro mensual con la descripción "N horas × $X USD rate = $Y MXN" para tener el historial claro.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Contratos y milestones en proyectos tech</div>
+      <div class="mod-sub">Cómo estructurar pagos en proyectos de software</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Estructura de pagos en proyectos de desarrollo</h3>
+<p>Los proyectos de software suelen tener fases claras que pueden traducirse en milestones de pago:</p>
+
+<table>
+  <thead><tr><th>Milestone</th><th>% típico</th><th>Cuándo facturar</th></tr></thead>
+  <tbody>
+    <tr><td>Firma de contrato / kick-off</td><td>25-30%</td><td>Al inicio, cuando recibes el anticipo</td></tr>
+    <tr><td>Entrega de diseño / arquitectura</td><td>20-25%</td><td>Al aprobar el cliente</td></tr>
+    <tr><td>MVP / primera versión funcional</td><td>25%</td><td>Al entregar y aprobar</td></tr>
+    <tr><td>Entrega final / deployment</td><td>20-25%</td><td>Al hacer go-live</td></tr>
+  </tbody>
+</table>
+
+<h3>Contratos de mantenimiento</h3>
+<p>Muchos proyectos incluyen un periodo de mantenimiento post-entrega (1-6 meses). Esto puede facturarse:</p>
+<ul>
+  <li>Como parte del precio final del proyecto</li>
+  <li>Como retainer mensual separado después de la entrega</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Scope creep fiscal:</strong> cuando el cliente pide funcionalidades extra fuera del alcance original, emite una nueva orden de trabajo y una nueva factura. Si lo incluyes "de gratis", estás trabajando sin documentar y sin ingreso declarado — si después hay disputa, no tienes respaldo.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada milestone como cobro independiente con su fecha real. Al declarar el mes, solo cuentan los milestones que se pagaron ese mes — exactamente como RESICO lo requiere.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles del desarrollador</div>
+      <div class="mod-sub">Herramientas, suscripciones y equipo con IVA acreditable</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Gastos del desarrollador con IVA acreditable</h3>
+<table>
+  <thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>MacBook / computadora de trabajo</td><td>Sí</td><td>Siempre pide factura a nombre de tu RFC</td></tr>
+    <tr><td>Monitor(es) adicionales</td><td>Sí</td><td>Equipo de trabajo</td></tr>
+    <tr><td>GitHub Pro / Teams</td><td>Sí</td><td>GitHub tiene presencia fiscal en MX</td></tr>
+    <tr><td>Vercel / Netlify Pro</td><td>Sí</td><td>Facturan con IVA en MX</td></tr>
+    <tr><td>AWS / GCP / Azure</td><td>Sí</td><td>Las tres tienen presencia en MX</td></tr>
+    <tr><td>Dominios y hosting (namecheap, etc.)</td><td>No</td><td>Empresas extranjeras sin presencia en MX</td></tr>
+    <tr><td>Cursos (Platzi, Udemy MX)</td><td>Sí</td><td>Si la plataforma tiene presencia en MX</td></tr>
+    <tr><td>Suscripciones de Stack Overflow / DevTools extranjeros</td><td>No</td><td>Sin presencia fiscal en MX</td></tr>
+    <tr><td>Teclado mecánico, webcam, micrófono</td><td>Sí</td><td>Equipo home office — pide factura</td></tr>
+    <tr><td>Internet dedicado (fibra para trabajo)</td><td>Sí</td><td>Factura de Telmex / Izzi a tu RFC</td></tr>
+  </tbody>
+</table>
+
+<h3>El internet y RESICO</h3>
+<p>Si trabajas desde casa, el internet es un gasto de negocio. Pide que tu factura de Telmex, Izzi o Total Play llegue a nombre de tu RFC. El IVA del plan empresarial (~$1,000 MXN/mes) te genera $160 de IVA acreditable cada mes = $1,920 al año.</p>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra tus suscripciones de AWS, Vercel, GitHub como gastos mensuales recurrentes. La categoría "Software" funciona para todos. El IVA acreditable de cloud computing suma rápido en un mes activo.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Trabajo remoto para empresas extranjeras</div>
+      <div class="mod-sub">El escenario más común del dev freelance moderno</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El modelo más ventajoso: dev remoto para empresa extranjera</h3>
+<p>Trabajar para una startup en Silicon Valley, una empresa en España o una agencia en Argentina — todos son exportación de servicios con IVA 0%.</p>
+
+<h3>Cómo estructurarlo correctamente</h3>
+<ol>
+  <li>Acuerda el rate y la periodicidad (semanal, quincenal, mensual)</li>
+  <li>Al recibir el pago: convierte a MXN con tipo de cambio <strong>DOF del día del depósito</strong></li>
+  <li>Emite factura en MXN: RFC receptor <strong>XEXX010101000</strong>, IVA 0%</li>
+  <li>Registra en resicodeo como "Cliente extranjero"</li>
+  <li>Declara ese monto en MXN el mes correspondiente</li>
+</ol>
+
+<div class="example">
+  <div class="example-label">Dev backend, $50 USD/hora, 160 horas/mes</div>
+  <p>Ingreso: $8,000 USD × $17.50 tipo de cambio DOF = <strong>$140,000 MXN</strong></p>
+  <p>IVA: $0 (exportación)</p>
+  <p>ISR: $140,000 × 2% = <strong>$2,800 MXN</strong></p>
+  <p>En régimen 612 pagarías: ~$35,000-40,000 MXN de ISR</p>
+  <p><strong>RESICO te ahorra más de $32,000 MXN de ISR al mes</strong></p>
+</div>
+
+<h3>¿Qué pasa con las plataformas (Upwork, Toptal, Remote)?</h3>
+<p>Si trabajas a través de plataformas:</p>
+<ul>
+  <li>Los ingresos siguen siendo exportación y aplica IVA 0%</li>
+  <li>Cada pago que recibes se declara como ingreso en el mes que lo recibiste</li>
+  <li>La comisión de la plataforma (ej: 20% de Upwork) NO es deducible de ISR en RESICO, pero el IVA que la plataforma cobra sobre su comisión puede ser acreditable si facturan desde México</li>
+</ul>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> selecciona "Cliente extranjero" y registra cada depósito recibido en MXN al tipo de cambio DOF. Si recibes pagos semanales, registra cada transferencia por separado con su tipo de cambio exacto.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">SaaS y productos propios en RESICO</div>
+      <div class="mod-sub">Ingresos recurrentes de tu propio producto</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Si tienes un SaaS o producto propio</h3>
+<p>Los ingresos de subscripción de tu propio software tienen reglas específicas:</p>
+<ul>
+  <li>Si vendes a clientes en México: IVA 16% normal</li>
+  <li>Si vendes a clientes en el extranjero: IVA 0% (exportación)</li>
+  <li>Si usas Stripe, Paddle o Lemon Squeezy como procesador: ellos pueden manejar el IVA por ti</li>
+</ul>
+
+<h3>App stores — caso especial</h3>
+<p>Si vendes apps en App Store (Apple) o Google Play:</p>
+<ul>
+  <li>Apple y Google cobran el IVA al usuario final en México</li>
+  <li>Tus ingresos llegan ya sin IVA (las tiendas lo retienen)</li>
+  <li>En México, debes declarar el ingreso bruto antes de la comisión de la tienda</li>
+  <li>La comisión de Apple/Google (30%) es un gasto tuyo — no genera IVA acreditable en MX porque son empresas extranjeras</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Confusión común con App Store:</strong> recibes depósito de $7,000 MXN de Apple (ya descontó su 30%). Tu ingreso real era $10,000 MXN. Debes declarar los <strong>$10,000</strong>, no los $7,000 que recibiste. La comisión de Apple son $3,000 que no se pueden deducir de ISR pero sí es un gasto documentado.</div>
+</div>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Para SaaS con Stripe:</strong> Stripe puede emitirte un resumen mensual de transacciones. Ese reporte es tu base para declarar. Registra el total mensual como un cobro en resicodeo con la descripción "Ingresos SaaS [mes] — vía Stripe".</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> para ingresos de SaaS o App Store, registra el total mensual recibido de cada fuente como un cobro. El historial mensual te permite comparar el crecimiento de ingresos mes a mes en la sección de Reportes.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales del desarrollador</div>
+      <div class="mod-sub">Los más comunes en el mundo dev</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Error #1: No declarar ingresos de Upwork/Toptal</h3>
+<p>Los ingresos de plataformas internacionales llegan a tu cuenta bancaria en dólares. El SAT puede cruzar esta información con declaraciones de divisas. "Nadie lo sabe" es un riesgo real.</p>
+<p><strong>Solución:</strong> declara cada depósito recibido convertido al tipo de cambio DOF del día del depósito.</p>
+
+<h3>Error #2: Confundir el ingreso bruto del App Store con el neto recibido</h3>
+<p>Apple deposita $7,000 y declaras $7,000. Pero tu ingreso real era $10,000 — Apple retuvo su 30%. El SAT tiene acceso a datos de ventas en App Store.</p>
+<p><strong>Solución:</strong> declara el ingreso bruto (antes de la comisión de la tienda), no el neto recibido.</p>
+
+<h3>Error #3: No facturar el mantenimiento mensual</h3>
+<p>El cliente paga $3,000/mes por mantenimiento vía transferencia, tú no emites factura porque "es poquito". Al año son $36,000 no declarados.</p>
+<p><strong>Solución:</strong> cualquier pago recibido, por pequeño que sea, debe tener su cobro registrado y su factura.</p>
+
+<h3>Error #4: Usar el tipo de cambio del banco en vez del DOF</h3>
+<p>El banco te deposita $1,000 USD a $16.80 (su tipo de cambio). Declaras $16,800. El SAT espera que uses el DOF de ese día que era $17.25. Diferencia: $450 sin declarar.</p>
+<p><strong>Solución:</strong> siempre usa el tipo de cambio del DOF del día del depósito, no el de tu banco.</p>
+
+<h3>Error #5: Facturar el proyecto completo en el mes de entrega, aunque el trabajo duró 4 meses</h3>
+<p>Trabajas de enero a abril, entregas en abril, facturas $60,000 en abril. El SAT ve un ingreso enorme en abril y puede preguntar cómo viviste de enero a marzo.</p>
+<p><strong>Solución:</strong> factura por milestones a lo largo del proyecto. Distribuye los ingresos en los meses que realmente trabajaste.</p>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el historial de cobros por mes te protege. Si el SAT hace preguntas sobre tus ingresos, tienes documentado exactamente cuándo recibiste cada pago y qué proyecto era.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">La rutina del dev que también controla sus finanzas</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Automatiza lo que puedas, registra el resto</h3>
+<p>Como desarrollador, puedes optimizar tu flujo fiscal al máximo.</p>
+
+<h3>Durante el mes</h3>
+<ul>
+  <li><strong>Al recibir depósito de cliente extranjero:</strong> busca el tipo de cambio DOF del día, calcula MXN, registra en resicodeo</li>
+  <li><strong>Al recibir pago de milestone:</strong> registra el cobro y usa el asistente de facturación</li>
+  <li><strong>Al pagar AWS/Vercel/GitHub:</strong> registra el gasto — ese IVA se acredita</li>
+  <li><strong>Al recibir liquidación de App Store:</strong> registra el ingreso bruto (no el neto)</li>
+</ul>
+
+<h3>Primeros 5 días del mes</h3>
+<ul>
+  <li>Revisar si hay cobros PPD del mes anterior → REP si aplica</li>
+  <li>Revisar depósitos de plataformas (Upwork, App Store, Stripe) → registrar</li>
+</ul>
+
+<h3>Del 10 al 17</h3>
+<ul>
+  <li>Resumen en resicodeo → comparar con portal SAT</li>
+  <li>Declarar y pagar</li>
+</ul>
+
+<h3>Bonus: automatización parcial posible</h3>
+<p>Si eres dev, puedes crear un script que consulte el tipo de cambio DOF vía su API pública y calcule tus ingresos en MXN automáticamente. El SAT publica el DOF en formato XML accesible.</p>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>API del DOF:</strong> el Banco de México publica el tipo de cambio diario en <strong>banxico.org.mx/SieAPIRest</strong>. Puedes consultar el tipo de cambio de cualquier fecha programáticamente para automatizar la conversión de tus ingresos en dólares.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el Resumen mensual y los Reportes anuales te dan una vista completa de todos tus ingresos por cliente, tipo y mes. Ideal para calcular cuánto llevas del año y si te estás acercando al límite de $3.5M de RESICO.</div>
+</div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT para desarrollo de aplicaciones móviles?",
+      "opts": [
+        "81111502 - Desarrollo de aplicaciones",
+        "81111500 - Desarrollo de software",
+        "82111804 - Producción audiovisual",
+        "81111601 - Consultoría en TI"
+      ],
+      "correct": 0,
+      "hint": "El módulo 1 tiene la tabla de claves SAT para diferentes especialidades de desarrollo."
+    },
+    {
+      "q": "Un desarrollador que trabaja remotamente para una startup en USA, ¿qué IVA aplica?",
+      "opts": [
+        "8% tasa reducida para exportaciones",
+        "16% porque trabaja desde México",
+        "No paga IVA en ningún caso",
+        "0% porque es exportación de servicios"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 clasifica el trabajo remoto para empresas extranjeras como exportación con IVA 0%."
+    },
+    {
+      "q": "¿Qué tipo de ingreso es el más predecible para efectos fiscales en desarrollo?",
+      "opts": [
+        "Trabajo por hora",
+        "Venta de SaaS",
+        "Retainer mensual de mantenimiento",
+        "Proyectos por precio fijo"
+      ],
+      "correct": 2,
+      "hint": "El módulo 1 menciona el retainer como recurrente e ideal para RESICO por su predictibilidad."
+    }
+  ],
+  "m2": [
+    {
+      "q": "Un dev trabaja 160 horas a $50 USD/hora para empresa extranjera. El DOF es $17.50. ¿Cuánto ISR paga aproximadamente?",
+      "opts": [
+        "$0 porque es ingreso extranjero",
+        "$35,000 MXN como en régimen 612",
+        "$2,800 MXN (2% de $140,000)",
+        "$14,000 MXN (10% estándar)"
+      ],
+      "correct": 2,
+      "hint": "El módulo 2 tiene el ejemplo exacto: $8,000 USD × $17.50 = $140,000 MXN × 2% ISR = $2,800."
+    },
+    {
+      "q": "¿Cómo debe calcular un dev el ingreso mensual cuando trabaja por horas para empresa en euros?",
+      "opts": [
+        "Al tipo de cambio que el cliente indique en el contrato",
+        "Horas × rate en euros, convertido a MXN con tipo de cambio DOF del último día del mes",
+        "En euros directamente",
+        "Al tipo de cambio del banco el día de depósito"
+      ],
+      "correct": 1,
+      "hint": "El módulo 2 explica: calcular horas × rate = USD/EUR, luego convertir con tipo de cambio DOF."
+    },
+    {
+      "q": "¿Para qué sirve guardar el paquete de retainer en 'Mis paquetes' de resicodeo?",
+      "opts": [
+        "Para que el cliente reciba la factura automáticamente",
+        "Para generar el contrato automáticamente",
+        "Para registrar el cobro mensual en un solo click sin volver a escribir los detalles",
+        "Para calcular el incremento anual del rate"
+      ],
+      "correct": 2,
+      "hint": "El módulo 2 menciona los paquetes guardados para aplicar el cobro mensual rápidamente."
+    }
+  ],
+  "m3": [
+    {
+      "q": "¿Cómo se llama fiscalmente cuando el cliente pide funcionalidades extra fuera del proyecto original?",
+      "opts": [
+        "Corrección de bugs — sin cargo",
+        "Scope creep — requiere nueva orden de trabajo y nueva factura",
+        "Mantenimiento incluido en el precio",
+        "Actualización del contrato original"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 usa el término 'scope creep fiscal' y explica que requiere una nueva factura independiente."
+    },
+    {
+      "q": "¿Qué estructura de pago recomienda el módulo 3 para proyectos de desarrollo de 4+ meses?",
+      "opts": [
+        "Pago mensual proporcional",
+        "50% inicio y 50% al finalizar",
+        "Un solo pago al finalizar el proyecto",
+        "Pago por milestones: kick-off, diseño/arquitectura, MVP, entrega final"
+      ],
+      "correct": 3,
+      "hint": "El módulo 3 tiene la tabla de milestones con sus porcentajes típicos."
+    },
+    {
+      "q": "¿Qué recomienda el módulo 3 respecto al mantenimiento post-entrega?",
+      "opts": [
+        "No facturarlo si son menos de 20 horas al mes",
+        "Puede facturarse como retainer mensual separado después de la entrega",
+        "Incluirlo siempre gratis en el precio del proyecto",
+        "Incluirlo en el precio final del proyecto siempre"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 da dos opciones válidas para el mantenimiento: incluido en precio o retainer separado."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿Los servicios de AWS, GCP y Azure generan IVA acreditable en México?",
+      "opts": [
+        "No, son empresas extranjeras",
+        "Depende del plan contratado",
+        "Solo AWS tiene presencia en México",
+        "Sí, las tres tienen presencia fiscal en México y facturan con IVA"
+      ],
+      "correct": 3,
+      "hint": "El módulo 4 incluye AWS, GCP y Azure en la tabla con la nota de que tienen presencia en MX."
+    },
+    {
+      "q": "¿Por qué el internet (Telmex/Izzi) es un gasto acreditable para el desarrollador que trabaja desde casa?",
+      "opts": [
+        "Porque es un gasto necesario para la actividad — y si la factura llega a tu RFC, el IVA se acredita",
+        "Porque el SAT lo tiene en lista de gastos permitidos",
+        "Solo es acreditable si tienes oficina formal",
+        "Porque el gobierno da descuento a freelancers tech"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 explica que el internet de trabajo facturado a tu RFC genera IVA acreditable mensual."
+    },
+    {
+      "q": "¿Los dominios comprados en Namecheap generan IVA acreditable en México?",
+      "opts": [
+        "No, Namecheap no tiene presencia fiscal en México",
+        "Solo si el dominio es .mx",
+        "Sí si pagas en pesos mexicanos",
+        "Sí, todo gasto digital es acreditable"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 lista específicamente dominios y hosting de empresas extranjeras como NO acreditables."
+    }
+  ],
+  "m5": [
+    {
+      "q": "Un dev recibe $8,000 USD de Upwork. El tipo de cambio DOF es $17.25. ¿Cuánto declara en MXN?",
+      "opts": [
+        "$134,400 MXN al tipo de cambio del banco",
+        "$0 porque ya pagó comisión a Upwork",
+        "$138,000 MXN",
+        "$8,000 USD directamente"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5 explica: siempre usar tipo de cambio DOF. $8,000 × $17.25 = $138,000 MXN."
+    },
+    {
+      "q": "¿La comisión de Upwork (20%) es deducible de ISR en RESICO?",
+      "opts": [
+        "No, en RESICO no hay deducciones de ISR",
+        "Solo la mitad de la comisión",
+        "Sí, es un gasto de operación",
+        "Sí si supera el 15% del ingreso bruto"
+      ],
+      "correct": 0,
+      "hint": "El módulo 5 explica que la comisión de la plataforma no es deducible de ISR en RESICO, aunque sí es un gasto documentado."
+    },
+    {
+      "q": "¿Qué debe hacer un dev que recibe pagos semanales de cliente extranjero?",
+      "opts": [
+        "Registrar al tipo de cambio del primer pago del mes",
+        "Acumularlos y registrar un cobro mensual",
+        "Registrar cada transferencia por separado con su tipo de cambio DOF exacto del día",
+        "Promediar el tipo de cambio de la semana"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5 especifica que cada depósito se registra por separado con el tipo de cambio DOF de ese día exacto."
+    }
+  ],
+  "m6": [
+    {
+      "q": "Un dev tiene app en App Store que genera $10,000 MXN bruto. Apple deposita $7,000 (neto del 30%). ¿Cuánto declara?",
+      "opts": [
+        "$10,000 MXN (el ingreso bruto)",
+        "$8,500 MXN (promedio entre bruto y neto)",
+        "$7,000 MXN (lo que recibió)",
+        "$3,000 MXN (solo la comisión)"
+      ],
+      "correct": 0,
+      "hint": "El módulo 6 explica específicamente este caso: se declara el ingreso bruto, no el neto depositado."
+    },
+    {
+      "q": "¿Por qué la comisión de Apple (30%) NO genera IVA acreditable en México?",
+      "opts": [
+        "Porque el SAT no permite acreditar comisiones",
+        "Porque supera el 10% del ingreso",
+        "Porque Apple es empresa extranjera sin presencia fiscal en México para ese servicio",
+        "Porque es una comisión, no un servicio"
+      ],
+      "correct": 2,
+      "hint": "El módulo 6 aclara que Apple es empresa extranjera y su comisión no genera IVA acreditable en MX."
+    },
+    {
+      "q": "Para ingresos de SaaS a través de Stripe, ¿cuál es la forma recomendada de registrar en resicodeo?",
+      "opts": [
+        "Esperar el resumen anual de Stripe",
+        "Registrar solo las transacciones mayores a $1,000 MXN",
+        "Un cobro por cada transacción individual",
+        "El total mensual de Stripe como un cobro con descripción del período"
+      ],
+      "correct": 3,
+      "hint": "El módulo 6 recomienda usar el reporte mensual de Stripe como base y registrar el total mensual como un cobro."
+    }
+  ],
+  "m7": [
+    {
+      "q": "¿Por qué declarar el ingreso neto de App Store (después de comisión Apple) en lugar del bruto es un error?",
+      "opts": [
+        "Porque el ISR se calcularía mal en cualquier sentido",
+        "Porque viola los términos de Apple",
+        "No es error, se puede declarar el neto",
+        "Porque el SAT tiene acceso a datos de ventas en App Store y puede detectar la diferencia"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #2) explica que el SAT tiene acceso a datos de App Store y detecta inconsistencias."
+    },
+    {
+      "q": "¿Por qué usar el tipo de cambio del banco en lugar del DOF es un error?",
+      "opts": [
+        "Porque el banco siempre da tipo de cambio más bajo",
+        "Solo es error si la diferencia supera 50 centavos",
+        "Porque el tipo de cambio DOF siempre es más favorable",
+        "Porque genera una diferencia con lo que el SAT espera, que puede interpretarse como ingreso no declarado"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #4) da el ejemplo: diferencia entre tipo de banco y DOF puede dejar ingresos sin declarar."
+    },
+    {
+      "q": "¿Por qué es mejor facturar un proyecto largo por milestones en lugar de todo al final?",
+      "opts": [
+        "Porque distribuye los ingresos en los meses reales de trabajo, evitando una cifra enorme en el mes de entrega",
+        "Porque el SAT exige facturar mensualmente",
+        "Porque el cliente puede acreditar el IVA en partes",
+        "Porque reduce el ISR total del proyecto"
+      ],
+      "correct": 0,
+      "hint": "El módulo 7 (Error #5) explica que concentrar 4 meses de trabajo en un solo ingreso puede generar preguntas del SAT."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Qué API pública menciona el módulo 8 para automatizar la consulta del tipo de cambio DOF?",
+      "opts": [
+        "Banco de México — banxico.org.mx/SieAPIRest",
+        "SHCP tipo de cambio API",
+        "SAT API REST oficial",
+        "Google Finance API"
+      ],
+      "correct": 0,
+      "hint": "El módulo 8 menciona específicamente la API del Banco de México para consultar el DOF programáticamente."
+    },
+    {
+      "q": "Para los primeros 5 días del mes, ¿qué deben revisar específicamente los developers?",
+      "opts": [
+        "Emitir todas las facturas del nuevo mes",
+        "Cobros PPD pendientes de REP más depósitos de plataformas internacionales del mes anterior",
+        "Presentar la declaración mensual",
+        "Actualizar los datos de clientes en resicodeo"
+      ],
+      "correct": 1,
+      "hint": "El módulo 8 divide la rutina: primeros 5 días para REP pendientes y depósitos de plataformas (Upwork, App Store, Stripe)."
+    },
+    {
+      "q": "¿Para qué sirve la sección de Reportes anuales de resicodeo para un desarrollador?",
+      "opts": [
+        "Para calcular automáticamente la declaración anual",
+        "Para compartir datos con el contador automáticamente",
+        "Para generar el estado de resultados formal",
+        "Para ver el crecimiento de ingresos mes a mes y monitorear el avance hacia el límite de $3.5M de RESICO"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8 menciona Reportes anuales para comparar ingresos y monitorear el límite de RESICO."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>

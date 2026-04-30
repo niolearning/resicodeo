@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Videógrafos y Editores · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#EF4444;--accent2:#FCA5A5;--accent-glow:rgba(239,68,68,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Producción Audiovisual</div>
+  <h1><em>RESICO para Videógrafos y Editores</em></h1>
+  <p class="hero-sub">Domina tu régimen fiscal aplicado a la producción audiovisual: spots, documentales, contenido digital, corporativos y postproducción. Casos reales de la industria.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar en producción audiovisual</div>
+    <div class="toc-item"><span class="toc-num">3</span>Contratos y pagos en producciones</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles en producción audiovisual</div>
+    <div class="toc-item"><span class="toc-num">5</span>Por proyecto vs retainer de contenido</div>
+    <div class="toc-item"><span class="toc-num">6</span>Producción para clientes extranjeros</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales en producción audiovisual</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Cómo encaja la producción audiovisual en el régimen</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad económica ante el SAT</h3>
+<p>La producción audiovisual abarca múltiples roles, cada uno con su propia clave SAT. Lo importante es registrar la actividad que genera la mayor parte de tus ingresos como principal.</p>
+
+<table>
+  <thead><tr><th>Rol</th><th>Clave SAT</th></tr></thead>
+  <tbody>
+    <tr><td>Director / camarógrafo / videógrafo</td><td>82111804 — Producción de contenido audiovisual</td></tr>
+    <tr><td>Editor de video / colorista</td><td>82111803 — Postproducción de video</td></tr>
+    <tr><td>Motion graphics / animación</td><td>82111801 — Producción de animación</td></tr>
+    <tr><td>Productor ejecutivo / coordinador</td><td>82111804 — Producción audiovisual</td></tr>
+    <tr><td>Sonidista / mezclador de audio</td><td>82111802 — Producción de audio</td></tr>
+    <tr><td>Director de fotografía (DOP)</td><td>82111804 — Producción audiovisual</td></tr>
+  </tbody>
+</table>
+
+<h3>Tipos de producción y su tratamiento fiscal</h3>
+<table>
+  <thead><tr><th>Tipo de producción</th><th>Cliente típico</th><th>Notas fiscales</th></tr></thead>
+  <tbody>
+    <tr><td>Spot publicitario / comercial</td><td>Agencia o marca (persona moral)</td><td>Retenciones ISR + IVA</td></tr>
+    <tr><td>Video corporativo / institucional</td><td>Empresa (persona moral)</td><td>Retenciones ISR + IVA</td></tr>
+    <tr><td>Documental / cortometraje</td><td>Productora, fondo, persona moral o física</td><td>Depende del cliente</td></tr>
+    <tr><td>Contenido para plataformas digitales</td><td>Marca, creador, agencia</td><td>Puede ser PM o PF</td></tr>
+    <tr><td>Postproducción / edición remota</td><td>Productora nacional o extranjera</td><td>IVA 0% si es extranjero</td></tr>
+    <tr><td>Producción para cliente extranjero</td><td>Estudio / agencia internacional</td><td>IVA 0%, tipo de cambio DOF</td></tr>
+  </tbody>
+</table>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> al crear cada cliente marca si es persona moral, persona física o extranjero. La app ajusta automáticamente las retenciones e IVA en cada cobro. Para agencias y marcas (persona moral), las retenciones son automáticas.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar en producción audiovisual</div>
+      <div class="mod-sub">Spots, corporativos y contenido digital con impuestos correctos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El error más caro: cotizar sin considerar impuestos</h3>
+<p>En producción audiovisual los presupuestos pueden ser grandes — $50,000, $200,000, $500,000. Cotizar sin separar el IVA o sin considerar las retenciones puede significar perder decenas de miles de pesos.</p>
+
+<div class="formula">Precio al cliente = Lo que quieres ganar neto ÷ (1 − tasa efectiva de retenciones)</div>
+
+<h3>Estructura del presupuesto audiovisual</h3>
+<p>En producción profesional, el presupuesto se divide en dos grandes bloques:</p>
+<ul>
+  <li><strong>Above the line:</strong> honorarios creativos — director, DOP, guionista, productor</li>
+  <li><strong>Below the line:</strong> gastos de producción — equipo, locaciones, crew, transporte, catering</li>
+</ul>
+<p>Desde el punto de vista fiscal, <strong>solo los honorarios son ingresos tuyos</strong>. Los gastos de producción que pagas a terceros (rentas, crew) son gastos de la producción que deben tener su propio comprobante.</p>
+
+<div class="example">
+  <div class="example-label">Spot publicitario para agencia (persona moral)</div>
+  <p>Honorarios de dirección que quieres ganar neto: <strong>$60,000</strong></p>
+  <p>Subtotal a cotizar: ~$75,000</p>
+  <p>IVA 16%: $12,000 → Total factura: $87,000</p>
+  <p>Retenciones agencia: −$7,500 ISR − $8,000 IVA</p>
+  <p>Depósito recibido: $71,500 → menos ISR propio</p>
+  <p><strong>Neto real: ~$60,000 ✓</strong></p>
+</div>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Honorarios vs gastos de producción:</strong> si la agencia te da un presupuesto global de $300,000 para producir un spot, no todo ese monto es tu ingreso. Solo son ingreso tuyo los honorarios. Los gastos de producción que administras y pagas a terceros no son tu ingreso — son pass-through que necesitan sus propios CFDIs.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> usa la calculadora de cotización para calcular exactamente cuánto cobrar de honorarios al cliente según su tipo. Registra por separado los honorarios (ingreso tuyo) y los gastos de producción administrados (con sus CFDIs).</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Contratos y pagos en producciones</div>
+      <div class="mod-sub">Anticipos, deal memos y pagos por etapas de producción</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>La estructura de pagos en producción audiovisual</h3>
+<p>Las producciones tienen fases claras que se traducen en pagos por etapas:</p>
+
+<table>
+  <thead><tr><th>Fase</th><th>% de pago típico</th><th>Momento de facturación</th></tr></thead>
+  <tbody>
+    <tr><td>Preproducción / firma de contrato</td><td>30–40%</td><td>Al inicio, cuando recibes el anticipo</td></tr>
+    <tr><td>Rodaje / producción</td><td>30–40%</td><td>Al iniciar o terminar el rodaje</td></tr>
+    <tr><td>Entrega de corte final / postproducción</td><td>20–30%</td><td>Al entregar y aprobar</td></tr>
+  </tbody>
+</table>
+
+<h3>Deal memo vs contrato formal</h3>
+<p>En la industria audiovisual es común trabajar con un <strong>deal memo</strong> (acuerdo rápido) antes del contrato formal. Fiscalmente, el deal memo tiene validez para iniciar la relación, pero el contrato debe especificar:</p>
+<ul>
+  <li>Descripción del servicio (debe coincidir con el concepto de tu factura)</li>
+  <li>Honorarios y calendario de pagos</li>
+  <li>Si el precio incluye o excluye IVA</li>
+  <li>Propiedad intelectual: cesión de derechos o licencia de uso</li>
+</ul>
+
+<h3>PPD en producciones con entrega diferida</h3>
+<p>Si firmas contrato en enero y el cliente paga hasta entregar el material en marzo:</p>
+<ol>
+  <li>Emite factura con método <strong>PPD</strong> al firmar</li>
+  <li>El cliente te paga en marzo al aprobar</li>
+  <li>Emites el <strong>Complemento de Pago (REP) antes del día 5 de abril</strong></li>
+</ol>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Producciones canceladas:</strong> si ya facturaste el anticipo y la producción se cancela, debes emitir nota de crédito (CFDI de Egreso) por lo que devuelvas. Si te quedas con el anticipo como penalización por cancelación, ese monto sí es ingreso y paga ISR.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada pago por etapa de producción como cobro independiente con su fecha real. El sistema "pendiente / cobrado" te ayuda a rastrear qué fases ya se pagaron y cuáles siguen en proceso.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles en producción audiovisual</div>
+      <div class="mod-sub">Equipo, crew, locaciones y postproducción con IVA acreditable</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Recordatorio del Curso Base: en RESICO los gastos NO reducen ISR</h3>
+<p>Pero el <strong>IVA de tus gastos con factura SÍ se acredita</strong> contra el IVA que debes. En producción audiovisual, donde los gastos de equipo y software pueden ser muy altos, esto marca una diferencia importante.</p>
+
+<h3>Gastos de producción con IVA acreditable</h3>
+<table>
+  <thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Cámaras, lentes, gimbals, estabilizadores</td><td>Sí</td><td>Siempre pide factura</td></tr>
+    <tr><td>Drones y accesorios</td><td>Sí</td><td>Incluyendo partes y reparaciones</td></tr>
+    <tr><td>Iluminación (LEDs, kits, paneles)</td><td>Sí</td><td>Equipo de producción</td></tr>
+    <tr><td>Renta de equipo (grúas, dollys, steadicam)</td><td>Sí</td><td>Pide factura al proveedor de renta</td></tr>
+    <tr><td>Discos duros, SSDs, tarjetas de memoria</td><td>Sí</td><td>Material de trabajo y archivo</td></tr>
+    <tr><td>Adobe Creative Cloud / DaVinci Resolve</td><td>Sí</td><td>Tienen presencia fiscal en México</td></tr>
+    <tr><td>Frame.io / WeTransfer Pro</td><td>Sí/No</td><td>Depende si facturan con IVA en MX</td></tr>
+    <tr><td>Renta de locaciones (con factura)</td><td>Sí</td><td>El dueño de la locación debe facturarte</td></tr>
+    <tr><td>Crew freelance que te factura</td><td>Sí</td><td>El crew debe emitirte CFDI por sus honorarios</td></tr>
+    <tr><td>Música licenciada (Artlist, Epidemic Sound)</td><td>No</td><td>Empresas extranjeras sin presencia en MX</td></tr>
+    <tr><td>Stock footage extranjero</td><td>No</td><td>Sin presencia fiscal en México</td></tr>
+    <tr><td>Catering / alimentación en set</td><td>No</td><td>No acreditable en RESICO</td></tr>
+  </tbody>
+</table>
+
+<h3>El crew y los CFDIs</h3>
+<p>Si contratas crew freelance (gaffer, sonidista, asistente de cámara), cada uno debe emitirte una factura por sus honorarios. Sin CFDI de ellos, ese gasto no existe fiscalmente para ti aunque lo hayas pagado.</p>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Política de facturación con crew:</strong> establece desde el inicio que todos los que trabajan en tu producción deben facturarte. Si alguien no tiene RFC activo, no puede darte CFDI y ese gasto no te genera IVA acreditable. Es parte de trabajar de forma profesional.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada gasto de producción en la categoría correcta. Los gastos con CFDI marcados como "Tiene factura" se suman al IVA acreditable mensual automáticamente. En producciones grandes, el IVA acreditable puede reducir significativamente lo que pagas al SAT.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Por proyecto vs retainer de contenido</div>
+      <div class="mod-sub">Producciones puntuales y contenido digital recurrente</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Los dos modelos del videógrafo moderno</h3>
+<ul>
+  <li><strong>Por proyecto:</strong> spot, documental, video corporativo, videoclip. Ingreso puntual y variable.</li>
+  <li><strong>Retainer de contenido:</strong> producción mensual para marca, canal de YouTube, redes sociales de empresa. Ingreso recurrente y predecible.</li>
+</ul>
+
+<h3>Producciones por proyecto — flujo fiscal</h3>
+<ol>
+  <li>Deal memo / contrato → define honorarios y fases de pago</li>
+  <li>Anticipo de preproducción → factura PPD o PUE según cuándo paga el cliente</li>
+  <li>Pago de rodaje → factura o complemento de pago</li>
+  <li>Entrega y aprobación final → factura por saldo o REP si era PPD</li>
+</ol>
+
+<h3>Retainer de contenido digital — flujo fiscal</h3>
+<p>Muchas marcas contratan producción mensual recurrente: 4 reels, 2 videos para YouTube, contenido para campañas digitales.</p>
+<ol>
+  <li>Define con la marca un monto mensual fijo (ej: $25,000 + IVA)</li>
+  <li>Factura el mismo día cada mes</li>
+  <li>Si el cliente paga en el mismo mes → PUE</li>
+  <li>Si paga el mes siguiente → PPD + REP antes del día 5</li>
+</ol>
+
+<div class="example">
+  <div class="example-label">Retainer de contenido digital con marca (persona moral)</div>
+  <p>Acuerdo: 8 piezas de contenido/mes = $25,000 + IVA</p>
+  <p>Factura: $25,000 + $4,000 IVA = $29,000 total</p>
+  <p>Retenciones: −$2,500 ISR − $2,667 IVA</p>
+  <p>Depósito mensual: <strong>$23,833</strong></p>
+  <p>ISR a pagar (1.1%): $275 — prácticamente cubierto por retenciones</p>
+</div>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Ventaja del retainer en RESICO:</strong> ingresos predecibles mes a mes significan tasa de ISR predecible. Si tu retainer siempre cae en el mismo rango, sabes exactamente cuánto pagas de ISR sin tener que hacer cálculos nuevos cada mes.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> guarda tu retainer de contenido en "Mis paquetes". Cada mes lo aplicas en un click: descripción, monto e IVA ya calculados. Para proyectos puntuales, registra cada cobro con la fase de producción correspondiente.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Producción para clientes extranjeros</div>
+      <div class="mod-sub">Agencias internacionales, coproducción y postproducción remota</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Exportación de servicios audiovisuales</h3>
+<p>Cuando produces o postproduces para clientes fuera de México, el servicio se considera exportación y aplica IVA 0%. Esto incluye:</p>
+<ul>
+  <li>Edición y color para productoras internacionales</li>
+  <li>Dirección o DOP en proyectos de coproducción internacional</li>
+  <li>Motion graphics y VFX para agencias o estudios extranjeros</li>
+  <li>Postproducción de audio para proyectos internacionales</li>
+  <li>Producción de contenido para plataformas extranjeras (Netflix, Amazon, etc.) si el contrato es con la entidad fuera de México</li>
+</ul>
+
+<h3>Cómo facturar a clientes extranjeros</h3>
+<ul>
+  <li>RFC del receptor: <strong>XEXX010101000</strong></li>
+  <li>Nombre: nombre real del cliente o estudio</li>
+  <li>País de residencia del cliente</li>
+  <li>IVA: <strong>0%</strong></li>
+  <li>Tipo de cambio: <strong>DOF del día del depósito</strong></li>
+</ul>
+
+<div class="example">
+  <div class="example-label">Postproducción de color para productora española</div>
+  <p>Acuerdo: €3,000 por colorización de cortometraje</p>
+  <p>Tipo de cambio DOF del día del cobro: $19.40 MXN/EUR</p>
+  <p>Ingreso a declarar: €3,000 × $19.40 = <strong>$58,200 MXN</strong></p>
+  <p>IVA: $0 (exportación)</p>
+  <p>ISR: $58,200 × 1.5% = <strong>$873 MXN</strong></p>
+</div>
+
+<h3>Coproducción — caso especial</h3>
+<p>Si participas en una coproducción donde hay dinero de fuentes nacionales e internacionales, el tratamiento fiscal depende de quién te contrata y te paga:</p>
+<ul>
+  <li>Si te paga la entidad mexicana → IVA 16% normal</li>
+  <li>Si te paga la entidad extranjera → IVA 0% exportación</li>
+  <li>Si recibes pagos de ambos → cada factura con su tratamiento correspondiente</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Apoyos y fondos públicos (IMCINE, FONCA, etc.):</strong> los apoyos de fondos gubernamentales tienen un tratamiento especial. Consulta con un contador si recibes apoyos o estímulos fiscales — pueden tener reglas distintas a los ingresos por servicios.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> selecciona "Cliente extranjero" al registrar el cobro. El IVA queda en 0% automáticamente. Registra el monto ya convertido a MXN con el tipo de cambio DOF del día del depósito.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales en producción audiovisual</div>
+      <div class="mod-sub">Los errores más caros de la industria</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Error #1: Meter todos los gastos de producción como ingreso propio</h3>
+<p>La agencia te transfiere $500,000 para producir un spot. Incluye tus honorarios ($80,000) + gastos de producción ($420,000 para crew, equipo, locaciones). Si declaras los $500,000 como ingreso tuyo, estás pagando ISR sobre dinero que no es tuyo.</p>
+<p><strong>Solución:</strong> solo son ingreso tuyo los honorarios. Los gastos de producción que administras para terceros deben tener sus propios CFDIs. Tu factura a la agencia puede ser solo por honorarios, o separar claramente honorarios de gastos reembolsables.</p>
+
+<h3>Error #2: No exigir CFDI al crew freelance</h3>
+<p>Pagas $8,000 en efectivo al gaffer, $5,000 al sonidista, $3,000 al asistente. Sin facturas de ellos, ese IVA ($2,560) se pierde y además puede ser cuestionado por el SAT.</p>
+<p><strong>Solución:</strong> todos en tu crew deben tener RFC activo y emitirte CFDI. Es estándar en producción profesional.</p>
+
+<h3>Error #3: No separar los honorarios del IVA al cotizar</h3>
+<p>Le dices a la agencia "$100,000 el proyecto". La agencia entiende que eso es todo. Cuando emites la factura con IVA, el cliente se sorprende del costo adicional y surgen conflictos.</p>
+<p><strong>Solución:</strong> siempre cotiza "más IVA" o "IVA incluido" desde el primer correo.</p>
+
+<h3>Error #4: Olvidar el REP cuando la agencia paga 30, 60 o 90 días</h3>
+<p>En producción es muy común que las agencias paguen a 30, 60 o 90 días. Si facturas con PPD y olvidas emitir el REP cuando finalmente pagan, la multa puede ser hasta $13,000 MXN por factura.</p>
+<p><strong>Solución:</strong> en resicodeo, cuando marcas un cobro como "cobrado", la app te recuerda emitir el REP y te muestra la fecha límite exacta.</p>
+
+<h3>Error #5: No guardar los XMLs del equipo rentado</h3>
+<p>Rentas cámara, lentes y steadicam por $40,000 para una producción. El proveedor te da factura pero solo guardas el PDF. Sin el XML, ese gasto (y su IVA de $6,400) no existe para el SAT.</p>
+<p><strong>Solución:</strong> descarga y guarda siempre el XML. Nómbralo con fecha y proveedor. Guárdalo mínimo 5 años.</p>
+
+<div class="danger">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Producciones en efectivo sin rastro:</strong> trabajos pagados en efectivo sin factura son tentadores, especialmente en producciones pequeñas o independientes. Si el SAT cruza tu presencia en redes, tus créditos en festivales o tu equipo visible, puede detectar inconsistencias con lo que declaras.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra todos tus cobros, incluyendo los de efectivo. El historial completo te protege si el SAT hace preguntas sobre tus ingresos. El resumen mensual muestra exactamente qué debes declarar.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">Tu rutina mensual como productor audiovisual</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>La rutina del productor audiovisual organizado</h3>
+<p>La producción audiovisual tiene ciclos irregulares — meses sin proyectos y meses con tres producciones simultáneas. La clave es registrar cada transacción en el momento que ocurre, no acumularlas al fin del mes.</p>
+
+<h3>Durante cada producción</h3>
+<ul>
+  <li><strong>Al firmar contrato / deal memo:</strong> crea el cliente en resicodeo si no existe</li>
+  <li><strong>Al recibir anticipo de preproducción:</strong> registra el cobro inmediatamente</li>
+  <li><strong>Al pagar crew o rentar equipo:</strong> registra el gasto — ese IVA se acredita</li>
+  <li><strong>Al recibir pago por rodaje o entrega:</strong> registra el cobro y usa el asistente de facturación</li>
+  <li><strong>Al recibir pago final:</strong> si era PPD, recuerda el REP antes del día 5 del mes siguiente</li>
+</ul>
+
+<h3>Primeros 5 días de cada mes</h3>
+<ul>
+  <li>Revisar cobros PPD del mes anterior</li>
+  <li>Emitir REP de los pagos recibidos → antes del día 5</li>
+  <li>Verificar pagos de clientes extranjeros → registrar con tipo de cambio DOF</li>
+</ul>
+
+<h3>Del día 10 al 17</h3>
+<ul>
+  <li>Abrir "Resumen" en resicodeo → revisar totales del mes anterior</li>
+  <li>Comparar con el portal SAT → si hay diferencia, algo falta registrar</li>
+  <li>Declarar y pagar ISR + IVA</li>
+  <li>Guardar acuse de recibo</li>
+</ul>
+
+<h3>Último día del mes</h3>
+<ul>
+  <li>Si hubo cobros sin factura (trabajos independientes, efectivo) → factura global</li>
+  <li>Respaldo de datos en resicodeo</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Para productores con proyectos de 2+ meses:</strong> registra cada pago en el mes exacto en que lo recibes, no cuando termina la producción. RESICO calcula el ISR sobre cuándo cobras, no sobre cuándo entregas. Un proyecto de enero a abril con pagos distribuidos = ISR distribuido en esos meses.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el Calendario fiscal te alerta 7 días antes de cada fecha crítica: REP, declaración mensual, factura global. El Resumen anual te muestra cuánto llevas del año y a qué ritmo te acercas al límite de $3.5M — información clave si tienes una temporada alta de producciones.</div>
+</div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT para postproducción de video y edición?",
+      "opts": [
+        "82111801 — Producción de animación",
+        "82111804 — Producción audiovisual",
+        "80111600 — Servicios profesionales",
+        "82111803 — Postproducción de video"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 tiene la tabla completa de claves SAT por rol. La postproducción tiene su propia clave."
+    },
+    {
+      "q": "¿Qué tipo de cliente es una agencia de publicidad que te contrata para producir un spot?",
+      "opts": [
+        "Persona física sin retenciones",
+        "Público en general sin factura",
+        "Cliente extranjero con IVA 0%",
+        "Persona moral con retenciones de ISR e IVA"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 clasifica las agencias y marcas como personas morales en la tabla de tipos de producción."
+    },
+    {
+      "q": "Un colorista que edita de forma remota para una productora en Argentina, ¿qué IVA aplica?",
+      "opts": [
+        "16% porque trabaja desde México",
+        "0% porque es exportación de servicios",
+        "8% tasa especial para servicios digitales",
+        "No aplica IVA en postproducción"
+      ],
+      "correct": 1,
+      "hint": "El módulo 1 incluye 'Postproducción / edición remota para productora extranjera' con IVA 0% en la tabla."
+    }
+  ],
+  "m2": [
+    {
+      "q": "En un presupuesto de producción, ¿qué parte representa el ingreso real del productor?",
+      "opts": [
+        "Solo los honorarios — los gastos de producción pagados a terceros no son ingreso",
+        "El presupuesto total menos el IVA",
+        "El total del presupuesto que transfiere la agencia",
+        "El 80% del presupuesto menos impuestos"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 explica la diferencia entre honorarios (ingreso tuyo) y gastos de producción (pass-through con sus propios CFDIs)."
+    },
+    {
+      "q": "¿Qué significa 'above the line' en un presupuesto audiovisual?",
+      "opts": [
+        "Los honorarios creativos: director, DOP, guionista, productor",
+        "Los gastos administrativos y legales",
+        "Los gastos de equipo técnico de rodaje",
+        "Todo lo que va antes del rodaje"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 divide el presupuesto audiovisual: above the line = honorarios creativos, below the line = gastos de producción."
+    },
+    {
+      "q": "Para ganar netos $60,000 en un spot para agencia (persona moral), ¿cuánto debes cotizar aproximadamente?",
+      "opts": [
+        "$69,600 más IVA",
+        "Alrededor de $75,000 más IVA",
+        "$51,724 más IVA",
+        "$60,000 exactos"
+      ],
+      "correct": 1,
+      "hint": "El módulo 2 tiene el ejemplo exacto: para ganar $60,000 netos con persona moral debes cotizar ~$75,000 más IVA."
+    }
+  ],
+  "m3": [
+    {
+      "q": "¿Qué es un deal memo en producción audiovisual y qué debe incluir para efectos fiscales?",
+      "opts": [
+        "Un acuerdo inicial que debe especificar honorarios, calendario de pagos y tratamiento de IVA",
+        "Un presupuesto detallado con todas las líneas de gasto",
+        "El contrato definitivo firmado ante notario",
+        "Solo la descripción del servicio sin mencionar dinero"
+      ],
+      "correct": 0,
+      "hint": "El módulo 3 explica que el deal memo es un acuerdo rápido previo al contrato formal, y lista qué debe incluir."
+    },
+    {
+      "q": "Una agencia paga tu spot a 60 días. ¿Qué método de facturación usas y qué debes emitir al cobrar?",
+      "opts": [
+        "PUE porque ya entregaste el trabajo",
+        "PPD sin necesidad de REP en agencias",
+        "PPD porque el pago llega después, y REP antes del día 5 del mes siguiente al cobro",
+        "Factura hasta que paguen"
+      ],
+      "correct": 2,
+      "hint": "El módulo 3 explica: pago diferido = PPD, y al recibir el pago debes emitir el REP antes del día 5 del mes siguiente."
+    },
+    {
+      "q": "Si una producción se cancela y te quedas con el anticipo de penalización, ¿qué pasa fiscalmente?",
+      "opts": [
+        "El anticipo retenido como penalización es ingreso y debe declararse",
+        "El anticipo devuelto no genera ningún movimiento fiscal",
+        "Solo pagas impuestos si el anticipo supera $10,000",
+        "Emites nota de crédito y el ingreso se cancela"
+      ],
+      "correct": 0,
+      "hint": "El módulo 3 advierte: el anticipo retenido por cancelación es ingreso gravable, a diferencia del anticipo devuelto."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿El crew freelance (gaffer, sonidista) genera IVA acreditable para el productor que los contrata?",
+      "opts": [
+        "Solo si el productor los paga con transferencia bancaria",
+        "Sí, siempre que cada miembro del crew emita CFDI por sus honorarios al productor",
+        "Solo si el crew gana más de $20,000 por producción",
+        "No, el crew es personal y no genera IVA"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 explica que el crew freelance debe emitirte CFDI — sin factura de ellos, el gasto no existe fiscalmente."
+    },
+    {
+      "q": "¿La música licenciada de Artlist o Epidemic Sound genera IVA acreditable en México?",
+      "opts": [
+        "Sí si pagas con tarjeta de crédito mexicana",
+        "No, son empresas extranjeras sin presencia fiscal en México",
+        "Sí, toda licencia de música es acreditable",
+        "Solo si el licenciamiento es para producción comercial"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 lista específicamente Artlist y Epidemic Sound como empresas extranjeras sin presencia en MX."
+    },
+    {
+      "q": "Rentas equipo por $40,000 para una producción. ¿Cuánto IVA acreditas si tienes el CFDI?",
+      "opts": [
+        "$6,400 (16% de $40,000)",
+        "$4,000 (10% de la renta)",
+        "$0 porque la renta no genera IVA",
+        "$3,200 (8% tasa reducida para renta de equipo)"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 menciona la renta de equipo con CFDI como gasto con IVA acreditable. $40,000 × 16% = $6,400."
+    }
+  ],
+  "m5": [
+    {
+      "q": "¿Cuál es la diferencia fiscal entre una producción por proyecto y un retainer de contenido mensual?",
+      "opts": [
+        "No hay diferencia fiscal entre ambos modelos",
+        "El proyecto genera ingreso puntual e irregular; el retainer genera ingreso predecible que facilita calcular el ISR",
+        "El proyecto paga más ISR que el retainer",
+        "El retainer no paga IVA porque es un acuerdo continuo"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 destaca la ventaja del retainer: ingresos predecibles = ISR predecible sin sorpresas."
+    },
+    {
+      "q": "En el ejemplo del módulo 5, ¿cuánto recibe en depósito un productor con retainer de $25,000 + IVA con marca (persona moral)?",
+      "opts": [
+        "$21,000 después de impuestos",
+        "$29,000 completos",
+        "Aproximadamente $23,833",
+        "$25,000 exactos"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5 tiene el ejemplo: $29,000 factura − $2,500 ISR − $2,667 IVA retenidos = $23,833 depositados."
+    },
+    {
+      "q": "Para un retainer de contenido donde la marca paga el mes siguiente, ¿qué debes emitir antes del día 5?",
+      "opts": [
+        "El Complemento de Pago (REP) de la factura PPD del mes anterior",
+        "Una nueva factura por el mes siguiente",
+        "Solo la declaración mensual cubre esto",
+        "Una nota de crédito y nueva factura PUE"
+      ],
+      "correct": 0,
+      "hint": "El módulo 5 explica el flujo del retainer con pago diferido: factura PPD + REP antes del día 5 del mes siguiente al cobro."
+    }
+  ],
+  "m6": [
+    {
+      "q": "¿Qué RFC debes usar para facturar postproducción a una productora en España?",
+      "opts": [
+        "El RFC fiscal de la productora española",
+        "XAXX010101000",
+        "No necesitas RFC para clientes extranjeros",
+        "XEXX010101000"
+      ],
+      "correct": 3,
+      "hint": "El módulo 6 especifica XEXX010101000 para todos los clientes extranjeros."
+    },
+    {
+      "q": "En una coproducción con dinero mexicano e internacional, ¿cómo determinas si aplica IVA 16% o 0%?",
+      "opts": [
+        "El productor ejecutivo decide qué IVA aplica",
+        "Depende de quién te paga: entidad mexicana = 16%, entidad extranjera = 0%",
+        "0% porque hay dinero internacional involucrado",
+        "Siempre 16% porque produces en México"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6 explica que en coproducción lo que importa es quién te paga, no de dónde viene el dinero."
+    },
+    {
+      "q": "¿Qué tipo de cambio debes usar para convertir €3,000 de honorarios de una productora europea?",
+      "opts": [
+        "El tipo de cambio del DOF del día del depósito",
+        "El tipo de cambio acordado en el contrato",
+        "El tipo de cambio de tu banco el día del depósito",
+        "El promedio mensual del Banco de México"
+      ],
+      "correct": 0,
+      "hint": "El módulo 6 muestra el ejemplo con euros: siempre se usa el tipo de cambio DOF del día del depósito."
+    }
+  ],
+  "m7": [
+    {
+      "q": "Una agencia transfiere $500,000 para producir un spot ($80,000 honorarios + $420,000 gastos). ¿Cuánto es ingreso tuyo?",
+      "opts": [
+        "$250,000 (la mitad del presupuesto)",
+        "$500,000 completos",
+        "$420,000 (los gastos de producción)",
+        "$80,000 (solo los honorarios)"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #1) explica que solo los honorarios son ingreso tuyo. Los gastos de producción para terceros tienen sus propios CFDIs."
+    },
+    {
+      "q": "¿Por qué el crew freelance sin RFC activo es un problema para el productor?",
+      "opts": [
+        "Porque sin RFC no pueden emitir CFDI, y sin CFDI ese gasto no existe fiscalmente ni genera IVA acreditable",
+        "Solo es problema si el pago supera $10,000",
+        "No es problema si se paga en efectivo",
+        "Porque no pueden firmar contratos de trabajo"
+      ],
+      "correct": 0,
+      "hint": "El módulo 7 (Error #2) explica que sin CFDI del crew, el gasto no existe para el SAT y el IVA se pierde."
+    },
+    {
+      "q": "¿Cuál es la consecuencia de olvidar el REP cuando una agencia paga a 60 días?",
+      "opts": [
+        "El SAT envía una carta invitación sin multa la primera vez",
+        "Multa de hasta $13,000 MXN por cada complemento de pago no emitido a tiempo",
+        "Solo un recargo menor del 1% mensual",
+        "No hay consecuencia si declaras el ingreso correctamente"
+      ],
+      "correct": 1,
+      "hint": "El módulo 7 (Error #4) menciona la multa específica de hasta $13,000 MXN por no emitir el REP a tiempo."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Por qué es importante registrar cada pago en el mes exacto en que se recibe, no al terminar la producción?",
+      "opts": [
+        "Porque RESICO calcula el ISR sobre cuándo cobras, no sobre cuándo entregas — los pagos distribuidos distribuyen el ISR",
+        "Solo importa el mes de registro para producciones mayores a $100,000",
+        "Porque las facturas vencen si no se registran en el mes",
+        "Porque el SAT solo acepta facturas del mes en curso"
+      ],
+      "correct": 0,
+      "hint": "El módulo 8 explica que en producciones de varios meses, registrar en el mes correcto distribuye el ISR correctamente."
+    },
+    {
+      "q": "¿Qué debes hacer en los primeros 5 días del mes en producción audiovisual?",
+      "opts": [
+        "Presentar la declaración mensual del mes anterior",
+        "Importar los XMLs de gastos del mes anterior",
+        "Emitir todas las facturas del mes nuevo",
+        "Revisar cobros PPD pendientes de REP y pagos de clientes extranjeros que falten registrar"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8 divide la rutina mensual. Los primeros 5 días son para REP pendientes y verificar depósitos de extranjeros."
+    },
+    {
+      "q": "¿Para qué sirve el Resumen anual de resicodeo en el contexto de producción audiovisual?",
+      "opts": [
+        "Para generar la declaración anual automáticamente",
+        "Para calcular el precio de tus siguientes producciones",
+        "Para compartir reportes con clientes y agencias",
+        "Para ver cuánto llevas del año y monitorear el avance hacia el límite de $3.5M en temporadas altas"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8 menciona el Resumen anual para monitorear el límite de RESICO — clave en temporadas con múltiples producciones."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>

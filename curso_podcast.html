@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Podcasters y Creadores de Contenido · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#14B8A6;--accent2:#99F6E4;--accent-glow:rgba(20,184,166,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Creación de Contenido Digital</div>
+  <h1><em>RESICO para Podcasters y Creadores de Contenido</em></h1>
+  <p class="hero-sub">Domina tu régimen fiscal con ejemplos reales de YouTube, TikTok, Instagram, podcasts, newsletters y contenido digital monetizado. Para creadores que viven de su audiencia.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar contenido patrocinado</div>
+    <div class="toc-item"><span class="toc-num">3</span>AdSense, Patreon y plataformas de monetización</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles del creador de contenido</div>
+    <div class="toc-item"><span class="toc-num">5</span>Venta de cursos, membresías y productos digitales</div>
+    <div class="toc-item"><span class="toc-num">6</span>Afiliados, merch y otras fuentes de ingreso</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales del creador de contenido</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Claves SAT para creadores de contenido digital</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad ante el SAT</h3>
+<table>
+  <thead><tr><th>Actividad</th><th>Clave SAT</th></tr></thead>
+  <tbody>
+    <tr><td>Youtuber / videoblogger</td><td>82111804 — Producción de contenido audiovisual</td></tr>
+    <tr><td>Podcaster</td><td>82111802 — Producción de audio y podcasting</td></tr>
+    <tr><td>Influencer / creador en redes</td><td>80141600 — Servicios de marketing digital</td></tr>
+    <tr><td>Streamer (Twitch, YouTube Live)</td><td>90111501 — Servicios de entretenimiento en vivo</td></tr>
+    <tr><td>Newsletter writer / Substack</td><td>80111604 — Servicios de redacción y publicación</td></tr>
+    <tr><td>Creador de cursos en línea</td><td>86101500 — Servicios de enseñanza</td></tr>
+  </tbody>
+</table>
+
+<h3>El ecosistema de ingresos del creador de contenido</h3>
+<table>
+  <thead><tr><th>Fuente de ingreso</th><th>Quién paga</th><th>Tipo fiscal</th></tr></thead>
+  <tbody>
+    <tr><td>AdSense / YouTube monetización</td><td>Google (extranjero)</td><td>Regalías, IVA 0%</td></tr>
+    <tr><td>Publicidad directa en podcast</td><td>Marca (persona moral)</td><td>Servicio, retenciones</td></tr>
+    <tr><td>Contenido patrocinado en redes</td><td>Marca o agencia (PM)</td><td>Servicio, retenciones</td></tr>
+    <tr><td>Membresías (Patreon, YouTube)</td><td>Audiencia / plataforma</td><td>Regalías o servicios</td></tr>
+    <tr><td>Venta de cursos propios</td><td>Alumnos (PF o PM)</td><td>Servicio de enseñanza</td></tr>
+    <tr><td>Afiliados (Amazon, etc.)</td><td>Plataforma extranjera</td><td>Comisiones, IVA 0%</td></tr>
+    <tr><td>Merch / productos propios</td><td>Público general</td><td>Venta de bienes + IVA</td></tr>
+  </tbody>
+</table>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>El creador moderno tiene ingresos de 5-8 fuentes distintas:</strong> AdSense, patrocinios, afiliados, Patreon, cursos, merch. Cada uno tiene tratamiento fiscal diferente. La clave está en registrar cada fuente por separado para tener claridad al declarar.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> crea un "cliente" por cada fuente de ingreso principal: Google AdSense, Patreon, cada marca que te patrocina. Así el historial queda claro por fuente.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar contenido patrocinado</div>
+      <div class="mod-sub">Publicidad en podcast, YouTube, Instagram y TikTok</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El patrocinio — tu ingreso más controlable</h3>
+<p>A diferencia de AdSense (que Google decide cuánto pagas), los patrocinios directos con marcas son ingresos que tú negocias. Por eso son los más importantes de estructurar bien.</p>
+
+<h3>Modelos de cotización de patrocinios</h3>
+<table>
+  <thead><tr><th>Modelo</th><th>Descripción</th><th>Cuándo usar</th></tr></thead>
+  <tbody>
+    <tr><td>CPM (costo por mil vistas)</td><td>$X por cada 1,000 reproducciones</td><td>Cuando tu alcance es el valor principal</td></tr>
+    <tr><td>Fee fijo por mención</td><td>$X por integración en episodio o video</td><td>Cuando es una sola aparición</td></tr>
+    <tr><td>Paquete mensual</td><td>$X/mes por N menciones en N piezas</td><td>Patrocinador recurrente</td></tr>
+    <tr><td>Canje + fee</td><td>Producto + dinero</td><td>Nano o micro influencers</td></tr>
+  </tbody>
+</table>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>El canje (producto sin dinero) también es ingreso:</strong> si una marca te manda productos valorados en $5,000 a cambio de contenido, eso es ingreso en especie. Debe declararse. El SAT considera el valor de mercado del producto recibido como ingreso gravable.</div>
+</div>
+
+<div class="example">
+  <div class="example-label">Paquete mensual de patrocinio para agencia (persona moral)</div>
+  <p>Acuerdo: 4 menciones en podcast + 2 posts en Instagram = $18,000/mes + IVA</p>
+  <p>Factura: $18,000 + $2,880 = $20,880</p>
+  <p>Retenciones agencia: −$1,800 ISR − $1,920 IVA</p>
+  <p>Depósito mensual: <strong>$17,160</strong></p>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> guarda cada patrocinador recurrente con su paquete en "Mis paquetes". Cada mes lo aplicas en un click. La calculadora de cotización te dice exactamente cuánto cobrar para que después de retenciones e ISR te quede el neto deseado.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">AdSense, Patreon y plataformas de monetización</div>
+      <div class="mod-sub">Cómo declarar correctamente cada fuente digital</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Google AdSense (YouTube, Blogger)</h3>
+<ul>
+  <li>Google retiene impuestos en USA según tu formulario W-8BEN (generalmente 0% si lo llenaste correctamente)</li>
+  <li>En México: declara el ingreso bruto antes de retención de Google, en el mes del depósito</li>
+  <li>Convierte cada depósito al tipo de cambio <strong>DOF del día del depósito</strong></li>
+  <li>Es ingreso de empresa extranjera → IVA 0%</li>
+</ul>
+
+<h3>Patreon / Ko-fi / Buy Me a Coffee</h3>
+<ul>
+  <li>Tus suscriptores pagan a la plataforma → la plataforma te paga a ti (menos su comisión)</li>
+  <li>Si tus suscriptores son mexicanos: técnicamente causas IVA 16% sobre su pago</li>
+  <li>Si son extranjeros: IVA 0%</li>
+  <li>En la práctica: si la mayoría de tu audiencia es internacional, muchos creadores declaran todo como exportación. Consulta con un contador tu caso específico.</li>
+  <li>Declara el ingreso bruto (antes de la comisión de Patreon)</li>
+</ul>
+
+<h3>Twitch (suscripciones, bits, raids)</h3>
+<ul>
+  <li>Amazon/Twitch paga en USD mensualmente</li>
+  <li>Convierte al tipo de cambio DOF del día del depósito</li>
+  <li>IVA 0% (empresa extranjera)</li>
+  <li>Declara el ingreso bruto del mes</li>
+</ul>
+
+<div class="example">
+  <div class="example-label">AdSense de YouTube — mes típico</div>
+  <p>Depósito de Google: $1,200 USD</p>
+  <p>Tipo de cambio DOF: $17.45</p>
+  <p>Ingreso a declarar: <strong>$20,940 MXN</strong></p>
+  <p>IVA: $0 (empresa extranjera)</p>
+  <p>ISR: $20,940 × 1.1% = <strong>$230 MXN</strong></p>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada plataforma como cobro separado: "AdSense marzo", "Patreon marzo", "Twitch marzo". Con el tipo de cambio DOF del día del depósito en cada uno. El resumen mensual suma todo para la declaración.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles del creador de contenido</div>
+      <div class="mod-sub">Equipo, software, internet y producción con IVA acreditable</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Gastos del creador con IVA acreditable</h3>
+<table>
+  <thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Cámara, micrófono, iluminación</td><td>Sí</td><td>Equipo de producción</td></tr>
+    <tr><td>Computadora / laptop de edición</td><td>Sí</td><td>Factura a tu RFC</td></tr>
+    <tr><td>Adobe Creative Cloud / Final Cut Pro</td><td>Sí</td><td>Adobe y Apple MX facturan con IVA</td></tr>
+    <tr><td>Internet dedicado (Telmex / Izzi)</td><td>Sí</td><td>Factura mensual a tu RFC</td></tr>
+    <tr><td>Spotify for Podcasters / Anchor</td><td>No</td><td>Sin presencia fiscal en MX</td></tr>
+    <tr><td>Buzzsprout / Transistor (hosting podcast)</td><td>No</td><td>Empresas extranjeras</td></tr>
+    <tr><td>Canva Pro</td><td>Sí</td><td>Canva factura con IVA en MX</td></tr>
+    <tr><td>Zoom Pro / StreamYard</td><td>Sí/No</td><td>Zoom sí; StreamYard no tiene presencia en MX</td></tr>
+    <tr><td>Música / efectos de sonido (Epidemic, Artlist)</td><td>No</td><td>Empresas extranjeras sin presencia en MX</td></tr>
+    <tr><td>Renta de estudio de grabación</td><td>Sí</td><td>Si el estudio te factura</td></tr>
+    <tr><td>Merch propio (producción / impresión)</td><td>Sí</td><td>El proveedor de impresión debe facturarte</td></tr>
+  </tbody>
+</table>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>El internet es tu gasto más constante:</strong> $800-1,200 MXN/mes de internet dedicado = $128-192 MXN de IVA acreditable mensual = $1,536-2,304 MXN al año. Asegúrate de que la factura mensual llegue a tu RFC, no al nombre de otra persona.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra las suscripciones mensuales de software como gastos recurrentes. Con el tiempo, el resumen te muestra exactamente cuánto inviertes en herramientas de producción y cuánto IVA estás recuperando.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Venta de cursos, membresías y productos digitales</div>
+      <div class="mod-sub">Cómo facturar tus propios productos de contenido</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Venta de cursos propios — el modelo más escalable</h3>
+<p>Si vendes cursos en tu propia plataforma o en marketplaces:</p>
+
+<table>
+  <thead><tr><th>Canal de venta</th><th>Tratamiento fiscal</th></tr></thead>
+  <tbody>
+    <tr><td>Tu propia web + Stripe (alumnos mexicanos)</td><td>IVA 16% sobre el precio del curso</td></tr>
+    <tr><td>Tu propia web + Stripe (alumnos extranjeros)</td><td>IVA 0% (exportación de servicios de enseñanza)</td></tr>
+    <tr><td>Hotmart (plataforma)</td><td>Hotmart factura con IVA en MX — ingreso para ti es lo que te depositan</td></tr>
+    <tr><td>Udemy (plataforma extranjera)</td><td>Regalías en USD, IVA 0%, convierte al DOF</td></tr>
+    <tr><td>Teachable (plataforma extranjera)</td><td>Regalías en USD, IVA 0%, convierte al DOF</td></tr>
+  </tbody>
+</table>
+
+<h3>Membresías recurrentes — tratamiento igual a Patreon</h3>
+<p>Si tienes membresías en tu propia web (Circle, MemberPress, Kajabi):</p>
+<ul>
+  <li>Alumnos mexicanos: IVA 16% incluido en la mensualidad o sumado</li>
+  <li>Alumnos extranjeros: IVA 0%</li>
+  <li>Declara el ingreso del mes en que se procesa el cargo</li>
+</ul>
+
+<div class="example">
+  <div class="example-label">Creador con curso en Hotmart y membresía propia</div>
+  <p>Hotmart deposita $35,000 MXN (tu parte después de la comisión de Hotmart)</p>
+  <p>Membresía propia: 50 alumnos × $300/mes = $15,000 MXN</p>
+  <p>Total ingresos del mes: <strong>$50,000 MXN</strong></p>
+  <p>ISR: $50,000 × 1.1% = <strong>$550 MXN</strong></p>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra los depósitos de Hotmart como cobros del mes. Para membresías propias, puedes registrar el total mensual de cada ciclo de cobro como un solo cobro con descripción "Membresía — N alumnos — mes".</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Afiliados, merch y otras fuentes de ingreso</div>
+      <div class="mod-sub">El ecosistema completo del creador diversificado</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Ingresos de afiliados</h3>
+<p>Amazon Associates, Impact, ShareASale, ClickBank — recibes comisiones cuando tu audiencia compra a través de tus links.</p>
+<ul>
+  <li>Los pagos llegan en USD generalmente</li>
+  <li>Son ingresos de empresas extranjeras → IVA 0%</li>
+  <li>Convierte cada depósito al tipo de cambio DOF del día</li>
+  <li>Declara en el mes en que recibes el pago (no cuando alguien hace click)</li>
+</ul>
+
+<h3>Venta de merch</h3>
+<p>Si vendes playeras, tazas o productos con tu marca:</p>
+<ul>
+  <li><strong>Print on demand extranjero (Printful, Printify):</strong> ellos producen y envían — tus ingresos son la diferencia entre el precio de venta y el costo. Si pagas en USD, el margen en USD que recibes es regalías o ingreso de exportación.</li>
+  <li><strong>Merch propio que produces y vendes en México:</strong> venta de bienes + IVA 16%. Emites CFDI de ingreso por cada venta o factura global mensual.</li>
+</ul>
+
+<h3>Speaking / conferencias</h3>
+<p>Si te invitan a dar conferencias o talleres por ser referente en tu nicho:</p>
+<ul>
+  <li>Empresa que te invita (persona moral): retenciones de ISR + IVA</li>
+  <li>Si es en el extranjero: IVA 0%, tipo de cambio DOF</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>La diversificación del creador:</strong> tener 6-8 fuentes de ingreso hace que ninguna cancelación destruya tu negocio. Pero también complica la declaración. La clave es registrar cada fuente en resicodeo en el momento en que llega el pago — nunca acumular para "acordarte después".</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> crea un "cliente" para cada fuente: "Amazon Afiliados", "Printful Merch", "Conferencia [empresa]". El historial por cliente te muestra cuánto generó cada fuente durante el año.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales del creador de contenido</div>
+      <div class="mod-sub">Los más comunes en YouTube, podcasting e influencer marketing</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Error #1: No declarar los ingresos de AdSense porque "son dólares de Google"</h3>
+<p>Google te deposita $500-2,000 USD mensuales en tu cuenta bancaria. "Nadie lo sabe porque es una empresa gringa." El SAT tiene acceso a declaraciones de divisas y puede detectar depósitos regulares del exterior.</p>
+<p><strong>Solución:</strong> declara cada depósito de AdSense en el mes que llega, convertido al tipo de cambio DOF.</p>
+
+<h3>Error #2: No declarar el canje como ingreso</h3>
+<p>Una marca te manda $8,000 en productos a cambio de un post de Instagram. No hay transferencia bancaria, no hay factura. "Fue solo un intercambio." Para el SAT, el valor de los productos recibidos es ingreso en especie.</p>
+<p><strong>Solución:</strong> registra el valor de mercado del canje como ingreso. Emite factura a la marca por el valor acordado del servicio.</p>
+
+<h3>Error #3: Declarar solo el neto de Patreon (después de la comisión)</h3>
+<p>Patreon te deposita $18,000 MXN después de su comisión de 10% ($2,000). Declaras $18,000. Tu ingreso real fue $20,000 — la comisión de Patreon es un gasto tuyo, no una reducción de ingresos.</p>
+<p><strong>Solución:</strong> declara el ingreso bruto de tus creadores ($20,000). La comisión de Patreon ($2,000) es un gasto — aunque generalmente no genera IVA acreditable porque Patreon es empresa extranjera.</p>
+
+<h3>Error #4: Mezclar el IVA de patrocinios en la cuenta bancaria con el resto</h3>
+<p>Recibes $23,200 de una agencia (que incluye $20,000 de honorarios + $3,200 de IVA). Gastas todo. Al declarar, descubres que debes pagar $3,200 de IVA y no tienes el dinero.</p>
+<p><strong>Solución:</strong> cuando recibes pagos con IVA, separa mentalmente (o en cuenta separada) el IVA. Ese dinero no es tuyo — es del SAT.</p>
+
+<h3>Error #5: No emitir factura global por ventas de cursos o merch en efectivo o por transferencia sin factura</h3>
+<p>Alumnos que pagan por transferencia sin pedir factura, ventas de merch en eventos. Si no hay factura individual ni global, son ingresos sin declarar.</p>
+<p><strong>Solución:</strong> factura global mensual por todas las ventas que no tienen CFDI individual.</p>
+
+<div class="danger">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Creadores con muchos seguidores y declaraciones mínimas:</strong> si tu canal de YouTube tiene 500,000 suscriptores, el SAT sabe que probablemente tienes ingresos significativos. Si declaras muy poco en comparación con tu presencia digital, eso puede generar una auditoría. Declara todo.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registrar todo en el momento en que ocurre es la única forma de estar al día. No lo dejes para después — "después" nunca llega hasta que el SAT pregunta.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">La rutina mensual del creador con múltiples fuentes de ingreso</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El reto del creador: demasiadas fuentes, muy poco tiempo</h3>
+<p>Un YouTuber activo puede tener 8 fuentes de ingreso distintas en el mismo mes. La única forma de no perder el control es registrar cada una cuando llega, no acumularlas.</p>
+
+<h3>Durante el mes — al momento de cada ingreso</h3>
+<ul>
+  <li><strong>Al llegar depósito de AdSense:</strong> busca el tipo de cambio DOF de ese día, registra en resicodeo</li>
+  <li><strong>Al recibir pago de patrocinador:</strong> registra el cobro y usa el asistente de facturación</li>
+  <li><strong>Al llegar depósito de Patreon/Twitch:</strong> registra el ingreso bruto al tipo de cambio DOF</li>
+  <li><strong>Al recibir canje de marca:</strong> registra el valor de mercado como ingreso y emite factura</li>
+  <li><strong>Al pagar herramientas de producción:</strong> registra el gasto con CFDI si está disponible</li>
+</ul>
+
+<h3>Primeros 5 días del mes</h3>
+<ul>
+  <li>Revisar cobros PPD del mes anterior → REP si aplica</li>
+  <li>Confirmar que llegaron todos los depósitos de plataformas → registrar los pendientes</li>
+</ul>
+
+<h3>Del 10 al 17</h3>
+<ul>
+  <li>Resumen en resicodeo → comparar con portal SAT</li>
+  <li>Declarar y pagar ISR + IVA</li>
+</ul>
+
+<h3>Último día del mes</h3>
+<ul>
+  <li>Factura global por ventas de cursos, merch o cualquier ingreso sin CFDI individual</li>
+  <li>Respaldo de datos</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Crea un checklist de fuentes de ingreso:</strong> anota todas tus fuentes activas (AdSense, Patreon, Amazon Afiliados, Twitch, patrocinador A, patrocinador B, cursos). Cada inicio de mes, verifica que cada fuente esté registrada. Si falta alguna, investiga si el pago llegó o está pendiente.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el Resumen anual por cliente te muestra exactamente cuánto generó cada fuente durante el año. Útil para decidir en qué fuentes invertir más energía el siguiente año y para identificar las que generan más con menos esfuerzo.</div>
+</div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT para un podcaster?",
+      "opts": [
+        "80141600 — Marketing digital",
+        "82111802 — Producción de audio y podcasting",
+        "86101500 — Servicios de enseñanza",
+        "90111501 — Entretenimiento en vivo"
+      ],
+      "correct": 1,
+      "hint": "El módulo 1 tiene la tabla de claves. El podcasting tiene su clave específica dentro de producción de audio."
+    },
+    {
+      "q": "Los ingresos de AdSense de YouTube, ¿qué tipo de cliente es Google para efectos fiscales?",
+      "opts": [
+        "Organismo público con trato especial",
+        "Persona física sin retenciones",
+        "Persona moral mexicana con retenciones",
+        "Cliente extranjero con IVA 0%"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 clasifica AdSense como ingreso de empresa extranjera con IVA 0% en la tabla del ecosistema de ingresos."
+    },
+    {
+      "q": "¿Cuántas fuentes de ingreso puede tener un creador de contenido activo?",
+      "opts": [
+        "Una sola fuente principal es lo recomendado en RESICO",
+        "Máximo 3 para que no se complique la declaración",
+        "Entre 6 y 8 fuentes distintas en el mismo mes es común",
+        "El SAT limita a 5 fuentes de ingreso en RESICO"
+      ],
+      "correct": 2,
+      "hint": "El módulo 1 menciona en el tip que el creador moderno suele tener 5-8 fuentes distintas de ingreso."
+    }
+  ],
+  "m2": [
+    {
+      "q": "Si una marca te manda productos valorados en $5,000 a cambio de contenido, ¿qué pasa fiscalmente?",
+      "opts": [
+        "El canje nunca se declara en RESICO",
+        "Solo es ingreso si el producto vale más de $10,000",
+        "Es ingreso en especie — el valor de mercado del producto recibido es ingreso gravable",
+        "No hay ingreso porque no hubo transferencia bancaria"
+      ],
+      "correct": 2,
+      "hint": "El módulo 2 advierte claramente: el canje (producto sin dinero) también es ingreso gravable en especie."
+    },
+    {
+      "q": "En el ejemplo del módulo 2, ¿cuánto recibe en depósito el podcaster por paquete mensual de patrocinio de $18,000 + IVA?",
+      "opts": [
+        "Aproximadamente $17,160",
+        "$15,000 después de todos los impuestos",
+        "$18,000 exactos",
+        "$20,880 completos"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 tiene el ejemplo: $20,880 factura − $1,800 ISR − $1,920 IVA retenidos = $17,160 depositados."
+    },
+    {
+      "q": "¿Qué modelo de cotización de patrocinio es mejor cuando el patrocinador quiere estar presente durante varios meses?",
+      "opts": [
+        "Fee fijo por una sola mención",
+        "CPM por cada video individual",
+        "Canje con producto exclusivamente",
+        "Paquete mensual con N menciones en N piezas"
+      ],
+      "correct": 3,
+      "hint": "El módulo 2 tabla: el paquete mensual es el modelo recomendado para patrocinadores recurrentes."
+    }
+  ],
+  "m3": [
+    {
+      "q": "Si recibes $1,200 USD de AdSense y el tipo de cambio DOF es $17.45, ¿cuánto declaras?",
+      "opts": [
+        "$1,200 USD directamente",
+        "$0 porque Google ya pagó impuestos en USA",
+        "$20,940 MXN",
+        "$19,200 MXN al tipo de cambio del banco"
+      ],
+      "correct": 2,
+      "hint": "El módulo 3 tiene el ejemplo exacto: $1,200 USD × $17.45 DOF = $20,940 MXN a declarar."
+    },
+    {
+      "q": "¿Qué monto de Patreon debes declarar: el bruto que pagan tus creadores o el neto que deposita Patreon?",
+      "opts": [
+        "Solo el neto si la comisión supera el 10%",
+        "El promedio entre bruto y neto",
+        "El neto depositado por Patreon porque la comisión ya fue descontada",
+        "El ingreso bruto antes de la comisión de Patreon — la comisión es un gasto tuyo"
+      ],
+      "correct": 3,
+      "hint": "El módulo 3 explica que debes declarar el ingreso bruto y la comisión de Patreon es tu gasto (aunque generalmente no acredita IVA)."
+    },
+    {
+      "q": "¿El llenado correcto del formulario W-8BEN con Google reduce la retención de impuestos en USA?",
+      "opts": [
+        "Sí, puede reducir la retención en USA a 0% para creadores mexicanos",
+        "Solo aplica si ganas más de $10,000 USD anuales de AdSense",
+        "No tiene ningún efecto fiscal",
+        "El W-8BEN es solo para trabajadores, no para creadores independientes"
+      ],
+      "correct": 0,
+      "hint": "El módulo 3 menciona el formulario W-8BEN y que, completado correctamente, generalmente resulta en retención de 0% para creadores mexicanos."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿El internet de casa (Telmex/Izzi) genera IVA acreditable para un creador de contenido?",
+      "opts": [
+        "Sí, siempre que la factura mensual llegue a tu RFC",
+        "No, es un gasto personal aunque trabajes desde casa",
+        "Solo el plan empresarial, no el residencial",
+        "Solo si tienes oficina formal registrada como domicilio fiscal"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 lista el internet con la condición de que la factura llegue a tu RFC — el plan puede ser residencial."
+    },
+    {
+      "q": "¿Canva Pro genera IVA acreditable para un creador en México?",
+      "opts": [
+        "Solo si pagas en pesos mexicanos",
+        "Sí, Canva factura con IVA en México",
+        "No, Canva es empresa extranjera",
+        "Solo el plan Teams de Canva"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 lista Canva Pro como acreditable con la nota de que factura con IVA en MX."
+    },
+    {
+      "q": "¿La música de Epidemic Sound o Artlist para videos genera IVA acreditable?",
+      "opts": [
+        "Sí si pagas con tarjeta de crédito mexicana",
+        "No, son empresas extranjeras sin presencia fiscal en México",
+        "Solo Artlist porque tiene subsidiaria en España",
+        "Sí, es software de producción necesario para el trabajo"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 lista explícitamente Epidemic y Artlist como empresas extranjeras sin presencia en MX — sin IVA acreditable."
+    }
+  ],
+  "m5": [
+    {
+      "q": "Si vendes un curso en Udemy, ¿cómo tratas el ingreso que recibes de ellos?",
+      "opts": [
+        "Solo se declara si el total anual supera $100,000 MXN",
+        "Como ingreso de exportación sin necesidad de declarar",
+        "Como ingreso de persona moral mexicana con retenciones",
+        "Como regalías de empresa extranjera en USD, IVA 0%, conviertes al DOF"
+      ],
+      "correct": 3,
+      "hint": "El módulo 5 tabla: Udemy es plataforma extranjera — regalías en USD, IVA 0%, conviertes al tipo de cambio DOF."
+    },
+    {
+      "q": "En el ejemplo del módulo 5, ¿cuánto ISR paga un creador con $35,000 de Hotmart + $15,000 de membresía propia?",
+      "opts": [
+        "$150 MXN (1% de $15,000)",
+        "$550 MXN (1.1% de $50,000)",
+        "$385 MXN (1.1% de $35,000)",
+        "$700 MXN (1.4% total)"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 tiene el ejemplo: $35,000 + $15,000 = $50,000 total × 1.1% = $550 MXN de ISR."
+    },
+    {
+      "q": "Para membresías propias con alumnos mexicanos, ¿qué IVA aplica?",
+      "opts": [
+        "0% porque la enseñanza está exenta",
+        "16% sobre el precio de la membresía",
+        "Depende si el curso tiene valor académico reconocido",
+        "8% tasa especial para servicios educativos"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 especifica: alumnos mexicanos en membresías propias = IVA 16%. La exención de IVA en educación aplica a instituciones con RVOE, no a cursos independientes."
+    }
+  ],
+  "m6": [
+    {
+      "q": "Los ingresos de Amazon Associates (afiliados), ¿tienen IVA al declararlos?",
+      "opts": [
+        "0% porque Amazon es empresa extranjera",
+        "Depende si los compradores son mexicanos o extranjeros",
+        "8% tasa especial para comisiones",
+        "16% porque se generan por ventas en México"
+      ],
+      "correct": 0,
+      "hint": "El módulo 6 clasifica los afiliados como ingresos de empresas extranjeras → IVA 0%."
+    },
+    {
+      "q": "Si te invitan a dar una conferencia en una empresa (persona moral) por ser referente en tu nicho, ¿qué aplica?",
+      "opts": [
+        "Sin retenciones porque es un evento cultural",
+        "IVA 0% porque son servicios educativos",
+        "Solo IVA, sin retención de ISR",
+        "Retenciones de ISR e IVA como cualquier servicio a persona moral"
+      ],
+      "correct": 3,
+      "hint": "El módulo 6 menciona las conferencias para empresas (persona moral): aplican retenciones normales de ISR e IVA."
+    },
+    {
+      "q": "¿Cuándo debes declarar los ingresos de afiliados — cuando alguien hace click o cuando recibes el pago?",
+      "opts": [
+        "Cuando la compra se confirma en la plataforma",
+        "Cuando la plataforma procesa el cierre mensual",
+        "Cuando recibes el depósito en tu cuenta bancaria",
+        "Cuando alguien hace click en tu link"
+      ],
+      "correct": 2,
+      "hint": "El módulo 6 especifica: declaras en el mes en que RECIBES el pago, no cuando ocurre el evento que genera la comisión."
+    }
+  ],
+  "m7": [
+    {
+      "q": "¿Por qué declarar solo el neto de Patreon (después de comisión) en lugar del bruto es un error?",
+      "opts": [
+        "No es error — el neto es lo que realmente recibiste",
+        "Solo es error si la comisión supera el 15%",
+        "Porque Patreon exige que declares el bruto en sus términos de servicio",
+        "Porque tu ingreso real es el bruto — la comisión es un gasto tuyo, no una reducción de ingresos"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #3) explica: ingreso bruto = lo que pagan tus suscriptores; comisión de Patreon = gasto tuyo. Son conceptos separados."
+    },
+    {
+      "q": "¿Por qué separar mentalmente el IVA de los patrocinios es importante?",
+      "opts": [
+        "Solo importa si el patrocinio supera $50,000",
+        "Porque ese IVA no es tuyo — es del SAT y debes tenerlo disponible al declarar",
+        "El IVA de patrocinios no se declara mensualmente",
+        "Para llevar la contabilidad más clara"
+      ],
+      "correct": 1,
+      "hint": "El módulo 7 (Error #4) lo explica: si gastas el IVA recibido, al declarar descubres que debes pagarlo y no tienes el dinero."
+    },
+    {
+      "q": "¿Qué puede suceder si un canal de YouTube con 500,000 suscriptores declara ingresos muy bajos?",
+      "opts": [
+        "Solo hay consecuencia si el canal está verificado",
+        "Nada, el SAT no revisa redes sociales",
+        "El SAT solo cruza datos de canales con más de 1 millón de suscriptores",
+        "El SAT puede generar una auditoría al detectar inconsistencia entre presencia digital e ingresos declarados"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 advierte explícitamente sobre el riesgo de auditoría cuando hay inconsistencia entre presencia digital y declaraciones."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Cuál es el primer paso al recibir un depósito de AdSense según la rutina del módulo 8?",
+      "opts": [
+        "Esperar a fin de mes para acumular todos los depósitos",
+        "Presentar declaración inmediata al SAT",
+        "Notificar a tu contador el monto recibido",
+        "Buscar el tipo de cambio DOF de ese día y registrar el cobro en resicodeo"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8 describe el flujo: al llegar el depósito → busca el DOF de ese día → registra en resicodeo. Siempre en el momento."
+    },
+    {
+      "q": "¿Para qué sirve el checklist de fuentes de ingreso que recomienda el módulo 8?",
+      "opts": [
+        "Para presentarlo al SAT como comprobante de ingresos",
+        "Para verificar al inicio de cada mes que cada fuente esté registrada y detectar pagos pendientes",
+        "Para cumplir con los requisitos de monetización de YouTube",
+        "Para negociar mejores tarifas con los patrocinadores"
+      ],
+      "correct": 1,
+      "hint": "El módulo 8 recomienda el checklist como herramienta para asegurarse de que ninguna fuente quede sin registrar cada mes."
+    },
+    {
+      "q": "¿Qué utilidad tienen los Reportes anuales de resicodeo para un creador con 8 fuentes de ingreso?",
+      "opts": [
+        "Calcular el número exacto de suscriptores rentables",
+        "Generar automáticamente la declaración anual",
+        "Presentar un estado de resultados a marcas y agencias",
+        "Ver cuánto generó cada fuente durante el año para decidir dónde invertir más energía"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8 menciona los Reportes anuales para comparar fuentes e identificar las que generan más con menos esfuerzo."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>

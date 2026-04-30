@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Ilustradores y Artistas · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#EC4899;--accent2:#FBCFE8;--accent-glow:rgba(236,72,153,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Ilustración & Artes Plásticas</div>
+  <h1><em>RESICO para Ilustradores y Artistas</em></h1>
+  <p class="hero-sub">Domina tu régimen fiscal con ejemplos reales de ilustración editorial, arte comercial, venta de obra original, prints y licenciamiento de imágenes.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar ilustración y arte comercial</div>
+    <div class="toc-item"><span class="toc-num">3</span>Venta de obra original y prints</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles del artista visual</div>
+    <div class="toc-item"><span class="toc-num">5</span>Licenciamiento y derechos de autor</div>
+    <div class="toc-item"><span class="toc-num">6</span>Clientes extranjeros y plataformas internacionales</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales del artista visual</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Claves SAT para ilustradores y artistas visuales</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad ante el SAT</h3>
+<table>
+  <thead><tr><th>Actividad</th><th>Clave SAT</th></tr></thead>
+  <tbody>
+    <tr><td>Ilustrador editorial / comercial</td><td>82141501 — Servicios de ilustración</td></tr>
+    <tr><td>Artista plástico (pintura, escultura)</td><td>90121500 — Producción de obras de arte</td></tr>
+    <tr><td>Artista digital / NFT artist</td><td>82141501 — Servicios de ilustración digital</td></tr>
+    <tr><td>Muralista</td><td>90121500 — Producción de obras de arte</td></tr>
+    <tr><td>Tatuador</td><td>85101600 — Servicios de cuidado personal (arte corporal)</td></tr>
+    <tr><td>Artista de concept art</td><td>82141501 — Ilustración para entretenimiento</td></tr>
+  </tbody>
+</table>
+
+<h3>Los tipos de ingreso del artista visual</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Cliente típico</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td>Ilustración editorial (libros, revistas)</td><td>Editorial (persona moral)</td><td>Retenciones ISR + IVA</td></tr>
+    <tr><td>Arte comercial (campañas, packaging)</td><td>Agencia / marca (persona moral)</td><td>Retenciones ISR + IVA</td></tr>
+    <tr><td>Venta de obra original</td><td>Coleccionista (persona física)</td><td>Sin retenciones</td></tr>
+    <tr><td>Venta de prints / reproducciones</td><td>Público general / plataformas</td><td>Puede tener IVA</td></tr>
+    <tr><td>Licenciamiento de imágenes</td><td>Empresa nacional o extranjera</td><td>Puede ser PM o exportación</td></tr>
+    <tr><td>Clases de ilustración / talleres</td><td>Persona física o institución</td><td>Servicio de enseñanza</td></tr>
+  </tbody>
+</table>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> distingue entre clientes corporativos (editoriales, agencias) con retenciones y clientes individuales (coleccionistas, alumnos) sin retenciones. La app ajusta automáticamente cada cobro.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar ilustración y arte comercial</div>
+      <div class="mod-sub">Editorial, campañas y licenciamiento de imágenes</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El modelo de derechos de uso — clave en ilustración</h3>
+<p>En ilustración profesional, el precio varía según el uso que se dará a tu obra. No es lo mismo ilustrar para una revista que para una campaña global de una marca multinacional.</p>
+
+<table>
+  <thead><tr><th>Uso</th><th>Alcance</th><th>Factor de precio</th></tr></thead>
+  <tbody>
+    <tr><td>Editorial — libro de tirada limitada</td><td>Un solo territorio, una edición</td><td>Base</td></tr>
+    <tr><td>Editorial — libro con distribución internacional</td><td>Múltiples territorios</td><td>Base × 1.5-2x</td></tr>
+    <tr><td>Publicidad — uso regional</td><td>Un estado o ciudad</td><td>Base × 2-3x</td></tr>
+    <tr><td>Publicidad — uso nacional</td><td>Todo México</td><td>Base × 4-6x</td></tr>
+    <tr><td>Publicidad — uso global / sin restricción</td><td>Todos los territorios</td><td>Base × 8-15x</td></tr>
+  </tbody>
+</table>
+
+<div class="example">
+  <div class="example-label">Ilustración para campaña nacional de marca (persona moral)</div>
+  <p>Quieres ganar netos: <strong>$25,000</strong></p>
+  <p>Subtotal a cotizar: ~$31,250</p>
+  <p>IVA 16%: $5,000 → Total: $36,250</p>
+  <p>Retenciones: −$3,125 ISR − $3,333 IVA</p>
+  <p>Depósito: $29,792 → menos ISR propio</p>
+  <p><strong>Neto real: ~$25,000 ✓</strong></p>
+</div>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Factura honorarios + licencia por separado:</strong> si produces la ilustración Y cedes derechos de uso, puedes facturar dos conceptos: "Servicios de ilustración" (82141501) y "Licencia de uso de imagen" (81162200). Esto documenta correctamente el acuerdo.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> usa la calculadora de cotización para saber exactamente cuánto cobrar a cada tipo de cliente. Guarda tus tarifas base por tipo de uso en "Mis paquetes".</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Venta de obra original y prints</div>
+      <div class="mod-sub">Cómo facturar cuando vendes arte físico o reproductions</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Venta de obra original — un caso especial</h3>
+<p>Cuando vendes un cuadro, escultura u obra original, la naturaleza del ingreso cambia: ya no es un servicio sino la venta de un bien.</p>
+<ul>
+  <li>Si vendes directamente a un coleccionista (persona física): sin retenciones, IVA 16% sobre el precio</li>
+  <li>Si vendes a través de una galería (persona moral): la galería puede actuar como intermediario y retener</li>
+  <li>Si vendes en el extranjero: puede aplicar IVA 0% si el comprador es extranjero y la obra sale del país</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Galerías y comisiones:</strong> si una galería vende tu obra y te paga su parte después de su comisión, el ingreso para el SAT es el precio total de venta menos la comisión de la galería (que la galería te puede facturar como su honorario). Pide siempre factura a la galería por su comisión.</div>
+</div>
+
+<h3>Venta de prints y reproducciones</h3>
+<p>Si vendes prints en plataformas como Society6, Redbubble o tienda propia:</p>
+<ul>
+  <li><strong>Plataformas extranjeras (Society6, Redbubble):</strong> regalías en USD → convierte al tipo de cambio DOF → declara como ingreso</li>
+  <li><strong>Tienda propia en México:</strong> precio + IVA 16% → emites CFDI por cada venta o factura global mensual</li>
+  <li><strong>Mercados físicos (ferias de arte):</strong> ventas en efectivo → van en factura global mensual</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Print on demand extranjero:</strong> Society6 y Redbubble ya pagan impuestos en sus países por ti. En México, el ingreso que recibes de ellos es ingreso a declarar normalmente. La retención que hicieron en su país puede acreditarse en tu declaración anual.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra ventas de plataformas POD como cobros de "Cliente extranjero". Las ventas en mercados o ferias de arte van como cobros en efectivo que luego incluyes en la factura global mensual.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles del artista visual</div>
+      <div class="mod-sub">Materiales, software y espacio de trabajo con IVA acreditable</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Gastos del ilustrador y artista con IVA acreditable</h3>
+<table>
+  <thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Tableta gráfica Wacom / iPad Pro</td><td>Sí</td><td>Equipo principal de trabajo</td></tr>
+    <tr><td>Procreate (App Store México)</td><td>Sí</td><td>Apple factura con IVA en MX</td></tr>
+    <tr><td>Adobe Illustrator / Photoshop</td><td>Sí</td><td>Adobe MX factura con IVA</td></tr>
+    <tr><td>Pinturas, lienzos, materiales artísticos</td><td>Sí</td><td>Si el proveedor factura</td></tr>
+    <tr><td>Impresión de portfolios / prints propios</td><td>Sí</td><td>Si la imprenta factura</td></tr>
+    <tr><td>Renta de estudio o taller de arte</td><td>Sí</td><td>Si el espacio te factura</td></tr>
+    <tr><td>Cursos de ilustración en plataformas MX</td><td>Sí</td><td>Plataforma con presencia en MX</td></tr>
+    <tr><td>Libros de arte / referencia visual</td><td>No</td><td>Los libros están exentos de IVA en MX</td></tr>
+    <tr><td>Ferias de arte — cuota de participación</td><td>Sí</td><td>Si el organizador te factura</td></tr>
+    <tr><td>Marcos, embalaje para envíos de obra</td><td>Sí</td><td>Material de venta</td></tr>
+  </tbody>
+</table>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>iPad Pro para ilustración:</strong> un iPad Pro con Apple Pencil puede costar $20,000-35,000. El IVA de esa compra ($3,200-$5,600) se acredita en el mes que lo compras. Si además compras una tableta Wacom y una computadora el mismo mes, el IVA acreditable puede ser muy significativo.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra los materiales artísticos en la categoría "Materiales de trabajo". El software en "Software". La renta del estudio en "Renta de espacio". Con el tiempo, verás exactamente cuánto inviertes en tu práctica artística.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Licenciamiento y derechos de autor</div>
+      <div class="mod-sub">Cómo monetizar tu obra más allá del servicio directo</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El licenciamiento como fuente de ingreso pasivo</h3>
+<p>Una vez que creas una ilustración, puedes licenciarla múltiples veces. Cada licencia es un ingreso adicional sin trabajo adicional.</p>
+
+<h3>Tipos de licenciamiento y cómo facturarlos</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Descripción</th><th>Cómo facturar</th></tr></thead>
+  <tbody>
+    <tr><td>Licencia editorial</td><td>Uso en libro, revista, contenido impreso</td><td>Servicio de ilustración + licencia de uso</td></tr>
+    <tr><td>Licencia comercial</td><td>Uso en producto, packaging, merchandising</td><td>Honorarios + cesión de derechos de uso comercial</td></tr>
+    <tr><td>Licencia de stock</td><td>Uso múltiple a través de plataformas (Shutterstock, etc.)</td><td>Regalías — ingreso por uso</td></tr>
+    <tr><td>Licencia de personaje</td><td>Uso de personaje o IP creada por ti</td><td>Royalty por unidad o monto fijo periódico</td></tr>
+  </tbody>
+</table>
+
+<h3>Protección de tu obra ante el SAT</h3>
+<p>El registro de tu obra ante el INDAUTOR (Instituto Nacional del Derecho de Autor) no es obligatorio para que exista la protección legal, pero sí es útil como evidencia en caso de disputas. Además, los gastos de registro de obra son deducibles.</p>
+
+<div class="example">
+  <div class="example-label">Licencia de personaje para empresa de merchandising</div>
+  <p>Empresa quiere usar tu personaje en 10,000 playeras</p>
+  <p>Acuerdo: $0.50 USD royalty por unidad = $5,000 USD</p>
+  <p>Tipo de cambio DOF: $17.50 → <strong>$87,500 MXN</strong></p>
+  <p>ISR: $87,500 × 1.5% = <strong>$1,312 MXN</strong></p>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada ingreso de licenciamiento con la descripción clara: "Licencia de uso comercial — Personaje X — Empresa Y". El historial te ayuda a rastrear qué obras están generando ingresos pasivos.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Clientes extranjeros y plataformas internacionales</div>
+      <div class="mod-sub">Illustration para el exterior, Society6 y Shutterstock</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Ilustración para clientes extranjeros directos</h3>
+<p>Editoriales, agencias y marcas fuera de México que te contratan directamente:</p>
+<ul>
+  <li>IVA: <strong>0%</strong> (exportación de servicios y derechos)</li>
+  <li>RFC receptor: <strong>XEXX010101000</strong></li>
+  <li>Tipo de cambio: DOF del día del cobro</li>
+  <li>Frecuente en ilustración editorial internacional y concept art</li>
+</ul>
+
+<h3>Plataformas de stock e ilustración</h3>
+<p><strong>Shutterstock / Adobe Stock / iStock:</strong> vendes licencias de tus imágenes a través de estas plataformas. Los ingresos son regalías en USD.</p>
+<ul>
+  <li>Convierte cada depósito a MXN con tipo de cambio DOF del día</li>
+  <li>Declara como ingreso del mes en que recibes el pago</li>
+  <li>La comisión de la plataforma no es deducible de ISR en RESICO</li>
+</ul>
+
+<p><strong>Society6 / Redbubble (prints):</strong> vendes reproductions físicas de tu arte. Los pagos mensuales son regalías por ventas.</p>
+
+<div class="example">
+  <div class="example-label">Ingreso mensual de Shutterstock</div>
+  <p>Regalías del mes: $180 USD</p>
+  <p>Tipo de cambio DOF: $17.30</p>
+  <p>Ingreso a declarar: <strong>$3,114 MXN</strong></p>
+  <p>ISR: $3,114 × 1% = <strong>$31.14 MXN</strong></p>
+</div>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>NFTs y criptomonedas:</strong> si vendes obra digital en plataformas de NFTs y recibes pagos en criptomonedas, el tratamiento fiscal en México aún es un área gris. Al momento de convertir a pesos o recibir el equivalente en MXN, ese ingreso debe declararse. Consulta con un contador especializado para casos con volumen significativo.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada plataforma como fuente separada. "Shutterstock — mes", "Society6 — mes", "Cliente editorial USA — proyecto". El historial muestra qué canal de ventas genera más ingresos.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales del artista visual</div>
+      <div class="mod-sub">Los más comunes en ilustración y artes plásticas</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Error #1: Vender obra en ferias de arte sin declarar</h3>
+<p>Participas en una feria de diseño, vendes $25,000 en prints y obra original en efectivo durante el fin de semana. Sin factura global ese mes, es ingreso no declarado.</p>
+<p><strong>Solución:</strong> al final del mes, suma todas las ventas en efectivo de ferias y mercados e inclúyelas en la factura global mensual.</p>
+
+<h3>Error #2: No facturar la comisión de la galería como gasto</h3>
+<p>Una galería vende tu cuadro en $50,000 y te paga $35,000 (su comisión fue $15,000). Declaras $35,000 como ingreso. Error: tu ingreso real era $50,000 y la comisión de $15,000 debería ser un gasto tuyo con CFDI de la galería.</p>
+<p><strong>Solución:</strong> exige a la galería que te facture su comisión. Tu ingreso es $50,000, tu gasto es $15,000 de comisión (con CFDI para acreditar el IVA).</p>
+
+<h3>Error #3: No declarar regalías de plataformas de stock porque son "poquitas"</h3>
+<p>$50-200 USD al mes de Shutterstock durante todo el año = $600-2,400 USD sin declarar. El SAT tiene acceso a esta información vía acuerdos internacionales.</p>
+<p><strong>Solución:</strong> declara cada depósito mensual de plataformas de stock, por pequeño que sea.</p>
+
+<h3>Error #4: Confundir obra artística con servicio de ilustración en la factura</h3>
+<p>Vendes un cuadro original ($15,000) y lo facturas igual que si fuera una ilustración por encargo. Son conceptos diferentes con claves SAT distintas.</p>
+<p><strong>Solución:</strong> obra original = 90121500 (producción de obras de arte). Servicio de ilustración = 82141501. Usa la clave correcta en cada caso.</p>
+
+<h3>Error #5: No guardar los CFDIs de materiales artísticos</h3>
+<p>Compras pinturas, lienzos, pigmentos, papel. Si pagas en tiendas que sí facturan pero no les pides factura, pierdes el IVA acreditable de cada compra.</p>
+<p><strong>Solución:</strong> en tiendas de materiales artísticos, siempre pide que la factura llegue a tu RFC. Muchas ya tienen sistemas digitales para esto.</p>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> lleva el registro de todas las ventas: ferias, galería, plataformas, clientes directos. El resumen mensual es tu base real para declarar sin dejar ingresos fuera.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">Tu rutina mensual como artista visual freelance</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Durante el mes</h3>
+<ul>
+  <li><strong>Al terminar un encargo de ilustración:</strong> registra el cobro con descripción del proyecto</li>
+  <li><strong>Al vender obra en galería o directo:</strong> registra el cobro con monto y tipo de obra</li>
+  <li><strong>Al recibir depósito de plataformas:</strong> convierte a MXN con tipo de cambio DOF y registra</li>
+  <li><strong>Al comprar materiales o equipo:</strong> registra el gasto con CFDI</li>
+  <li><strong>Al participar en una feria:</strong> anota todas las ventas del evento para la factura global</li>
+</ul>
+
+<h3>Primeros 5 días del mes</h3>
+<ul>
+  <li>Revisar cobros PPD del mes anterior → REP si aplica</li>
+  <li>Revisar depósitos de Shutterstock, Society6, Redbubble → registrar con DOF</li>
+</ul>
+
+<h3>Del 10 al 17</h3>
+<ul>
+  <li>Resumen en resicodeo → comparar con portal SAT</li>
+  <li>Declarar y pagar ISR + IVA</li>
+</ul>
+
+<h3>Último día del mes</h3>
+<ul>
+  <li>Factura global por ventas en efectivo (ferias, talleres, ventas directas sin factura)</li>
+  <li>Respaldo de datos</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Para artistas con ferias frecuentes:</strong> lleva una libreta o nota en el celular durante cada feria. Apunta cada venta con monto y forma de pago. Al final del evento tienes el total listo para registrar en resicodeo y luego en la factura global.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el Resumen anual te muestra qué canal generó más ingresos: encargos directos, galerías, plataformas o ferias. Información valiosa para decidir dónde enfocarte el siguiente año.</div>
+</div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT para ilustración editorial y comercial?",
+      "opts": [
+        "90121500 — Producción de obras de arte",
+        "90111500 — Servicios de artistas intérpretes",
+        "85101600 — Servicios de cuidado personal",
+        "82141501 — Servicios de ilustración"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 tiene la tabla de claves. La ilustración tiene su propia clave diferente a la producción de obra original."
+    },
+    {
+      "q": "Una editorial (persona moral) te paga por ilustrar su libro. ¿Qué aplica fiscalmente?",
+      "opts": [
+        "Con retenciones de ISR e IVA como cualquier persona moral",
+        "Solo retención de IVA, no ISR",
+        "IVA 0% porque las editoriales tienen trato especial",
+        "Sin retenciones porque es trabajo creativo"
+      ],
+      "correct": 0,
+      "hint": "El módulo 1 clasifica las editoriales como personas morales con retenciones completas."
+    },
+    {
+      "q": "Un coleccionista (persona física) compra un cuadro original. ¿Qué aplica?",
+      "opts": [
+        "Sin retenciones de ISR ni IVA — pero sí debes cobrar IVA 16% sobre el precio",
+        "Sin IVA porque las obras de arte están exentas",
+        "Retenciones de ISR e IVA como persona moral",
+        "Solo IVA 8% para obras de arte originales"
+      ],
+      "correct": 0,
+      "hint": "El módulo 1 tabla: coleccionistas son personas físicas — sin retenciones, pero el IVA 16% aplica normalmente."
+    }
+  ],
+  "m2": [
+    {
+      "q": "¿Por qué el precio de una ilustración para campaña global es mucho mayor que para una revista local?",
+      "opts": [
+        "Porque los diseñadores globales cobran más por estatus",
+        "Porque el alcance del uso determina el precio — a mayor territorio y duración, mayor valor de la licencia",
+        "No debería ser diferente — el trabajo es el mismo",
+        "Porque las campañas globales tienen presupuestos más grandes"
+      ],
+      "correct": 1,
+      "hint": "El módulo 2 tiene la tabla de factores de precio según alcance: desde editorial local (base) hasta publicidad global (hasta 15x más)."
+    },
+    {
+      "q": "¿Para qué sirve facturar 'Servicios de ilustración' y 'Licencia de uso de imagen' como dos conceptos separados?",
+      "opts": [
+        "El SAT exige que sean dos facturas, no conceptos en una misma factura",
+        "No tiene utilidad práctica, es solo preferencia del ilustrador",
+        "Solo para poder cobrar más en total",
+        "Para documentar correctamente que hay un servicio de creación y una cesión de derechos de uso"
+      ],
+      "correct": 3,
+      "hint": "El módulo 2 explica que dos conceptos en la misma factura documentan el acuerdo completo: creación + licencia."
+    },
+    {
+      "q": "Para una campaña nacional con persona moral y querer ganar $25,000 netos, ¿cuánto cotizas aproximadamente?",
+      "opts": [
+        "Alrededor de $31,250 más IVA",
+        "$21,552 más IVA",
+        "$25,000 exactos",
+        "$29,000 más IVA"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 tiene el ejemplo: para ganar $25,000 netos con persona moral debes cotizar ~$31,250 más IVA."
+    }
+  ],
+  "m3": [
+    {
+      "q": "Si una galería vende tu cuadro en $50,000 y te paga $35,000 después de su comisión, ¿cuál es tu ingreso real para el SAT?",
+      "opts": [
+        "$42,500 promedio entre lo vendido y lo recibido",
+        "$50,000 — el precio total de venta, con la comisión siendo un gasto tuyo",
+        "$35,000 que depositaron en tu cuenta",
+        "Depende de si la galería emitió factura al comprador"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 explica que tu ingreso es el precio de venta completo — la comisión de galería es un gasto con CFDI."
+    },
+    {
+      "q": "¿Qué pasa con las ventas de prints en ferias de arte donde no emites facturas individuales?",
+      "opts": [
+        "Solo se declaran si superan $10,000 en la feria",
+        "Se declaran en la declaración anual, no mensualmente",
+        "Se acumulan en la factura global mensual al final del mes",
+        "No se declaran porque son ventas artísticas"
+      ],
+      "correct": 2,
+      "hint": "El módulo 3 menciona que las ventas en ferias van en la factura global mensual."
+    },
+    {
+      "q": "¿Qué tipo de licencia de beat es más parecida a la venta de un print de ilustración (el artista mantiene todos los derechos)?",
+      "opts": [
+        "Licencia de dominio público",
+        "Licencia exclusiva de uso",
+        "Licencia no exclusiva — el artista mantiene la obra y puede seguir vendiéndola",
+        "Compra total de derechos"
+      ],
+      "correct": 2,
+      "hint": "El módulo 3 describe las licencias: la no exclusiva permite al artista seguir siendo dueño y vendiendo a otros, igual que los prints."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿El Procreate para iPad genera IVA acreditable en México?",
+      "opts": [
+        "Sí, Apple factura con IVA en México cuando compras desde la App Store MX",
+        "No aplica porque Procreate es de pago único",
+        "Solo si usas el iPad exclusivamente para trabajo",
+        "No, Apple es empresa extranjera"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 lista Procreate específicamente como acreditable porque Apple MX factura con IVA."
+    },
+    {
+      "q": "¿Por qué los libros de arte y referencia visual NO generan IVA acreditable?",
+      "opts": [
+        "Solo los libros extranjeros están exentos, los nacionales sí tienen IVA",
+        "Porque los libros en México están exentos de IVA (tasa 0%) por ley",
+        "Porque no son necesarios para el trabajo de ilustración",
+        "Porque el SAT no los reconoce como gasto de negocio"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 menciona que los libros físicos tienen IVA 0% en México — no hay IVA que acreditar."
+    },
+    {
+      "q": "Un ilustrador compra un iPad Pro con Apple Pencil en $30,000. ¿Cuánto IVA acredita ese mes?",
+      "opts": [
+        "$0, los dispositivos Apple no son acreditables",
+        "$4,800 (16% de $30,000)",
+        "$2,400 (8% tasa especial para equipo digital)",
+        "$3,000 (10% de $30,000)"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 menciona el iPad Pro como acreditable. $30,000 × 16% = $4,800 de IVA acreditable."
+    }
+  ],
+  "m5": [
+    {
+      "q": "¿Cuál es la ventaja principal del licenciamiento de imágenes frente a los encargos directos?",
+      "opts": [
+        "El precio por hora es mayor en licencias",
+        "Las licencias no pagan IVA en RESICO",
+        "Una imagen creada una sola vez puede generar ingresos múltiples veces sin trabajo adicional",
+        "El SAT no revisa los ingresos de licenciamiento"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5 describe el licenciamiento como 'ingreso pasivo': crear una vez y monetizar múltiples veces."
+    },
+    {
+      "q": "¿Qué clave SAT se usa para facturar la licencia de uso comercial de un personaje?",
+      "opts": [
+        "90121500 — Producción de obras de arte",
+        "81162200 — Licencia / cesión de derechos de uso comercial",
+        "80111600 — Servicios profesionales",
+        "82141501 — Ilustración"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 tabla: la licencia de personaje se factura con la clave de cesión de derechos 81162200."
+    },
+    {
+      "q": "En el ejemplo del módulo 5, ¿cuánto ISR paga un artista que recibe $5,000 USD de royalties por licencia de personaje?",
+      "opts": [
+        "$8,750 MXN (10%)",
+        "$4,375 MXN (5%)",
+        "$875 MXN (1%)",
+        "Aproximadamente $1,312 MXN (1.5% sobre $87,500 MXN)"
+      ],
+      "correct": 3,
+      "hint": "El módulo 5 tiene el ejemplo: $5,000 USD × $17.50 = $87,500 MXN × 1.5% = $1,312 MXN de ISR."
+    }
+  ],
+  "m6": [
+    {
+      "q": "¿Las regalías de Shutterstock deben declararse aunque sean $50 USD al mes?",
+      "opts": [
+        "Solo si el acumulado anual supera $1,000 USD",
+        "Sí, todo ingreso debe declararse — el SAT tiene acceso a esta información vía acuerdos internacionales",
+        "No, montos menores a $100 USD están exentos",
+        "Solo en la declaración anual, no mensualmente"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6 advierte explícitamente que el SAT tiene acceso a información de plataformas internacionales vía acuerdos."
+    },
+    {
+      "q": "¿Qué RFC usas para facturar ilustración a una editorial en Francia?",
+      "opts": [
+        "XAXX010101000",
+        "No se emite factura para clientes europeos",
+        "XEXX010101000",
+        "El RFC fiscal francés de la editorial"
+      ],
+      "correct": 2,
+      "hint": "El módulo 6 especifica XEXX010101000 para todos los clientes extranjeros sin excepción."
+    },
+    {
+      "q": "¿Qué recomienda el módulo 6 para ingresos por NFTs en criptomonedas?",
+      "opts": [
+        "No declarar hasta que el SAT emita reglas claras sobre NFTs",
+        "Declarar el equivalente en MXN al momento de convertir, y consultar contador especializado para volúmenes significativos",
+        "Solo declarar si supera 10 ETH anuales",
+        "Están completamente exentos de impuestos en México"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6 menciona los NFTs como área gris fiscal que requiere conversión al equivalente en MXN y asesoría especializada."
+    }
+  ],
+  "m7": [
+    {
+      "q": "¿Cuál es el ingreso real de un artista cuyo cuadro se vende en $50,000 a través de galería con 30% de comisión?",
+      "opts": [
+        "$50,000 menos IVA = $43,103",
+        "$35,000 (lo que depositó la galería)",
+        "$42,500 promedio fiscal",
+        "$50,000 — el precio de venta completo, con $15,000 de comisión siendo gasto deducible de IVA"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #2) explica exactamente este caso: ingreso = precio total, comisión de galería con CFDI = gasto tuyo."
+    },
+    {
+      "q": "¿Qué clave SAT debe usar un artista al vender una pintura original vs al facturar un encargo de ilustración?",
+      "opts": [
+        "La misma clave para ambos casos — 82141501",
+        "80111600 para ambos porque son servicios profesionales",
+        "90121500 para obra original y 82141501 para ilustración por encargo",
+        "No hay diferencia mientras el monto sea el mismo"
+      ],
+      "correct": 2,
+      "hint": "El módulo 7 (Error #4) explica que obra original (90121500) y servicio de ilustración (82141501) son conceptos con claves SAT distintas."
+    },
+    {
+      "q": "Las ventas de fin de semana en una feria de arte hechas en efectivo, ¿cuándo se incluyen en la factura global?",
+      "opts": [
+        "No se incluyen si el total de la feria fue menor a $5,000",
+        "En la declaración anual junto con todos los ingresos en efectivo del año",
+        "Al fin del mes en que ocurrió la feria",
+        "El mismo día de la feria"
+      ],
+      "correct": 2,
+      "hint": "El módulo 7 (Error #1) explica que las ventas en ferias de efectivo van en la factura global del mes en que ocurrieron."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Por qué se recomienda llevar una libreta o nota durante las ferias de arte?",
+      "opts": [
+        "El SAT exige un registro físico de ventas en eventos",
+        "Para registrar cada venta con monto y forma de pago — eso es el insumo para la factura global mensual",
+        "Para hacer inventario de la obra disponible",
+        "Para recordar qué obra pertenece a qué cliente"
+      ],
+      "correct": 1,
+      "hint": "El módulo 8 recomienda la libreta en ferias específicamente para tener el total listo para la factura global."
+    },
+    {
+      "q": "¿Qué utilidad tienen los Reportes anuales de resicodeo para un artista visual?",
+      "opts": [
+        "Presentar estados financieros a galerías y coleccionistas",
+        "Generar automáticamente la declaración anual",
+        "Ver qué canal generó más: encargos directos, galerías, plataformas o ferias — para enfocar energía el siguiente año",
+        "Calcular el valor de mercado de su portafolio de obra"
+      ],
+      "correct": 2,
+      "hint": "El módulo 8 menciona los Reportes anuales para comparar canales de venta y tomar decisiones de negocio."
+    },
+    {
+      "q": "¿Cuándo debes registrar los depósitos de Shutterstock y Society6?",
+      "opts": [
+        "En los primeros 5 días del mes siguiente al depósito",
+        "El último día del mes en que llegaron",
+        "El día exacto en que llegan — con el tipo de cambio DOF de ese día",
+        "El día 17 junto con la declaración mensual"
+      ],
+      "correct": 0,
+      "hint": "El módulo 8 en la rutina de primeros 5 días del mes incluye revisar y registrar depósitos de plataformas con el tipo de cambio DOF."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>

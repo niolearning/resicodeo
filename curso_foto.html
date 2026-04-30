@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Fotógrafos y Editores · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#F97316;--accent2:#FED7AA;--accent-glow:rgba(249,115,22,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Fotografía & Edición</div>
+  <h1><em>RESICO para Fotógrafos y Editores</em></h1>
+  <p class="hero-sub">Maneja tu régimen fiscal con ejemplos reales de bodas, retratos, fotografía comercial y edición digital. Todo lo que necesitas para tu actividad fotográfica.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar en fotografía</div>
+    <div class="toc-item"><span class="toc-num">3</span>Contratos, anticipos y entregas</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles de tu trabajo</div>
+    <div class="toc-item"><span class="toc-num">5</span>Facturar por sesión vs paquetes recurrentes</div>
+    <div class="toc-item"><span class="toc-num">6</span>Clientes extranjeros y stock photography</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales comunes del fotógrafo</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Cómo encajan fotógrafos y editores en el régimen</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad económica ante el SAT</h3>
+<p>Como fotógrafo o editor de fotografía, tu actividad principal es <strong>prestación de servicios fotográficos</strong>. Si también vendes impresiones, álbumes físicos o productos, puedes tener actividad mixta.</p>
+<ul>
+  <li><strong>Fotógrafo de bodas / eventos:</strong> Servicios de fotografía (82121500)</li>
+  <li><strong>Fotógrafo comercial / publicitario:</strong> Servicios de fotografía publicitaria (82121501)</li>
+  <li><strong>Editor de fotografía / retocador:</strong> Servicios de edición de imágenes (82121502)</li>
+  <li><strong>Fotógrafo de producto:</strong> Fotografía comercial para e-commerce (82121500)</li>
+</ul>
+
+<h3>El modelo de ingresos del fotógrafo en RESICO</h3>
+<p>La fotografía tiene ingresos muy variables: temporada de bodas concentra la mayor parte del año. RESICO es ideal porque pagas sobre lo que cobras cada mes.</p>
+
+<div class="example">
+  <div class="example-label">Año típico de fotógrafo de bodas</div>
+  <p>Ene-Feb (baja): $8,000/mes → ISR: $80/mes (1%)</p>
+  <p>Mar-Jun (media): $45,000/mes → ISR: $495/mes (1.1%)</p>
+  <p>Oct-Nov (alta): $90,000/mes → ISR: $1,350/mes (1.5%)</p>
+  <p><strong>ISR anual total ≈ $8,000 vs ~$50,000+ en régimen general</strong></p>
+</div>
+
+<h3>Tipos de trabajo y su tratamiento fiscal</h3>
+<table>
+  <thead><tr><th>Tipo de proyecto</th><th>Cliente típico</th><th>Peculiaridades</th></tr></thead>
+  <tbody>
+    <tr><td>Boda / quinceañera / familia</td><td>Persona física</td><td>Anticipos frecuentes, sin retenciones</td></tr>
+    <tr><td>Sesión comercial / e-commerce</td><td>Persona moral</td><td>Retenciones ISR + IVA</td></tr>
+    <tr><td>Editorial / revista</td><td>Persona moral o física</td><td>Derechos de imagen + servicios</td></tr>
+    <tr><td>Edición remota para extranjeros</td><td>Cliente extranjero</td><td>IVA 0%, factura en USD</td></tr>
+    <tr><td>Stock photography (Shutterstock, Getty)</td><td>Plataforma extranjera</td><td>Retenciones de plataforma, declaración especial</td></tr>
+  </tbody>
+</table>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> guarda cada tipo de cliente con sus datos completos. Para agencias (persona moral), la app aplica retenciones automáticamente. Para clientes extranjeros, IVA en cero. Todo calculado sin que tengas que recordar las reglas.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar en fotografía</div>
+      <div class="mod-sub">Precios que ya incluyen tus impuestos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El error de la cotización sin impuestos</h3>
+<p>Muchos fotógrafos dan precio de lo que quieren ganar, sin considerar que de ese precio todavía sale IVA. Si no separas el IVA desde la cotización, lo pagas tú.</p>
+
+<h3>Estructura de precio según tipo de cliente</h3>
+<table>
+  <thead><tr><th>Tipo de cliente</th><th>Cómo cotizar</th><th>Por qué</th></tr></thead>
+  <tbody>
+    <tr><td>Persona física (boda, familia)</td><td>Precio todo incluido o con IVA aparte</td><td>Simple para el cliente</td></tr>
+    <tr><td>Empresa (persona moral)</td><td>Subtotal + IVA por separado</td><td>Ellos acreditan el IVA</td></tr>
+    <tr><td>Extranjero</td><td>En USD, sin IVA</td><td>Exportación = 0% IVA</td></tr>
+  </tbody>
+</table>
+
+<div class="example">
+  <div class="example-label">Sesión de producto para empresa (persona moral)</div>
+  <p>Quieres ganar limpios: <strong>$18,000</strong></p>
+  <p>Cotización necesaria (con retenciones): ~$23,500 + IVA</p>
+  <p>La empresa te retiene: 10% ISR ($2,350) + 2/3 IVA ($2,507)</p>
+  <p>Recibes en depósito: ~$22,393</p>
+  <p>Tu ganancia neta después de pagar ISR: <strong>~$18,000 ✓</strong></p>
+</div>
+
+<h3>Derechos de imagen vs servicio fotográfico</h3>
+<p>Si cedes los derechos de uso de tus fotografías a una empresa (para publicidad, catálogo, etc.), eso puede facturarse por separado como licencia de uso. Ambos conceptos van en la misma factura como conceptos diferentes.</p>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Tip:</strong> para sesiones comerciales donde cedes derechos, especifica en la factura: Concepto 1 = Servicios fotográficos, Concepto 2 = Licencia de uso de imágenes. Esto documenta correctamente el acuerdo y te protege legalmente.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> usa la calculadora de cotización antes de dar precio a cualquier sesión comercial. Pones cuánto quieres ganar limpio, seleccionas el tipo de cliente, y te dice exactamente cuánto cobrar para que después de impuestos y retenciones te quede lo que pediste.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Contratos, anticipos y entregas</div>
+      <div class="mod-sub">Cómo facturar los pagos en etapas</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El flujo de pagos típico en fotografía de bodas</h3>
+<ul>
+  <li><strong>Al apartar fecha:</strong> anticipo de reserva (20-30%)</li>
+  <li><strong>Antes del evento:</strong> segundo pago (50%)</li>
+  <li><strong>Al entregar álbum/galería:</strong> saldo final (20-30%)</li>
+</ul>
+
+<h3>Cómo facturar cada pago</h3>
+<p>Tienes dos enfoques válidos:</p>
+<ul>
+  <li><strong>Facturar cada pago por separado:</strong> emites CFDI por cada anticipo recibido. El ingreso cuenta cuando recibes cada pago.</li>
+  <li><strong>Facturar todo al final:</strong> esperas a cobrar el total y emites una sola factura. Más simple, pero todos los ingresos caen en el mes de entrega.</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Cuidado con las cancelaciones:</strong> si ya facturaste el anticipo y el cliente cancela la boda, debes emitir una nota de crédito (CFDI de Egreso) por lo que devuelvas. Si te quedas con el anticipo por penalización, ese dinero SÍ es ingreso y SÍ paga impuestos.</div>
+</div>
+
+<h3>Sesiones comerciales con entrega diferida</h3>
+<p>Para sesiones de producto o editorial donde la empresa paga después de recibir las fotos:</p>
+<ol>
+  <li>Realiza la sesión</li>
+  <li>Entrega las imágenes</li>
+  <li>Emite factura con método <strong>PPD</strong></li>
+  <li>Cuando te pagan, emite el <strong>REP antes del día 5 del mes siguiente</strong></li>
+</ol>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> cuando registras un cobro como "Pendiente" y después lo marcas como "Cobrado", la app te recuerda automáticamente si necesitas emitir el REP. También calcula la fecha límite exacta para ese complemento.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles de tu trabajo</div>
+      <div class="mod-sub">IVA acreditable en equipo, software y servicios</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Gastos del fotógrafo con IVA acreditable</h3>
+<table>
+  <thead><tr><th>Gasto</th><th>¿IVA acreditable?</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Cámaras, lentes, flashes</td><td>Sí</td><td>Siempre pide factura</td></tr>
+    <tr><td>Trípodes, bolsas, filtros</td><td>Sí</td><td>Equipo accesorio</td></tr>
+    <tr><td>Tarjetas de memoria, discos</td><td>Sí</td><td>Material de trabajo</td></tr>
+    <tr><td>Adobe Lightroom / Photoshop</td><td>Sí</td><td>Adobe factura con IVA en MX</td></tr>
+    <tr><td>Capture One</td><td>Sí</td><td>Tiene presencia fiscal en MX</td></tr>
+    <tr><td>Servicio de nube (Google Drive, Dropbox)</td><td>Sí</td><td>Facturan con IVA en MX</td></tr>
+    <tr><td>Impresión de álbumes (proveedor con factura)</td><td>Sí</td><td>Asegura que facturen a tu RFC</td></tr>
+    <tr><td>Renta de estudio fotográfico</td><td>Sí</td><td>Muy común, siempre factura</td></tr>
+    <tr><td>Asistente de fotografía</td><td>Sí</td><td>El asistente te factura</td></tr>
+    <tr><td>Gasolina con ticket fiscal</td><td>Sí</td><td>Pide factura en gasolinera</td></tr>
+    <tr><td>Presets de terceros (Etsy, sitios extranjeros)</td><td>No</td><td>Sin presencia fiscal en MX</td></tr>
+  </tbody>
+</table>
+
+<h3>La impresión de álbumes — caso especial</h3>
+<p>Si ofreces álbumes físicos como parte de tu paquete, el proveedor de impresión debe facturarte a ti. Tú le cobras al cliente por el álbum dentro de tu servicio fotográfico total. No necesitas facturar el álbum por separado.</p>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>La renta de estudio:</strong> si rentas un estudio varias veces al mes para sesiones, esos recibos suman IVA acreditable importante. Un estudio a $2,000 + IVA por sesión, si tienes 4 sesiones al mes, son $1,280 de IVA que recuperas.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> en la pestaña "Nuevo gasto" hay categorías específicas: Equipo, Software, Transporte, Renta de equipo, Colaboradores. Marca "Tiene CFDI" en cada gasto con factura y el IVA acreditable se suma automáticamente a tu resumen mensual.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Facturar por sesión vs paquetes recurrentes</div>
+      <div class="mod-sub">Bodas puntuales y clientes de contenido regular</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Dos modelos de negocio del fotógrafo</h3>
+<ul>
+  <li><strong>Por sesión/evento:</strong> boda, quinceañera, sesión familiar. Ingreso puntual.</li>
+  <li><strong>Recurrente:</strong> fotografía mensual para restaurante, e-commerce, redes sociales de empresa. Ingreso mensual estable.</li>
+</ul>
+
+<h3>Ventajas fiscales del trabajo recurrente</h3>
+<p>Con un cliente recurrente mensual sabes exactamente cuánto vas a ganar e ISR vas a pagar ese mes. Te permite planear tu flujo de efectivo y no tener sorpresas.</p>
+
+<div class="example">
+  <div class="example-label">Fotógrafo de restaurante — retainer mensual</div>
+  <p>Acuerdo: $8,000 + IVA mensual por fotografía de platillos y menú</p>
+  <p>Cliente: Cadena de restaurantes (persona moral)</p>
+  <p>Factura: $8,000 + $1,280 IVA = $9,280 total</p>
+  <p>Retenciones: −$800 ISR − $853 IVA</p>
+  <p>Depósito mensual: <strong>$7,627</strong></p>
+  <p>ISR efectivo que pagas: aprox. $0 adicional (las retenciones lo cubren)</p>
+</div>
+
+<h3>Combinando bodas con trabajo recurrente</h3>
+<p>Muchos fotógrafos tienen 2-3 clientes recurrentes + bodas en temporada. Esto crea ingresos mixtos en algunos meses.</p>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Ojo con los meses pico:</strong> si en octubre tienes 2 bodas ($40,000 c/u) + tu retainer ($8,000), tus ingresos son $88,000. Eso sube tu tasa a 1.5%. La app lo calcula automáticamente pero es bueno saberlo para no sorprenderte al declarar.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> puedes ver en tiempo real en "Resumen" cuánto llevas de ingresos en el mes actual y qué tasa de ISR te aplica. Si vas a agregar una sesión extra, puedes calcular antes cuánto impacta en tu ISR.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Clientes extranjeros y stock photography</div>
+      <div class="mod-sub">Exportación de servicios y plataformas internacionales</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Clientes extranjeros directos</h3>
+<p>Si un cliente en el extranjero te contrata para editar fotos, retocar imágenes o hacer sesiones remotas:</p>
+<ul>
+  <li>IVA: <strong>0%</strong> (exportación de servicios)</li>
+  <li>RFC receptor: <strong>XEXX010101000</strong></li>
+  <li>Tipo de cambio: DOF del día del cobro</li>
+  <li>ISR: sí pagas, sobre el ingreso convertido a MXN</li>
+</ul>
+
+<h3>Stock photography — el caso especial</h3>
+<p>Si vendes fotos en plataformas como Shutterstock, Getty Images o Adobe Stock, los ingresos que recibes tienen reglas distintas:</p>
+<ul>
+  <li>Las plataformas ya retienen un porcentaje (impuesto en USA u otro país)</li>
+  <li>En México, ese ingreso sigue siendo tuyo y debes declararlo</li>
+  <li>La retención extranjera puede acreditarse contra tu ISR mexicano en la declaración anual</li>
+  <li>Regla: convierte cada pago recibido al tipo de cambio DOF del día de depósito</li>
+</ul>
+
+<div class="warn">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg>
+  <div><strong>Sobre el IVA y las plataformas de stock:</strong> desde 2020, algunas plataformas digitales extranjeras deben cobrar IVA en México. Revisa si Shutterstock o Getty cobran IVA en tu factura — si lo cobran, no lo acreditas tú (ya lo pagó la plataforma). Si no lo cobran, consulta a un contador para tu situación específica.</div>
+</div>
+
+<h3>Bodas de destino con cliente extranjero</h3>
+<p>Para bodas donde el cliente que te contrata y paga es extranjero:</p>
+<ul>
+  <li>IVA: 0% (exportación)</li>
+  <li>El evento puede ser en México — lo que importa es la residencia fiscal del cliente</li>
+  <li>Si el cliente es mexicano residiendo en el extranjero, consulta caso por caso</li>
+</ul>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> selecciona "Cliente extranjero" al registrar el cobro. El IVA queda en 0% automáticamente. Registra el monto ya convertido a MXN con el tipo de cambio DOF del día. El resumen mensual incluirá ese ingreso correctamente en tus cálculos.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales comunes del fotógrafo</div>
+      <div class="mod-sub">Lo que más cuesta y cómo evitarlo</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Error #1: Cobrar el álbum y el servicio en precios separados sin estructura clara</h3>
+<p>Algunos fotógrafos cobran por separado el "servicio" y el "álbum", pero sin emitir dos facturas o dos conceptos en la misma factura. El SAT ve una inconsistencia entre el contrato y la factura.</p>
+<p><strong>Solución:</strong> en la factura, especifica los conceptos claramente: servicio fotográfico + álbum físico (con sus respectivas claves SAT).</p>
+
+<h3>Error #2: No declarar las sesiones pagadas en efectivo</h3>
+<p>Sesiones de retrato familiar, "mini sessions" de temporada, todo pagado en efectivo y sin factura. El ingreso existe aunque no haya factura.</p>
+<p><strong>Solución:</strong> emite factura global mensual por todos los cobros sin factura, incluyendo los de efectivo.</p>
+
+<h3>Error #3: No pedir factura al laboratorio de impresión</h3>
+<p>Mandas imprimir álbumes, el laboratorio no te da factura "porque es persona física". El IVA que pagas se pierde.</p>
+<p><strong>Solución:</strong> trabaja solo con proveedores que facturen. Exige factura siempre, aunque el proveedor ponga resistencia.</p>
+
+<h3>Error #4: Confundir regalías de stock con ingresos normales</h3>
+<p>Las regalías de Shutterstock se reciben mensualmente en montos pequeños. Muchos fotógrafos no los declaran porque "son poquito". El SAT los ve vía información internacional.</p>
+<p><strong>Solución:</strong> registra cada depósito de regalías como ingreso, convirtiendo al tipo de cambio DOF del día de depósito.</p>
+
+<h3>Error #5: Olvidar la factura global de mini sessions</h3>
+<p>En temporada de Navidad haces 20 mini sessions a $1,500 c/u en efectivo = $30,000 sin factura. No emites la factura global. El SAT detecta la diferencia entre tus depósitos y lo declarado.</p>
+<p><strong>Solución:</strong> al fin de cada mes, emite factura global por todo lo cobrado sin factura individual.</p>
+
+<div class="danger">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Las redes sociales y el SAT:</strong> si publicitas mini sessions en Instagram con precios visibles, el SAT puede estimar cuántas vendiste. Si declaras mucho menos de lo que tus publicaciones sugieren que vendiste, es una alerta. Declara todo.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> registra cada sesión aunque sea de efectivo. Marca la forma de pago como "Efectivo". Al fin del mes, el resumen te muestra cuánto debes incluir en la factura global para que tu declaración cuadre.</div>
+</div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">Tu rutina mensual completa como fotógrafo</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu rutina fiscal mensual en 4 momentos</h3>
+
+<h3>1. Al momento de cada transacción</h3>
+<ul>
+  <li><strong>Nuevo cliente:</strong> créalo en la app con sus datos completos</li>
+  <li><strong>Al recibir anticipo:</strong> regístralo como cobro (pendiente o cobrado)</li>
+  <li><strong>Al realizar la sesión y cobrar:</strong> marca el cobro como cobrado</li>
+  <li><strong>Al comprar equipo o insumos:</strong> registra el gasto con CFDI</li>
+  <li><strong>Al rentar estudio:</strong> registra el gasto — ese IVA se acredita</li>
+</ul>
+
+<h3>2. Primeros 5 días del mes</h3>
+<ul>
+  <li>Revisa cobros PPD del mes anterior → emite REP antes del día 5</li>
+  <li>Verifica si hay pagos de stock photography recibidos → regístralos</li>
+</ul>
+
+<h3>3. Del día 10 al 17</h3>
+<ul>
+  <li>Abre "Resumen" en resicodeo → revisa totales del mes anterior</li>
+  <li>Entra al portal SAT → presenta declaración mensual</li>
+  <li>Compara cifras SAT vs resicodeo — si hay diferencia, algo falta registrar</li>
+  <li>Paga ISR + IVA resultante</li>
+</ul>
+
+<h3>4. Último día del mes</h3>
+<ul>
+  <li>Emite factura global por mini sessions, efectivo y cobros sin factura</li>
+  <li>Registra esa factura global en resicodeo</li>
+  <li>Haz respaldo de tus datos</li>
+</ul>
+
+<div class="tip">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg>
+  <div><strong>Para fotógrafos de bodas:</strong> al inicio de cada año nueva temporada, importa los XMLs de todas las facturas del año anterior al banco de datos de resicodeo. Así tienes el histórico completo y puedes comparar temporadas.</div>
+</div>
+
+<div class="app-callout">
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg>
+  <div><strong>En resicodeo:</strong> el calendario fiscal te avisa 7 días antes de cada fecha crítica. Nunca más se te va a olvidar el REP, la declaración mensual ni la factura global. Y el resumen de reportes anuales te muestra cómo fue tu año fiscal completo.</div>
+</div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT correcta para fotógrafo de bodas?",
+      "opts": [
+        "82141500 - Diseño gráfico",
+        "82111804 - Producción audiovisual",
+        "80111600 - Servicios profesionales",
+        "82121500 - Servicios de fotografía"
+      ],
+      "correct": 3,
+      "hint": "El módulo 1 incluye la tabla de claves SAT específicas para fotógrafos."
+    },
+    {
+      "q": "Si una cadena de restaurantes te contrata para fotografía mensual, ¿qué tipo de cliente es?",
+      "opts": [
+        "Persona física sin retenciones",
+        "Público en general sin factura",
+        "Persona moral con retenciones de ISR e IVA",
+        "Cliente extranjero con IVA 0%"
+      ],
+      "correct": 2,
+      "hint": "El módulo 1 tiene la tabla de tipos de trabajo. Las empresas son personas morales y sí retienen."
+    },
+    {
+      "q": "¿Por qué RESICO es ventajoso para fotógrafos con ingresos variables por temporada?",
+      "opts": [
+        "Porque no pagas ISR en meses de baja actividad",
+        "Porque pagas ISR según lo que cobras ese mes, sin promedios ni estimaciones",
+        "Porque puedes diferir el pago de ISR a la temporada alta",
+        "Porque los meses con pérdida reducen el ISR de meses anteriores"
+      ],
+      "correct": 1,
+      "hint": "El módulo 1 muestra el ejemplo del año típico y explica la ventaja de pagar sobre ingresos efectivos del mes."
+    }
+  ],
+  "m2": [
+    {
+      "q": "¿Para qué sirve especificar en la factura 'Servicios fotográficos + Licencia de uso de imágenes' como conceptos separados?",
+      "opts": [
+        "Para documentar correctamente el acuerdo y protegerse legalmente",
+        "Porque el SAT lo exige siempre para fotógrafos",
+        "No tiene ningún beneficio, es solo preferencia",
+        "Para poder cobrar más al cliente"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 explica esto en la sección de derechos de imagen vs servicio fotográfico."
+    },
+    {
+      "q": "¿Cómo debe cotizar un fotógrafo a una empresa (persona moral) según el módulo 2?",
+      "opts": [
+        "En USD para evitar retenciones",
+        "Sin IVA porque la empresa lo paga aparte",
+        "Subtotal + IVA por separado",
+        "Precio todo incluido con IVA dentro"
+      ],
+      "correct": 2,
+      "hint": "El módulo 2 tiene la tabla de estructura de precios según tipo de cliente."
+    },
+    {
+      "q": "¿Para qué sirve la calculadora de cotización de resicodeo en fotografía comercial?",
+      "opts": [
+        "Para comparar precios con competidores",
+        "Para calcular el precio justo de mercado",
+        "Para generar cotizaciones PDF automáticamente",
+        "Para saber exactamente cuánto cobrar para que después de impuestos y retenciones te quede el monto deseado"
+      ],
+      "correct": 3,
+      "hint": "El módulo 2 describe la calculadora: introduces lo que quieres ganar limpio y te dice el precio al cliente."
+    }
+  ],
+  "m3": [
+    {
+      "q": "Si un cliente cancela una boda y tú te quedas con el anticipo como penalización, ¿qué pasa fiscalmente?",
+      "opts": [
+        "El anticipo de penalización es ingreso y sí paga impuestos",
+        "Debes devolver el anticipo para no tener problemas",
+        "Solo pagas impuestos si el anticipo supera $10,000",
+        "No pasa nada, el anticipo de penalización está exento"
+      ],
+      "correct": 0,
+      "hint": "El módulo 3 explica en la advertencia sobre cancelaciones que el anticipo retenido como penalización sí es ingreso gravable."
+    },
+    {
+      "q": "Para una sesión comercial donde la empresa paga 30 días después de recibir las fotos, ¿qué método de facturación usas?",
+      "opts": [
+        "Sin factura hasta que paguen",
+        "Cualquiera, no importa en este caso",
+        "PUE porque ya entregaste el trabajo",
+        "PPD porque el pago llega después"
+      ],
+      "correct": 3,
+      "hint": "El módulo 3 explica el flujo: cuando el pago llega después de emitir la factura, es PPD."
+    },
+    {
+      "q": "¿Cuándo debes emitir el REP para una sesión editorial facturada con PPD en enero que te pagaron en febrero?",
+      "opts": [
+        "El 17 de febrero",
+        "El 17 de marzo",
+        "El 31 de enero",
+        "El 5 de marzo"
+      ],
+      "correct": 3,
+      "hint": "El módulo 3 especifica: REP antes del día 5 del mes siguiente al cobro. Pagaron en febrero, límite es 5 de marzo."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿El Adobe Lightroom genera IVA acreditable para un fotógrafo en RESICO?",
+      "opts": [
+        "No, es software extranjero",
+        "Sí, Adobe tiene presencia fiscal en México y factura con IVA",
+        "Solo el primer año de suscripción",
+        "Solo si pagas con factura empresarial"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 incluye Lightroom/Photoshop en la tabla de gastos con IVA acreditable."
+    },
+    {
+      "q": "¿Qué gasto del fotógrafo NO genera IVA acreditable según el módulo 4?",
+      "opts": [
+        "Tarjetas de memoria",
+        "Renta de estudio fotográfico",
+        "Presets comprados en sitios extranjeros sin presencia en México",
+        "Adobe Lightroom"
+      ],
+      "correct": 2,
+      "hint": "El módulo 4 lista al final los gastos que NO generan IVA acreditable, incluyendo productos de sitios extranjeros sin presencia fiscal en MX."
+    },
+    {
+      "q": "Si rentas un estudio 4 veces al mes a $2,000 + IVA cada vez, ¿cuánto IVA recuperas en tu declaración?",
+      "opts": [
+        "$800 en total",
+        "$1,280 en total",
+        "$320 en total",
+        "Nada, la renta de estudio no es acreditable"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 tiene el tip del estudio: $2,000 × 16% = $320 IVA por sesión × 4 sesiones = $1,280."
+    }
+  ],
+  "m5": [
+    {
+      "q": "¿Cuál es la ventaja fiscal principal de tener clientes recurrentes mensuales según el módulo 5?",
+      "opts": [
+        "Que los ingresos predecibles permiten conocer exactamente el ISR a pagar cada mes",
+        "Que las retenciones no aplican en contratos de más de 3 meses",
+        "Que no necesitas facturar mensualmente",
+        "Que puedes deducir más gastos con contratos recurrentes"
+      ],
+      "correct": 0,
+      "hint": "El módulo 5 menciona la predecibilidad del ISR como ventaja directa del trabajo recurrente."
+    },
+    {
+      "q": "¿Qué pasa con la tasa de ISR si en octubre tienes 2 bodas de $40,000 más tu retainer de $8,000?",
+      "opts": [
+        "La tasa se promedia entre los diferentes tipos de ingreso",
+        "Los ingresos se suman y la tasa del rango $88,000 aplica al total del mes",
+        "El retainer cambia de tasa pero las bodas no",
+        "Cada ingreso mantiene su tasa individual"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 explica con ejemplo que combinar bodas y retainer en el mismo mes puede subir la tasa al siguiente rango."
+    },
+    {
+      "q": "¿Cómo puedes ver en tiempo real cuánto ISR vas a pagar si agregas una sesión más al mes?",
+      "opts": [
+        "Calculando manualmente con la tabla de tasas",
+        "Esperando hasta hacer la declaración mensual",
+        "En el Resumen de resicodeo que muestra el impacto en tiempo real de cada cobro",
+        "Llamando al SAT para consulta"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5 menciona que resicodeo muestra en Resumen la tasa actual y el ISR estimado del mes."
+    }
+  ],
+  "m6": [
+    {
+      "q": "¿Cómo debes declarar los ingresos de regalías de Shutterstock?",
+      "opts": [
+        "Se declaran como ingreso en MXN usando el tipo de cambio DOF del día de cada depósito",
+        "No se declaran porque ya pagaron impuestos en USA",
+        "Solo se declaran si superan $10,000 USD anuales",
+        "Se declaran solo en la declaración anual, no mensualmente"
+      ],
+      "correct": 0,
+      "hint": "El módulo 6 explica que las regalías de stock sí son ingreso en México y deben declararse con el tipo de cambio DOF."
+    },
+    {
+      "q": "Para una boda con cliente extranjero que se celebra en México, ¿qué IVA aplica?",
+      "opts": [
+        "8% tasa reducida para eventos",
+        "0% porque el cliente que paga tiene residencia fiscal fuera de México",
+        "Depende del país de origen del cliente",
+        "16% porque el evento es en México"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6 aclara que lo que determina el IVA es la residencia fiscal del cliente, no la ubicación del evento."
+    },
+    {
+      "q": "¿Qué RFC debes usar para facturar a un estudio de diseño en España?",
+      "opts": [
+        "XEXX010101000",
+        "No se necesita RFC para clientes extranjeros",
+        "XAXX010101000",
+        "El RFC fiscal español del cliente"
+      ],
+      "correct": 0,
+      "hint": "El módulo 6 indica: XEXX010101000 es el RFC genérico para todos los clientes extranjeros."
+    }
+  ],
+  "m7": [
+    {
+      "q": "¿Por qué el SAT puede detectar inconsistencias en fotógrafos que publicitan mini sessions en Instagram?",
+      "opts": [
+        "Porque Instagram comparte datos automáticamente con el SAT",
+        "Solo aplica si tienes más de 10,000 seguidores",
+        "Porque el SAT monitorea Instagram directamente",
+        "Porque los precios visibles en redes permiten estimar ingresos que pueden no coincidir con lo declarado"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 menciona específicamente el riesgo de publicitar precios en redes y declarar mucho menos de lo que sugieren esas publicaciones."
+    },
+    {
+      "q": "¿Qué debe hacer un fotógrafo con las mini sessions navideñas cobradas en efectivo?",
+      "opts": [
+        "Declarar solo las que superen $5,000 por sesión",
+        "No declarar porque son montos pequeños",
+        "Declarar únicamente en la declaración anual",
+        "Incluirlas en la factura global mensual de público en general"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #5) explica exactamente este caso: las mini sessions en efectivo van en la factura global mensual."
+    },
+    {
+      "q": "¿Por qué no pedir factura al laboratorio de impresión de álbumes es un error?",
+      "opts": [
+        "No es error, el álbum no genera IVA acreditable",
+        "Porque el laboratorio puede subir el precio si pides factura",
+        "Porque el IVA que pagas sin factura se pierde y no puedes acreditarlo",
+        "Porque el SAT audita a los laboratorios de impresión frecuentemente"
+      ],
+      "correct": 2,
+      "hint": "El módulo 7 (Error #3) explica que el IVA del laboratorio de impresión es acreditable si tienes CFDI."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Qué debes hacer específicamente en los primeros 5 días del mes como fotógrafo?",
+      "opts": [
+        "Emitir la factura global del mes",
+        "Importar todos los XMLs del mes anterior",
+        "Revisar cobros PPD del mes anterior y emitir el REP antes del día 5",
+        "Presentar la declaración mensual"
+      ],
+      "correct": 2,
+      "hint": "El módulo 8 divide la rutina por fechas. Los primeros 5 días son exclusivamente para los REP pendientes."
+    },
+    {
+      "q": "¿Cuándo debes emitir la factura global de mini sessions y cobros sin factura?",
+      "opts": [
+        "El primer día del mes siguiente",
+        "Cualquier día antes de la declaración",
+        "El último día del mes por los cobros de ese mismo mes",
+        "El día 17 junto con la declaración"
+      ],
+      "correct": 2,
+      "hint": "El módulo 8 en la sección 'Último día del mes' especifica que la factura global es por los cobros sin factura de ese mes."
+    },
+    {
+      "q": "¿Qué hacer si los números del SAT en la declaración no coinciden con los de resicodeo?",
+      "opts": [
+        "Investigar qué facturas emitiste que no registraste en la app",
+        "Corregir los números en la app para que coincidan con el SAT",
+        "Declarar los números del SAT aunque no coincidan",
+        "Usar siempre los números del SAT porque son oficiales"
+      ],
+      "correct": 0,
+      "hint": "El módulo 8 explica que si hay diferencia, algo falta registrar en la app — el SAT conoce todas las facturas timbradas."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>
