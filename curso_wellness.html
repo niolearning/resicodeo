@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Coaches de Wellness · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#10B981;--accent2:#A7F3D0;--accent-glow:rgba(16,185,129,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Wellness & Bienestar Integral</div>
+  <h1><em>RESICO para Coaches de Wellness</em></h1>
+  <p class="hero-sub">Domina tu régimen fiscal con ejemplos de coaching de bienestar integral, programas de salud, retiros, talleres y contenido digital. Para coaches de wellness independientes.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar tus servicios</div>
+    <div class="toc-item"><span class="toc-num">3</span>Contratos y membresías</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles de tu práctica</div>
+    <div class="toc-item"><span class="toc-num">5</span>Convenios con empresas y gimnasios</div>
+    <div class="toc-item"><span class="toc-num">6</span>Clases online y clientes extranjeros</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales más comunes</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Claves SAT y tipos de ingreso</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad ante el SAT</h3>
+<table><thead><tr><th>Actividad</th><th>Clave SAT</th></tr></thead><tbody>
+<tr><td>Coach de bienestar / wellness coach</td><td>85101700 — Servicios de coaching de bienestar</td></tr><tr><td>Coach de vida / life coach</td><td>85101700 — Servicios de coaching integral</td></tr><tr><td>Facilitador de talleres de bienestar</td><td>86101500 — Servicios de enseñanza en bienestar</td></tr><tr><td>Consultor de salud integral</td><td>85101700 — Consultoría en salud y bienestar</td></tr><tr><td>Creador de contenido de wellness</td><td>80141600 — Servicios de marketing de bienestar</td></tr>
+</tbody></table>
+<h3>Tipos de ingreso</h3>
+<table><thead><tr><th>Servicio</th><th>Cliente</th><th>Notas fiscales</th></tr></thead><tbody>
+<tr><td>Consulta / sesión individual</td><td>Persona física</td><td>Sin retenciones, IVA 16%</td></tr>
+<tr><td>Convenio con empresa o institución</td><td>Persona moral</td><td>Retenciones ISR + IVA</td></tr>
+<tr><td>Clases o talleres grupales</td><td>Persona física o moral</td><td>Depende del cliente</td></tr>
+<tr><td>Sesión online a cliente extranjero</td><td>Cliente extranjero</td><td>IVA 0%, tipo de cambio DOF</td></tr>
+<tr><td>Membresías o paquetes de sesiones</td><td>Persona física</td><td>PPD si pagan por adelantado</td></tr>
+</tbody></table>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada cliente con su tipo para que la app calcule retenciones e IVA automáticamente.</div></div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar tus servicios</div>
+      <div class="mod-sub">Sesiones, paquetes y membresías con impuestos correctos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El error más común: dar precio sin considerar el IVA</h3>
+<p>Si cotizas sin separar el IVA, lo terminas pagando tú. Siempre aclara si el precio incluye o excluye IVA desde el primer mensaje.</p>
+<div class="example">
+  <div class="example-label">Programa de wellness de 3 meses</div>
+  <p>Inversión: <strong>$12,000 + IVA</strong> (12 sesiones + recursos)</p>
+  <p>IVA: $1,920 → Total: <strong>$13,920</strong></p>
+  <p>ISR (1%): $120 por cliente</p>
+  <p><strong>5 clientes en programa: ISR = $600 mensual</strong></p>
+</div>
+<h3>Membresías o paquetes — dos enfoques válidos</h3>
+<ul>
+  <li><strong>Factura al inicio (PPD):</strong> CFDI por el total cuando recibes el pago. REP al completar.</li>
+  <li><strong>Factura mensual:</strong> CFDI cada mes por la mensualidad. Más simple para el cliente.</li>
+</ul>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> guarda tus paquetes en "Mis paquetes" para registrar cobros en un click.</div></div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Contratos y membresías</div>
+      <div class="mod-sub">Cómo documentar tus acuerdos correctamente</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Lo que tu contrato debe especificar para el SAT</h3>
+<ul>
+  <li>Descripción exacta del servicio — debe coincidir con la factura</li>
+  <li>Precio y si incluye o excluye IVA</li>
+  <li>Frecuencia de clases o sesiones</li>
+  <li>Política de cancelación y reembolsos</li>
+  <li>Reglas de la membresía (congelamiento, cambio de plan)</li>
+</ul>
+<h3>Membresía mensual — el modelo más simple</h3>
+<ol>
+  <li>Cliente paga su mensualidad el día 1</li>
+  <li>Emites CFDI por esa mensualidad (PUE si paga en el mes, PPD si paga después)</li>
+  <li>Si hay pagos pendientes al siguiente mes → REP antes del día 5</li>
+</ol>
+<div class="warn"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg><div><strong>Inscripciones o pagos anuales:</strong> si cobras el año completo por adelantado, ese monto es ingreso en el mes que lo recibes — no se distribuye en 12 meses.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada pago de membresía en el mes que lo cobras con el monto correcto.</div></div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles de tu práctica</div>
+      <div class="mod-sub">Qué gastos acreditan IVA en tu profesión</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Regla de RESICO: gastos no reducen ISR pero el IVA sí se acredita</h3>
+<p>Siempre pide factura de todos tus gastos de trabajo. El IVA que acreditas reduce directamente lo que pagas al SAT cada mes.</p>
+<table><thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead><tbody>
+<tr><td>Renta de espacio para sesiones / talleres</td><td>Sí</td><td>CFDI del arrendador</td></tr>
+<tr><td>Plataforma de videollamadas (Zoom Pro)</td><td>Sí</td><td>Zoom factura con IVA en MX</td></tr>
+<tr><td>Herramientas de coaching (software, apps)</td><td>Sí/No</td><td>Depende de la plataforma</td></tr>
+<tr><td>Impresión de workbooks y materiales</td><td>Sí</td><td>Con factura de la imprenta</td></tr>
+<tr><td>Cursos de certificación en coaching</td><td>Sí/No</td><td>Depende si la institución factura</td></tr>
+<tr><td>Supervisión o mentoría de coaching</td><td>Sí</td><td>El mentor te factura</td></tr>
+<tr><td>Cámara / equipo para contenido digital</td><td>Sí</td><td>Para crear contenido de tu negocio</td></tr>
+<tr><td>Libros de desarrollo personal</td><td>No</td><td>Libros exentos de IVA en MX</td></tr>
+<tr><td>Internet dedicado (si trabajas desde casa)</td><td>Sí</td><td>Factura a tu RFC</td></tr>
+</tbody></table>
+<div class="tip"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg><div><strong>Renta de espacio:</strong> renta de estudio, consultorio o sala de clases es uno de tus gastos más importantes. Exige CFDI mensualmente al arrendador.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada gasto con su CFDI. El resumen mensual te muestra exactamente cuánto IVA estás recuperando.</div></div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Convenios con empresas y gimnasios</div>
+      <div class="mod-sub">Cuando tu cliente es una persona moral</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El convenio corporativo — ingreso estable y predecible</h3>
+<div class="example">
+  <div class="example-label">Programa de bienestar corporativo (empresa/persona moral)</div>
+  <p>Talleres + sesiones mensuales: $22,000 + IVA</p>
+  <p>Factura: $22,000 + $3,520 = $25,520</p>
+  <p>Retenciones: −$2,200 ISR − $2,347 IVA</p>
+  <p>Depósito mensual: <strong>$20,973</strong></p>
+</div>
+<h3>Retenciones que aplica la empresa o gimnasio</h3>
+<ul>
+  <li><strong>10% ISR</strong> sobre el subtotal sin IVA</li>
+  <li><strong>2/3 del IVA</strong> ≈ 10.67% del subtotal</li>
+</ul>
+<p>Ese dinero lo pagan al SAT a tu nombre. No es un descuento.</p>
+<div class="tip"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg><div><strong>Constancia de retenciones:</strong> pídela entre enero y febrero a cada empresa. Es tu respaldo para la declaración anual y puede significar saldo a favor.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> selecciona "Persona moral" y la app calcula automáticamente las retenciones.</div></div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Clases online y clientes extranjeros</div>
+      <div class="mod-sub">Clases virtuales internacionales y plataformas digitales</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Clases online con clientes en México — igual que presencial</h3>
+<p>Mismo tratamiento fiscal. El hecho de que sea por videollamada no cambia nada.</p>
+<h3>Clases online con clientes en el extranjero</h3>
+<ul>
+  <li>IVA: <strong>0%</strong> — exportación de servicios</li>
+  <li>RFC receptor: <strong>XEXX010101000</strong></li>
+  <li>Tipo de cambio: <strong>DOF del día del depósito</strong></li>
+</ul>
+<div class="example">
+  <div class="example-label">Programa de wellness online a cliente en USA</div>
+  <p>Inversión: $500 USD · Tipo de cambio DOF: $17.40</p>
+  <p>Ingreso a declarar: <strong>$8,700 MXN</strong></p>
+  <p>IVA: $0 · ISR: $87 MXN (1%)</p>
+</div>
+<h3>Plataformas internacionales de fitness y bienestar</h3>
+<ul>
+  <li>Pagos de empresa extranjera → IVA 0%</li>
+  <li>Convierte cada depósito al tipo de cambio DOF del día</li>
+  <li>Declara el ingreso bruto antes de la comisión de la plataforma</li>
+</ul>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> selecciona "Cliente extranjero" y el IVA queda en 0% automáticamente.</div></div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales más comunes</div>
+      <div class="mod-sub">Los que más cuestan a los profesionales del fitness y bienestar</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <h3>Error #1: No declarar los ingresos de cursos online vendidos por plataformas digitales</h3>
+<p>Vender cursos en Hotmart, Kajabi, Teachable o tu propia web genera ingresos que deben declararse. Muchos coaches piensan que las plataformas "lo manejan todo".</p>
+<p><strong>Solución:</strong> declara cada depósito recibido como ingreso del mes que llega, al tipo de cambio DOF si es en dólares.</p>
+<h3>Error #2: No facturar el cobro de programas grupales o mastermind</h3>
+<p>Mastermind de $15,000 por persona, 8 personas = $120,000. Cobrados por transferencia sin CFDI. El SAT detecta el depósito.</p>
+<p><strong>Solución:</strong> emite CFDI por cada participante o factura global por los que no piden factura.</p>
+<h3>Error #3: Confundir coaching con terapia en la clave SAT</h3>
+<p>El coaching no es terapia. La exención de IVA para servicios de salud mental no aplica al coaching de bienestar.</p>
+<p><strong>Solución:</strong> usa 85101700 (coaching de bienestar) y cobra IVA 16%. No uses claves de salud clínica si no tienes cédula profesional de esa área.</p>
+<h3>Error #4: No declarar los canjes de servicios</h3>
+<p>Intercambias sesiones de coaching por diseño, fotografía u otro servicio. El valor de lo recibido es ingreso en especie.</p>
+<p><strong>Solución:</strong> declara el valor de mercado del servicio recibido como ingreso del mes del intercambio.</p>
+<h3>Error #5: No registrar los testimonios pagados como ingreso</h3>
+<p>Algunas marcas de wellness te pagan por testimonios o por crear contenido sobre sus productos. Son ingresos aunque los llamen "colaboración" o "regalo".</p>
+<p><strong>Solución:</strong> cualquier pago o producto recibido a cambio de trabajo es ingreso. Regístralo y emite factura o inclúyelo en la factura global.</p>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada fuente de ingreso por separado: programas individuales, grupales, cursos online, corporativos, canjes. El desglose te protege y te da claridad sobre tu negocio.</div></div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">Tu rutina mensual como coach o instructor independiente</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Durante el mes</h3>
+<ul>
+  <li><strong>Al cobrar membresía o clase:</strong> registra inmediatamente</li>
+  <li><strong>Al recibir pago de empresa o gimnasio:</strong> registra como "Persona moral"</li>
+  <li><strong>Al recibir depósito de plataforma extranjera:</strong> convierte al DOF y registra</li>
+  <li><strong>Al pagar renta o equipo:</strong> registra con CFDI</li>
+</ul>
+<h3>Primeros 5 días del mes</h3>
+<ul>
+  <li>Cobros PPD del mes anterior → REP antes del día 5</li>
+  <li>Depósitos de plataformas internacionales → registra con DOF</li>
+</ul>
+<h3>Del 10 al 17</h3>
+<ul><li>Resumen en resicodeo → declarar y pagar ISR + IVA</li></ul>
+<h3>Último día del mes</h3>
+<ul>
+  <li>Factura global por cobros en efectivo sin CFDI individual</li>
+  <li>Respaldo de datos</li>
+</ul>
+<div class="tip"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg><div><strong>Para coaches con muchos clientes:</strong> activa las notificaciones de membresías para saber cuándo vence cada una y cuándo debes registrar el cobro.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> el calendario fiscal te avisa 7 días antes de cada fecha crítica. Nunca más se te va a olvidar el REP ni la declaración.</div></div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT correcta para un coach de bienestar (wellness coach)?",
+      "opts": [
+        "86101500 — Enseñanza",
+        "85101700 — Servicios de coaching de bienestar",
+        "80111600 — Servicios profesionales genérico",
+        "85101600 — Salud mental / psicología"
+      ],
+      "correct": 1,
+      "hint": "El módulo 1 tiene la tabla de claves SAT. El coaching de bienestar tiene su propia clave diferente a psicología."
+    },
+    {
+      "q": "¿El coaching de bienestar está exento de IVA como los servicios médicos?",
+      "opts": [
+        "Solo si el coach tiene certificación reconocida",
+        "No, el coaching no es terapia clínica — cobra IVA 16%",
+        "Depende del contenido del programa",
+        "Sí, todo servicio de salud y bienestar está exento"
+      ],
+      "correct": 1,
+      "hint": "El módulo 1 aclara que la exención de IVA es para servicios médicos y psicológicos clínicos — no para coaching."
+    },
+    {
+      "q": "Una empresa que te contrata para un programa de bienestar corporativo, ¿qué tipo de cliente es?",
+      "opts": [
+        "Cliente extranjero con IVA 0%",
+        "Persona moral con retenciones de ISR e IVA",
+        "Público en general sin factura",
+        "Persona física sin retenciones"
+      ],
+      "correct": 1,
+      "hint": "El módulo 1 clasifica las empresas como personas morales con retenciones completas."
+    }
+  ],
+  "m2": [
+    {
+      "q": "Un programa de wellness de $12,000 + IVA cobrado por adelantado, ¿cuándo es el ingreso?",
+      "opts": [
+        "En el último mes cuando termina el programa",
+        "En el mes en que recibes el pago completo",
+        "Al emitir la última factura del programa",
+        "Distribuido en los 3 meses del programa"
+      ],
+      "correct": 1,
+      "hint": "El módulo 2 y el Curso Base: el ingreso es cuando cobras efectivamente, no cuando entregas el servicio."
+    },
+    {
+      "q": "¿Por qué el coaching no puede usar la clave SAT 85101600 (salud mental)?",
+      "opts": [
+        "Porque esa clave es solo para hospitales",
+        "Porque el coaching genera más IVA",
+        "Porque el coaching no es terapia clínica — usar la clave incorrecta puede implicar reclamar una exención que no aplica",
+        "Solo si el coach no tiene cédula de psicólogo"
+      ],
+      "correct": 2,
+      "hint": "El módulo 2 (y el Error #3 del módulo 7) aclaran que usar la clave de psicología siendo coach es incorrecto."
+    },
+    {
+      "q": "Para un mastermind grupal de $15,000 por persona con 8 participantes, ¿cómo facturas?",
+      "opts": [
+        "CFDI individual a cada participante, o factura global por quienes no pidan CFDI",
+        "Una sola factura por el total del grupo",
+        "Sin factura — el mastermind no es un servicio formal",
+        "Una factura al organizador del grupo"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 explica que cada participante que paga debe tener su CFDI o estar incluido en la factura global."
+    }
+  ],
+  "m3": [
+    {
+      "q": "¿Cuándo es ingreso el anticipo de un programa de coaching de 3 meses cobrado en enero?",
+      "opts": [
+        "Distribuido en los 3 meses del programa",
+        "En enero cuando recibes el anticipo",
+        "En marzo cuando termina el programa",
+        "En la declaración anual"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 y el Curso Base: el anticipo es ingreso en el mes que lo cobras."
+    },
+    {
+      "q": "¿Cuándo emites el REP de un programa de wellness pagado por adelantado?",
+      "opts": [
+        "Al terminar el programa",
+        "Antes del día 5 del mes siguiente a cuando se completaron todos los cobros",
+        "Al inicio cuando recibes el pago",
+        "Al dar la primera sesión"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3: REP antes del día 5 del mes siguiente al último cobro del programa."
+    },
+    {
+      "q": "Si intercambias sesiones de coaching por servicios de diseño, ¿qué pasa fiscalmente?",
+      "opts": [
+        "No hay consecuencia fiscal — no hay dinero de por medio",
+        "El valor del servicio recibido es ingreso en especie que debes declarar",
+        "Lo declaras en la anual como deducción",
+        "Solo si el canje supera $5,000"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 y el módulo 7 (Error #4) explican que los canjes son ingreso en especie a valor de mercado."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿Los workbooks e impresiones de materiales para tus programas generan IVA acreditable?",
+      "opts": [
+        "Solo si los vendas, no si los regalas",
+        "Sí, si la imprenta emite CFDI a tu RFC",
+        "No, son publicaciones sin IVA",
+        "Solo si tienen más de 50 páginas"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 lista impresión de workbooks y materiales como gasto con IVA acreditable con CFDI."
+    },
+    {
+      "q": "¿La mentoría o supervisión de coaching que pagas a otro coach genera IVA acreditable?",
+      "opts": [
+        "Sí, si el mentor emite CFDI a tu RFC por sus honorarios",
+        "Solo si el mentor está certificado internacionalmente",
+        "No, es un gasto de formación personal",
+        "Solo si la mentoría dura más de 3 meses"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 incluye la mentoría de coaching como gasto acreditable con CFDI del mentor."
+    },
+    {
+      "q": "¿El internet de casa genera IVA acreditable para un coach que trabaja desde home office?",
+      "opts": [
+        "Solo el plan empresarial, no el residencial",
+        "Sí, si la factura mensual llega a nombre de tu RFC",
+        "No, el internet residencial es gasto personal",
+        "Solo si tienes domicilio fiscal registrado en casa"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 lista el internet con la condición de que la factura llegue a tu RFC — el plan puede ser residencial."
+    }
+  ],
+  "m5": [
+    {
+      "q": "Una empresa te paga $22,000 por talleres de bienestar corporativo. ¿Cuánto te retiene de ISR?",
+      "opts": [
+        "$3,520 (16%)",
+        "$2,200 (10% del subtotal)",
+        "$4,400 (20%)",
+        "$1,100 (5%)"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 tiene el ejemplo: persona moral retiene 10% de ISR sobre el subtotal sin IVA."
+    },
+    {
+      "q": "¿Qué es lo que más valoras de trabajar con empresas versus solo con clientes individuales?",
+      "opts": [
+        "Las empresas permiten facturar sin IVA",
+        "Las empresas no aplican retenciones",
+        "Los ingresos predecibles hacen calculable el ISR mensual de antemano",
+        "Las empresas pagan más rápido siempre"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5 destaca la predictibilidad del ISR como la ventaja principal del trabajo corporativo."
+    },
+    {
+      "q": "¿Por qué pedir la constancia de retenciones a las empresas entre enero y febrero?",
+      "opts": [
+        "Para verificar que la empresa pagó al SAT",
+        "Para declarar el IVA retroactivo del año",
+        "El SAT la exige como trámite obligatorio",
+        "Como respaldo para la declaración anual — puede generar saldo a favor de ISR"
+      ],
+      "correct": 3,
+      "hint": "El módulo 5: la constancia de retenciones es tu respaldo anual y puede generar saldo a favor."
+    }
+  ],
+  "m6": [
+    {
+      "q": "Un programa de coaching online a cliente en USA, ¿qué IVA aplica?",
+      "opts": [
+        "No aplica IVA en coaching",
+        "8% para servicios digitales",
+        "0% porque el cliente vive fuera de México",
+        "16% porque trabajas desde México"
+      ],
+      "correct": 2,
+      "hint": "El módulo 6: cliente con residencia fuera de México = exportación = IVA 0%."
+    },
+    {
+      "q": "Recibes $500 USD de un programa de wellness para cliente en Canadá. ¿Cuánto declaras?",
+      "opts": [
+        "Los $500 USD al tipo de cambio DOF del día del depósito",
+        "$500 USD directamente",
+        "El neto después de comisión de Stripe o PayPal",
+        "No declaras si ya pagaste comisión de la plataforma"
+      ],
+      "correct": 0,
+      "hint": "El módulo 6: convierte al tipo de cambio DOF del día del depósito y declara el ingreso bruto."
+    },
+    {
+      "q": "¿Una colaboración pagada con una marca de wellness extranjera (producto + dinero), qué IVA aplica en el pago en dinero?",
+      "opts": [
+        "16% porque el servicio se presta en México",
+        "Solo el producto tiene IVA, no el dinero",
+        "8% tasa especial para colaboraciones",
+        "0% porque la marca es empresa extranjera"
+      ],
+      "correct": 3,
+      "hint": "El módulo 6 clasifica los pagos de empresas extranjeras como exportación con IVA 0%."
+    }
+  ],
+  "m7": [
+    {
+      "q": "¿Por qué los ingresos de cursos en Hotmart o Kajabi deben declararse?",
+      "opts": [
+        "Porque son depósitos en tu cuenta bancaria rastreables por el SAT",
+        "Solo si supera $50,000 en ventas",
+        "Solo en la declaración anual",
+        "No deben — la plataforma paga impuestos por ti"
+      ],
+      "correct": 0,
+      "hint": "El módulo 7 (Error #1) explica que los depósitos de plataformas de cursos son rastreables por el SAT."
+    },
+    {
+      "q": "¿Por qué un canje de coaching por diseño gráfico debe declararse como ingreso?",
+      "opts": [
+        "El valor del servicio recibido es ingreso en especie a valor de mercado",
+        "Es opcional declararlo si ambas partes acuerdan confidencialidad",
+        "No debe — no hay dinero de por medio",
+        "Solo si el servicio recibido vale más de $3,000"
+      ],
+      "correct": 0,
+      "hint": "El módulo 7 (Error #4) aclara que los canjes son ingreso en especie aunque no haya efectivo."
+    },
+    {
+      "q": "¿Por qué un pago de marca por testimonio o 'colaboración' es ingreso gravable?",
+      "opts": [
+        "Sí, cualquier pago o producto recibido a cambio de trabajo es ingreso — aunque lo llamen 'colaboración'",
+        "Solo si la marca es empresa grande",
+        "No lo es — los testimonios son actividad voluntaria no comercial",
+        "Solo si supera $5,000 en valor"
+      ],
+      "correct": 0,
+      "hint": "El módulo 7 (Error #5) aclara que el nombre que use la marca (colaboración, regalo, barter) no cambia la naturaleza fiscal del ingreso."
+    }
+  ],
+  "m8": [
+    {
+      "q": "¿Cuándo emites la factura global de sesiones y programas sin CFDI individual?",
+      "opts": [
+        "Cuando acumulas $10,000 en cobros sin factura",
+        "El último día del mes de los cobros sin CFDI",
+        "El día 17 junto con la declaración",
+        "El primer día del mes siguiente"
+      ],
+      "correct": 1,
+      "hint": "El módulo 8: factura global el último día del mes por los cobros sin CFDI de ese mes."
+    },
+    {
+      "q": "¿Para qué sirve el Resumen anual de resicodeo para un coach de wellness?",
+      "opts": [
+        "Para comparar con otros coaches del mercado",
+        "Para ver qué servicios generan más ingresos y enfocar energía en los más rentables del negocio",
+        "Para calcular el precio de tus programas del año siguiente",
+        "Para presentar ingresos a un banco"
+      ],
+      "correct": 1,
+      "hint": "El módulo 8 menciona los reportes anuales para identificar los servicios más rentables y tomar decisiones."
+    },
+    {
+      "q": "Si tienes ingresos de programas individuales, corporativos, cursos online y canjes en el mismo mes, ¿cómo los registras?",
+      "opts": [
+        "Un solo cobro mensual consolidado para simplificar",
+        "Consolidados por tipo: individuales juntos, corporativos juntos",
+        "Solo los que tienen CFDI — el resto en la anual",
+        "Cada fuente de ingreso por separado con descripción clara del tipo de servicio"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8 recomienda registrar cada fuente de ingreso por separado para claridad y protección fiscal."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>

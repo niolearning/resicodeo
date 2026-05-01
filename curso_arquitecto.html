@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESICO para Arquitectos Freelance · resicodeo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0C0D11;--ink2:#161820;--ink3:#1F222D;--ink4:#282C3A;
+  --accent:#78716C;--accent2:#D6D3D1;--accent-glow:rgba(120,113,108,0.2);
+  --green:#22C55E;--green-soft:rgba(34,197,94,0.1);
+  --amber:#F5A623;--amber-soft:rgba(245,166,35,0.08);
+  --red:#F87171;--red-soft:rgba(248,113,113,0.08);
+  --white:#F2F3F8;--muted:#8E93AB;--muted2:#555A70;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:-0.04em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:4px}
+.logo-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.nav-btn{font-family:var(--body);font-size:13px;font-weight:600;padding:8px 16px;border-radius:9px;border:none;cursor:pointer;text-decoration:none;transition:all .18s;background:var(--ink3);color:var(--white);border:1px solid var(--border2)}
+.nav-btn:hover{border-color:var(--accent)}
+.progress{height:3px;background:var(--ink3);position:fixed;top:0;left:0;right:0;z-index:200}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s;box-shadow:0 0 10px var(--accent-glow)}
+.container{max-width:820px;margin:0 auto;padding:0 24px}
+.hero{text-align:center;padding:56px 24px 48px;border-bottom:1px solid var(--border)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.hero h1{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:14px}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:var(--muted2)}
+.hero-meta-item{display:flex;align-items:center;gap:5px}
+.toc{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:24px;margin:36px 0}
+.toc-title{font-size:12px;font-weight:700;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr}}
+.toc-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--ink3);border-radius:8px;font-size:12px;font-weight:600;color:var(--white);cursor:default;pointer-events:none;}
+.toc-num{width:22px;height:22px;border-radius:5px;background:rgba(255,255,255,0.06);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.mod{margin:32px 0;scroll-margin-top:64px}
+.mod-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.mod-num{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 6px 16px var(--accent-glow)}
+.mod-meta{flex:1;min-width:0}
+.mod-title{font-family:var(--display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:4px}
+.mod-sub{font-size:13px;color:var(--muted)}
+.mod-body{background:var(--ink2);border:1px solid var(--border);border-radius:18px;padding:28px}
+.mod-body h3{font-family:var(--display);font-size:17px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mod-body h3:first-child{margin-top:0}
+.mod-body p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.mod-body p:last-child{margin-bottom:0}
+.mod-body strong{color:var(--white);font-weight:700}
+.mod-body ul,.mod-body ol{margin:0 0 14px 20px;font-size:14px;color:var(--muted)}
+.mod-body li{margin-bottom:5px}
+.tip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.tip svg{flex-shrink:0;margin-top:1px;color:var(--accent2)}
+.tip strong{color:var(--accent2)}
+.warn{background:var(--amber-soft);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.warn svg{flex-shrink:0;margin-top:1px;color:var(--amber)}
+.warn strong{color:var(--amber)}
+.danger{background:var(--red-soft);border:1px solid rgba(248,113,113,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.danger svg{flex-shrink:0;margin-top:1px;color:var(--red)}
+.danger strong{color:var(--red)}
+.app-callout{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:14px 18px;margin:16px 0;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.app-callout svg{flex-shrink:0;margin-top:1px;color:var(--green)}
+.app-callout strong{color:var(--green)}
+.mod-body table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+.mod-body th,.mod-body td{border:1px solid var(--border2);padding:8px 12px;text-align:left}
+.mod-body th{background:var(--ink3);font-weight:700;color:var(--white);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.mod-body td{color:var(--muted)}
+.formula{background:var(--ink);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:monospace;font-size:13px;color:var(--accent2);text-align:center;letter-spacing:.02em}
+.example{background:var(--ink3);border-radius:12px;padding:16px 18px;margin:14px 0;border-left:3px solid var(--accent)}
+.example-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:8px}
+.example p{font-size:13px;color:var(--muted);margin-bottom:6px}
+.example strong{color:var(--white)}
+.cta-final{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:40px;text-align:center;margin:48px 0 32px;position:relative;overflow:hidden;box-shadow:0 20px 48px var(--accent-glow)}
+.cta-final::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}60%,100%{left:100%}}
+.cta-final h2{font-family:var(--display);font-size:26px;font-weight:800;color:white;margin-bottom:10px;position:relative}
+.cta-final p{font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:20px;position:relative}
+.cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--body);font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;position:relative;transition:all .18s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.footer{border-top:1px solid var(--border);padding:28px 24px;margin-top:32px}
+.footer-inner{max-width:820px;margin:0 auto;font-size:11px;color:var(--muted2);line-height:1.6}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(max-width:600px){
+  .mod-header{flex-direction:column;gap:10px}
+  .mod-num{width:40px;height:40px;font-size:15px;border-radius:11px}
+  .mod-body{padding:20px}
+  .hero{padding:40px 20px 36px}
+}
+/* ── QUIZ SYSTEM ── */
+.quiz-overlay{position:fixed;inset:0;z-index:9000;background:rgba(8,9,12,0);backdrop-filter:blur(0px);display:flex;align-items:center;justify-content:center;padding:20px;transition:background .4s ease,backdrop-filter .4s ease;pointer-events:none;opacity:0}
+.quiz-overlay.active{background:rgba(8,9,12,0.9);backdrop-filter:blur(8px);pointer-events:all;opacity:1}
+.quiz-modal{background:#1A1D28;border:1px solid rgba(255,255,255,0.1);border-radius:22px;padding:36px;max-width:540px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,0.6);transform:scale(0.92) translateY(20px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.quiz-overlay.active .quiz-modal{transform:scale(1) translateY(0)}
+.quiz-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));background-size:200%;animation:quiz-bar 2s linear infinite}
+@keyframes quiz-bar{0%{background-position:0%}100%{background-position:200%}}
+.quiz-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 12px;margin-bottom:16px}
+.quiz-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:dot-pulse 1.5s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.quiz-title{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;color:#F2F3F8}
+.quiz-subtitle{font-size:13px;color:#8E93AB;margin-bottom:20px;line-height:1.5}
+.quiz-question{font-size:15px;font-weight:600;color:#F2F3F8;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.04);border-radius:12px;border-left:3px solid var(--accent);line-height:1.5}
+.quiz-progress{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.quiz-progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:100px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease}
+.quiz-progress-label{font-size:11px;color:#555A70;white-space:nowrap;font-weight:600}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--body);font-size:13px;color:#8E93AB;font-weight:500;width:100%}
+.quiz-opt:hover:not(:disabled){background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:#F2F3F8;transform:translateX(3px)}
+.quiz-opt-letter{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#555A70;transition:all .2s}
+.quiz-opt.correct{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#F2F3F8;cursor:default}
+.quiz-opt.correct .quiz-opt-letter{background:rgba(34,197,94,0.2);border-color:#22C55E;color:#22C55E}
+.quiz-opt.wrong{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:#8E93AB;cursor:default;opacity:.6}
+.quiz-opt.wrong .quiz-opt-letter{background:rgba(248,113,113,0.15);border-color:#F87171;color:#F87171}
+.quiz-opt:disabled{cursor:default}
+.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:13px;line-height:1.5;display:none;align-items:flex-start;gap:10px}
+.quiz-feedback.show{display:flex}
+.quiz-feedback.ok{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#22C55E}
+.quiz-feedback.fail{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.15);color:#F87171}
+.quiz-feedback-text strong{font-weight:700;display:block;margin-bottom:3px}
+.quiz-feedback-text span{color:#8E93AB}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<nav>
+  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="/resicodeo/" class="nav-btn">Abrir app →</a>
+</nav>
+
+<div class="container">
+
+<div class="hero">
+  <div class="hero-badge">Especialización · Arquitectura & Diseño</div>
+  <h1><em>RESICO para Arquitectos Freelance</em></h1>
+  <p class="hero-sub">Domina tu régimen fiscal con ejemplos reales de proyectos de diseño, supervisión de obra, direcciones de proyecto y consultoría. Para arquitectos que trabajan de forma independiente.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><rect x="2" y="3" width="12" height="12" rx="1.5"/><path d="M2 7h12M5 1v3M11 1v3"/></svg> 8 módulos especializados</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg> ~3 horas</div>
+    <div class="hero-meta-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="14" height="14"><path d="M8 14s6-3 6-7.5V3.5L8 1 2 3.5v3C2 11 8 14 8 14z"/></svg> Requiere Curso Base RESICO</div>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contenido del curso</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">1</span>Tu profesión en RESICO</div>
+    <div class="toc-item"><span class="toc-num">2</span>Cómo cotizar tus servicios</div>
+    <div class="toc-item"><span class="toc-num">3</span>Contratos y membresías</div>
+    <div class="toc-item"><span class="toc-num">4</span>Gastos deducibles de tu práctica</div>
+    <div class="toc-item"><span class="toc-num">5</span>Convenios con empresas y gimnasios</div>
+    <div class="toc-item"><span class="toc-num">6</span>Clases online y clientes extranjeros</div>
+    <div class="toc-item"><span class="toc-num">7</span>Errores fiscales más comunes</div>
+    <div class="toc-item"><span class="toc-num">8</span>Flujo de trabajo fiscal con resicodeo</div>
+  </div>
+</div>
+
+
+<div class="mod" id="m1">
+  <div class="mod-header">
+    <div class="mod-num">01</div>
+    <div class="mod-meta">
+      <div class="mod-title">Tu profesión en RESICO</div>
+      <div class="mod-sub">Claves SAT y tipos de ingreso</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Tu actividad ante el SAT</h3>
+<table><thead><tr><th>Actividad</th><th>Clave SAT</th></tr></thead><tbody>
+<tr><td>Arquitecto / diseñador de espacios</td><td>73151600 — Servicios de arquitectura</td></tr><tr><td>Director de obra</td><td>73151601 — Dirección y supervisión de obra</td></tr><tr><td>Diseñador de interiores</td><td>73151700 — Diseño de interiores</td></tr><tr><td>Consultor de proyectos</td><td>73151602 — Consultoría en construcción</td></tr><tr><td>Dibujante técnico / BIM</td><td>73151603 — Servicios de modelado y planos</td></tr>
+</tbody></table>
+<h3>Tipos de ingreso</h3>
+<table><thead><tr><th>Servicio</th><th>Cliente</th><th>Notas fiscales</th></tr></thead><tbody>
+<tr><td>Consulta / sesión individual</td><td>Persona física</td><td>Sin retenciones, IVA 16%</td></tr>
+<tr><td>Convenio con empresa o institución</td><td>Persona moral</td><td>Retenciones ISR + IVA</td></tr>
+<tr><td>Clases o talleres grupales</td><td>Persona física o moral</td><td>Depende del cliente</td></tr>
+<tr><td>Sesión online a cliente extranjero</td><td>Cliente extranjero</td><td>IVA 0%, tipo de cambio DOF</td></tr>
+<tr><td>Membresías o paquetes de sesiones</td><td>Persona física</td><td>PPD si pagan por adelantado</td></tr>
+</tbody></table>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada cliente con su tipo para que la app calcule retenciones e IVA automáticamente.</div></div>
+  </div>
+</div>
+<div class="mod" id="m2">
+  <div class="mod-header">
+    <div class="mod-num">02</div>
+    <div class="mod-meta">
+      <div class="mod-title">Cómo cotizar tus servicios</div>
+      <div class="mod-sub">Sesiones, paquetes y membresías con impuestos correctos</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El error más común: dar precio sin considerar el IVA</h3>
+<p>Si cotizas sin separar el IVA, lo terminas pagando tú. Siempre aclara si el precio incluye o excluye IVA desde el primer mensaje.</p>
+<div class="example">
+  <div class="example-label">Proyecto de diseño arquitectónico para persona física</div>
+  <p>Honorarios de diseño: <strong>$80,000 + IVA</strong></p>
+  <p>IVA: $12,800 → Total: <strong>$92,800</strong></p>
+  <p>ISR (1.5%): $1,200</p>
+  <p><strong>Pagos por etapas: diseño, proyecto ejecutivo y supervisión</strong></p>
+</div>
+<h3>Membresías o paquetes — dos enfoques válidos</h3>
+<ul>
+  <li><strong>Factura al inicio (PPD):</strong> CFDI por el total cuando recibes el pago. REP al completar.</li>
+  <li><strong>Factura mensual:</strong> CFDI cada mes por la mensualidad. Más simple para el cliente.</li>
+</ul>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> guarda tus paquetes en "Mis paquetes" para registrar cobros en un click.</div></div>
+  </div>
+</div>
+<div class="mod" id="m3">
+  <div class="mod-header">
+    <div class="mod-num">03</div>
+    <div class="mod-meta">
+      <div class="mod-title">Contratos y membresías</div>
+      <div class="mod-sub">Cómo documentar tus acuerdos correctamente</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Lo que tu contrato debe especificar para el SAT</h3>
+<ul>
+  <li>Descripción exacta del servicio — debe coincidir con la factura</li>
+  <li>Precio y si incluye o excluye IVA</li>
+  <li>Frecuencia de clases o sesiones</li>
+  <li>Política de cancelación y reembolsos</li>
+  <li>Reglas de la membresía (congelamiento, cambio de plan)</li>
+</ul>
+<h3>Membresía mensual — el modelo más simple</h3>
+<ol>
+  <li>Cliente paga su mensualidad el día 1</li>
+  <li>Emites CFDI por esa mensualidad (PUE si paga en el mes, PPD si paga después)</li>
+  <li>Si hay pagos pendientes al siguiente mes → REP antes del día 5</li>
+</ol>
+<div class="warn"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><path d="M10 3L2 17h16L10 3zM10 8v4M10 14v.01"/></svg><div><strong>Inscripciones o pagos anuales:</strong> si cobras el año completo por adelantado, ese monto es ingreso en el mes que lo recibes — no se distribuye en 12 meses.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada pago de membresía en el mes que lo cobras con el monto correcto.</div></div>
+  </div>
+</div>
+<div class="mod" id="m4">
+  <div class="mod-header">
+    <div class="mod-num">04</div>
+    <div class="mod-meta">
+      <div class="mod-title">Gastos deducibles de tu práctica</div>
+      <div class="mod-sub">Qué gastos acreditan IVA en tu profesión</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Regla de RESICO: gastos no reducen ISR pero el IVA sí se acredita</h3>
+<p>Siempre pide factura de todos tus gastos de trabajo. El IVA que acreditas reduce directamente lo que pagas al SAT cada mes.</p>
+<table><thead><tr><th>Gasto</th><th>IVA acreditable</th><th>Nota</th></tr></thead><tbody>
+<tr><td>Software (AutoCAD, Revit, SketchUp)</td><td>Sí/No</td><td>Depende si facturan en MX</td></tr>
+<tr><td>Renta de oficina o estudio</td><td>Sí</td><td>CFDI del arrendador</td></tr>
+<tr><td>Plotter / impresión de planos</td><td>Sí</td><td>Con factura del proveedor</td></tr>
+<tr><td>Materiales de maqueta</td><td>Sí</td><td>Con factura</td></tr>
+<tr><td>Transporte a obra</td><td>Sí</td><td>Uber factura con IVA en MX</td></tr>
+<tr><td>Cámara / dron para documentación</td><td>Sí</td><td>Equipo de trabajo</td></tr>
+<tr><td>Libros y normas técnicas</td><td>No</td><td>Libros exentos de IVA en MX</td></tr>
+<tr><td>Cuotas de colegios de arquitectos</td><td>Sí</td><td>Si el colegio emite CFDI</td></tr>
+<tr><td>Colaboradores freelance (dibujantes, BIM)</td><td>Sí</td><td>Deben emitirte CFDI</td></tr>
+</tbody></table>
+<div class="tip"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg><div><strong>Renta de espacio:</strong> renta de estudio, consultorio o sala de clases es uno de tus gastos más importantes. Exige CFDI mensualmente al arrendador.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada gasto con su CFDI. El resumen mensual te muestra exactamente cuánto IVA estás recuperando.</div></div>
+  </div>
+</div>
+<div class="mod" id="m5">
+  <div class="mod-header">
+    <div class="mod-num">05</div>
+    <div class="mod-meta">
+      <div class="mod-title">Convenios con empresas y gimnasios</div>
+      <div class="mod-sub">Cuando tu cliente es una persona moral</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>El convenio corporativo — ingreso estable y predecible</h3>
+<div class="example">
+  <div class="example-label">Dirección de obra con desarrolladora (persona moral)</div>
+  <p>Honorarios mensuales: $35,000 + IVA</p>
+  <p>Factura: $35,000 + $5,600 = $40,600</p>
+  <p>Retenciones: −$3,500 ISR − $3,733 IVA</p>
+  <p>Depósito mensual: <strong>$33,367</strong></p>
+</div>
+<h3>Retenciones que aplica la empresa o gimnasio</h3>
+<ul>
+  <li><strong>10% ISR</strong> sobre el subtotal sin IVA</li>
+  <li><strong>2/3 del IVA</strong> ≈ 10.67% del subtotal</li>
+</ul>
+<p>Ese dinero lo pagan al SAT a tu nombre. No es un descuento.</p>
+<div class="tip"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg><div><strong>Constancia de retenciones:</strong> pídela entre enero y febrero a cada empresa. Es tu respaldo para la declaración anual y puede significar saldo a favor.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> selecciona "Persona moral" y la app calcula automáticamente las retenciones.</div></div>
+  </div>
+</div>
+<div class="mod" id="m6">
+  <div class="mod-header">
+    <div class="mod-num">06</div>
+    <div class="mod-meta">
+      <div class="mod-title">Clases online y clientes extranjeros</div>
+      <div class="mod-sub">Clases virtuales internacionales y plataformas digitales</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Clases online con clientes en México — igual que presencial</h3>
+<p>Mismo tratamiento fiscal. El hecho de que sea por videollamada no cambia nada.</p>
+<h3>Clases online con clientes en el extranjero</h3>
+<ul>
+  <li>IVA: <strong>0%</strong> — exportación de servicios</li>
+  <li>RFC receptor: <strong>XEXX010101000</strong></li>
+  <li>Tipo de cambio: <strong>DOF del día del depósito</strong></li>
+</ul>
+<div class="example">
+  <div class="example-label">Consultoría de diseño para desarrolladora en USA</div>
+  <p>Honorarios: $5,000 USD · Tipo de cambio DOF: $17.40</p>
+  <p>Ingreso a declarar: <strong>$87,000 MXN</strong></p>
+  <p>IVA: $0 · ISR: $87,000 × 1.5% = <strong>$1,305 MXN</strong></p>
+</div>
+<h3>Plataformas internacionales de fitness y bienestar</h3>
+<ul>
+  <li>Pagos de empresa extranjera → IVA 0%</li>
+  <li>Convierte cada depósito al tipo de cambio DOF del día</li>
+  <li>Declara el ingreso bruto antes de la comisión de la plataforma</li>
+</ul>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> selecciona "Cliente extranjero" y el IVA queda en 0% automáticamente.</div></div>
+  </div>
+</div>
+<div class="mod" id="m7">
+  <div class="mod-header">
+    <div class="mod-num">07</div>
+    <div class="mod-meta">
+      <div class="mod-title">Errores fiscales más comunes</div>
+      <div class="mod-sub">Los que más cuestan a los profesionales del fitness y bienestar</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    <h3>Error #1: Facturar el total del proyecto en el mes de entrega cuando duró 6 meses</h3>
+<p>Si el proyecto duró de enero a junio y facturas todo en junio, el SAT ve un ingreso enorme en un solo mes. Además, si hubo pagos por etapas, esos pagos ya son ingresos de sus respectivos meses.</p>
+<p><strong>Solución:</strong> factura por etapas (anticipo, proyecto, supervisión). Cada pago es ingreso del mes en que lo recibes.</p>
+<h3>Error #2: Mezclar los gastos de la obra del cliente con tus honorarios</h3>
+<p>Si administras materiales y mano de obra para el cliente, ese dinero no es tuyo. Solo son ingreso tuyo tus honorarios profesionales.</p>
+<p><strong>Solución:</strong> maneja los recursos de la obra en cuenta separada. Tu ingreso = tus honorarios solamente.</p>
+<h3>Error #3: No pedir factura a colaboradores freelance</h3>
+<p>Contratas dibujantes, especialistas en BIM o ingenieros para el proyecto y los pagas en efectivo sin pedirles factura. Ese IVA se pierde.</p>
+<p><strong>Solución:</strong> exige CFDI a cada colaborador. Si no tienen RFC activo, no pueden facturarte y pierdes el IVA acreditable.</p>
+<h3>Error #4: No declarar los ingresos de proyectos en el extranjero</h3>
+<p>Proyectos para desarrolladoras o clientes en USA, España u otros países. Son exportación de servicios con IVA 0%, pero el ISR sí aplica.</p>
+<p><strong>Solución:</strong> declara cada pago convertido al tipo de cambio DOF. IVA 0%, ISR normal.</p>
+<h3>Error #5: Omitir el anticipo de diseño porque "todavía no empiezo a trabajar"</h3>
+<p>Recibes el anticipo en enero, empiezas a trabajar en febrero. El anticipo es ingreso de enero, no de febrero.</p>
+<p><strong>Solución:</strong> el anticipo es ingreso en el mes que lo recibes, sin importar cuándo empieces el proyecto.</p>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> registra cada anticipo y pago parcial en el mes exacto en que lo recibes. El resumen mensual mostrará correctamente el ISR de cada mes.</div></div>
+  </div>
+</div>
+<div class="mod" id="m8">
+  <div class="mod-header">
+    <div class="mod-num">08</div>
+    <div class="mod-meta">
+      <div class="mod-title">Flujo de trabajo fiscal con resicodeo</div>
+      <div class="mod-sub">Tu rutina mensual como coach o instructor independiente</div>
+    </div>
+  </div>
+  <div class="mod-body reveal">
+    
+<h3>Durante el mes</h3>
+<ul>
+  <li><strong>Al cobrar membresía o clase:</strong> registra inmediatamente</li>
+  <li><strong>Al recibir pago de empresa o gimnasio:</strong> registra como "Persona moral"</li>
+  <li><strong>Al recibir depósito de plataforma extranjera:</strong> convierte al DOF y registra</li>
+  <li><strong>Al pagar renta o equipo:</strong> registra con CFDI</li>
+</ul>
+<h3>Primeros 5 días del mes</h3>
+<ul>
+  <li>Cobros PPD del mes anterior → REP antes del día 5</li>
+  <li>Depósitos de plataformas internacionales → registra con DOF</li>
+</ul>
+<h3>Del 10 al 17</h3>
+<ul><li>Resumen en resicodeo → declarar y pagar ISR + IVA</li></ul>
+<h3>Último día del mes</h3>
+<ul>
+  <li>Factura global por cobros en efectivo sin CFDI individual</li>
+  <li>Respaldo de datos</li>
+</ul>
+<div class="tip"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><circle cx="10" cy="10" r="8"/><path d="M10 6v5M10 13v.01"/></svg><div><strong>Para coaches con muchos clientes:</strong> activa las notificaciones de membresías para saber cuándo vence cada una y cuándo debes registrar el cobro.</div></div>
+<div class="app-callout"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 6h6M7 10h6M7 14h3"/></svg><div><strong>En resicodeo:</strong> el calendario fiscal te avisa 7 días antes de cada fecha crítica. Nunca más se te va a olvidar el REP ni la declaración.</div></div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>¡Curso completado!</h2>
+  <p>Ahora tienes todo lo que necesitas para manejar tu RESICO como profesional.</p>
+  <a href="/resicodeo/" class="cta-btn">Abrir resicodeo →</a>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Aviso:</strong> este curso es material educativo. No constituye asesoría fiscal profesional. Las tasas y procedimientos reflejan reglas vigentes a abril de 2026. Verifica siempre en <a href="https://sat.gob.mx" target="_blank">sat.gob.mx</a>. Para casos complejos consulta a un Contador Público o llama a PRODECON: 55 1205 9000 (gratis).
+  </div>
+</div>
+
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div id="quizOverlay" class="quiz-overlay">
+  <div class="quiz-modal">
+    <div class="quiz-eyebrow"><span class="quiz-eyebrow-dot"></span>Pregunta Sorpresa</div>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+      <span class="quiz-progress-label" id="quizProgressLabel"></span>
+    </div>
+    <div class="quiz-title">¿Entendiste este módulo?</div>
+    <div class="quiz-subtitle">Para continuar, responde las siguientes preguntas sobre lo que acabas de leer.</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback">
+      <div class="quiz-feedback-text">
+        <strong id="quizFeedbackTitle"></strong>
+        <span id="quizFeedbackMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {
+  "m1": [
+    {
+      "q": "¿Cuál es la clave SAT para un arquitecto independiente?",
+      "opts": [
+        "73151600 — Servicios de arquitectura",
+        "73151700 — Diseño de interiores",
+        "80101600 — Consultoría",
+        "80111600 — Servicios profesionales genérico"
+      ],
+      "correct": 0,
+      "hint": "El módulo 1 tiene la tabla de claves SAT para arquitectos y sus especialidades."
+    },
+    {
+      "q": "Si administras materiales y mano de obra para un cliente, ¿ese dinero es tu ingreso?",
+      "opts": [
+        "No, solo son ingreso tuyo tus honorarios profesionales — los recursos de obra son del cliente",
+        "Solo si la obra supera $500,000",
+        "Depende de si hay contrato escrito",
+        "Sí, todo lo que pasa por tu cuenta es ingreso"
+      ],
+      "correct": 0,
+      "hint": "El módulo 1 aclara que los recursos de la obra administrados para el cliente no son tus ingresos — solo tus honorarios lo son."
+    },
+    {
+      "q": "Un anticipo de diseño recibido en enero para un proyecto que empieza en febrero, ¿cuándo es el ingreso?",
+      "opts": [
+        "En enero cuando recibes el pago",
+        "Distribuido entre enero y el mes de entrega",
+        "En febrero cuando empieces a trabajar",
+        "En la declaración anual"
+      ],
+      "correct": 0,
+      "hint": "El módulo 1 y el Curso Base: el ingreso es en el mes que efectivamente cobras, no cuando trabajas."
+    }
+  ],
+  "m2": [
+    {
+      "q": "Para un proyecto de diseño de 6 meses con pagos por etapas, ¿cómo debes facturar?",
+      "opts": [
+        "Una factura mensual proporcional durante los 6 meses",
+        "Por etapas: cada pago es una factura en el mes que lo recibes",
+        "PPD global al inicio por el total del proyecto",
+        "Una sola factura al entregar el proyecto en el mes 6"
+      ],
+      "correct": 1,
+      "hint": "El módulo 2 explica que los pagos por etapas se facturan en el mes en que se reciben."
+    },
+    {
+      "q": "¿Cómo cotizar honorarios de dirección de obra a una desarrolladora (persona moral)?",
+      "opts": [
+        "Sin IVA porque la construcción está exenta",
+        "En porcentaje del costo de obra sin IVA",
+        "Precio todo incluido sin mencionar IVA",
+        "Subtotal + IVA por separado — las personas morales prefieren el desglose"
+      ],
+      "correct": 3,
+      "hint": "El módulo 2 recomienda cotizar con IVA separado para personas morales."
+    },
+    {
+      "q": "¿Cuándo es ingreso el anticipo de diseño recibido antes de empezar el proyecto?",
+      "opts": [
+        "En el mes en que recibes el anticipo",
+        "En la declaración anual",
+        "Cuando terminas el diseño y lo entregas",
+        "Cuando empiezas a trabajar en el proyecto"
+      ],
+      "correct": 0,
+      "hint": "El módulo 2 reitera: el anticipo es ingreso del mes en que lo recibes, independientemente de cuándo trabajas."
+    }
+  ],
+  "m3": [
+    {
+      "q": "¿Cómo debes manejar fiscalmente los recursos de obra que el cliente te entrega para administrar?",
+      "opts": [
+        "Declararlos y luego deducirlos en RESICO",
+        "Mantenerlos en cuenta separada — no son tu ingreso, solo tus honorarios lo son",
+        "Registrarlos como ingreso propio y deducirlos como gasto",
+        "Reportarlos como ingreso en la declaración anual"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 aclara: los recursos de obra del cliente van en cuenta separada. Tu ingreso = tus honorarios."
+    },
+    {
+      "q": "Un cliente corporativo paga la supervisión de obra 45 días después de tu factura. ¿Qué método usas?",
+      "opts": [
+        "Sin factura hasta recibir el pago",
+        "Factura retroactiva al mes del pago",
+        "PPD porque el pago llega después de emitir la factura",
+        "PUE porque ya prestaste el servicio"
+      ],
+      "correct": 2,
+      "hint": "El módulo 3: pago diferido después de facturar = PPD. Necesitas emitir REP cuando te pagan."
+    },
+    {
+      "q": "¿Qué pasa fiscalmente con el anticipo si el cliente cancela el proyecto?",
+      "opts": [
+        "Solo si el anticipo supera $10,000",
+        "El anticipo retenido es ingreso gravable aunque no hayas trabajado",
+        "Lo declaras en la anual como deducción",
+        "No hay consecuencia fiscal si no empezaste a trabajar"
+      ],
+      "correct": 1,
+      "hint": "El módulo 3 advierte: el anticipo por penalización de cancelación es ingreso del mes que lo retienes."
+    }
+  ],
+  "m4": [
+    {
+      "q": "¿Los colaboradores freelance (dibujantes, especialistas BIM) generan IVA acreditable?",
+      "opts": [
+        "Sí, siempre que cada colaborador te emita CFDI por sus honorarios",
+        "Solo si están dados de alta como personas morales",
+        "Solo si el colaborador gana más de $10,000 por proyecto",
+        "No, son gastos de personal sin IVA"
+      ],
+      "correct": 0,
+      "hint": "El módulo 4 explica que los colaboradores freelance deben emitirte CFDI para que el gasto genere IVA acreditable."
+    },
+    {
+      "q": "¿El transporte a obra (Uber, casetas, gasolina con factura) genera IVA acreditable?",
+      "opts": [
+        "Solo si el cliente te reembolsa el transporte",
+        "Sí, Uber factura con IVA en México y las gasolineras también pueden facturar",
+        "No, el transporte es gasto personal",
+        "Solo si la distancia supera 50 km"
+      ],
+      "correct": 1,
+      "hint": "El módulo 4 lista el transporte a obra como gasto con IVA acreditable."
+    },
+    {
+      "q": "¿Las cuotas del colegio de arquitectos generan IVA acreditable?",
+      "opts": [
+        "No, las cuotas de asociaciones son donativos",
+        "Solo si son cuotas anuales mayores a $5,000",
+        "Sí, si el colegio emite CFDI a tu RFC por la cuota",
+        "No, las asociaciones profesionales están exentas de IVA"
+      ],
+      "correct": 2,
+      "hint": "El módulo 4 incluye cuotas de colegios profesionales con la condición de que el colegio emita CFDI."
+    }
+  ],
+  "m5": [
+    {
+      "q": "Una desarrolladora te paga $35,000 mensuales por dirección de obra. ¿Cuánto te retiene de ISR?",
+      "opts": [
+        "$5,600 (16%)",
+        "$1,750 (5%)",
+        "$3,500 (10% del subtotal)",
+        "$7,000 (20%)"
+      ],
+      "correct": 2,
+      "hint": "El módulo 5: persona moral retiene 10% de ISR sobre el subtotal sin IVA."
+    },
+    {
+      "q": "¿Por qué debes pedir la constancia de retenciones a la desarrolladora entre enero y febrero?",
+      "opts": [
+        "Como respaldo de retenciones para la declaración anual — puede generar saldo a favor de ISR",
+        "El SAT la exige como trámite obligatorio",
+        "Para verificar que la desarrolladora pagó al SAT correctamente",
+        "Para declarar el IVA anual retroactivo"
+      ],
+      "correct": 0,
+      "hint": "El módulo 5: la constancia de retenciones es tu respaldo anual y puede generar saldo a favor."
+    },
+    {
+      "q": "Si la desarrolladora no te aplica retenciones correctamente, ¿quién paga el IVA al SAT?",
+      "opts": [
+        "La desarrolladora, porque es su obligación hacerlo",
+        "Tú pagas el IVA completo al SAT aunque la desarrolladora no lo haya retenido",
+        "Nadie — si no hubo retención no hay obligación",
+        "El SAT lo cobra directamente a la desarrolladora"
+      ],
+      "correct": 1,
+      "hint": "El módulo 5 advierte: si la persona moral no retiene, el IVA completo lo pagas tú directamente al SAT."
+    }
+  ],
+  "m6": [
+    {
+      "q": "Consultoría de diseño para una desarrolladora en Miami, ¿qué IVA aplica?",
+      "opts": [
+        "8% para exportaciones de servicios profesionales",
+        "0% porque el cliente tiene residencia fuera de México",
+        "16% porque el diseño se hace en México",
+        "Exento porque es servicio arquitectónico"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6: cliente extranjero = exportación de servicios = IVA 0%."
+    },
+    {
+      "q": "¿Qué RFC usas para facturar honorarios de diseño a una firma de arquitectura en España?",
+      "opts": [
+        "XAXX010101000",
+        "El NIF fiscal español de la firma",
+        "XEXX010101000",
+        "Tu propio RFC como receptor"
+      ],
+      "correct": 2,
+      "hint": "El módulo 6: XEXX010101000 para todos los clientes con residencia fuera de México."
+    },
+    {
+      "q": "Recibes $5,000 USD por un proyecto con desarrolladora en USA. ¿Qué declara?",
+      "opts": [
+        "Solo si el proyecto duró más de 3 meses",
+        "Los $5,000 USD convertidos a MXN con el tipo de cambio DOF del día del depósito",
+        "El neto después de la transferencia bancaria",
+        "$5,000 USD directamente"
+      ],
+      "correct": 1,
+      "hint": "El módulo 6: convierte al tipo de cambio DOF del día del depósito y declara el monto completo en MXN."
+    }
+  ],
+  "m7": [
+    {
+      "q": "¿Por qué es un error facturar todo el proyecto en el mes de entrega cuando recibiste pagos en meses anteriores?",
+      "opts": [
+        "No es error si hay un solo contrato",
+        "Porque el SAT exige facturar por etapas en proyectos de más de 3 meses",
+        "Solo si el total supera $500,000",
+        "Porque los pagos recibidos son ingresos de sus respectivos meses — acumularlos en uno solo genera inconsistencias"
+      ],
+      "correct": 3,
+      "hint": "El módulo 7 (Error #1) explica que cada pago por etapa es ingreso del mes en que se recibe."
+    },
+    {
+      "q": "¿Por qué contratar colaboradores y pagarles en efectivo sin pedirles CFDI es un error?",
+      "opts": [
+        "Porque el pago en efectivo no es válido entre profesionales",
+        "Solo si el colaborador gana más de $8,000 por proyecto",
+        "Porque sin CFDI del colaborador pierdes el IVA acreditable de ese gasto",
+        "Porque el colaborador puede denunciarte ante el SAT"
+      ],
+      "correct": 2,
+      "hint": "El módulo 7 (Error #3) explica: sin CFDI del colaborador no hay IVA acreditable — ese gasto fiscalmente no existe."
+    },
+    {
+      "q": "Un anticipo de proyecto recibido en enero para trabajo que empieza en marzo, ¿cuándo lo declaras?",
+      "opts": [
+        "En la declaración anual de ambos meses",
+        "Distribuido entre enero y el mes de entrega",
+        "En enero cuando recibes el pago",
+        "En marzo cuando empieces a trabajar"
+      ],
+      "correct": 2,
+      "hint": "El módulo 7 (Error #5) aclara: el anticipo es ingreso del mes que lo recibes, no del mes que empiezas."
+    }
+  ],
+  "m8": [
+    {
+      "q": "Para un proyecto de 8 meses con 4 pagos por etapas, ¿en cuántos meses se declaran los ingresos?",
+      "opts": [
+        "En 8 meses proporcionales aunque no haya pago todos los meses",
+        "Todo en el primer mes cuando se firma el contrato",
+        "Todo en el mes de entrega final",
+        "En los 4 meses en que se recibe cada pago por etapa"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8 y el Curso Base: el ingreso se declara en los meses en que efectivamente se recibe cada pago."
+    },
+    {
+      "q": "¿Qué haces si el SAT muestra más ingresos que los registrados en resicodeo?",
+      "opts": [
+        "Reportar error al SAT",
+        "Usar los del SAT y aumentar lo declarado sin investigar",
+        "Revisar qué anticipo o pago de etapa falta registrar en la app",
+        "Declarar el promedio"
+      ],
+      "correct": 2,
+      "hint": "El módulo 8: si el SAT muestra más, algo falta registrar. El SAT ve todas las facturas de honorarios timbradas."
+    },
+    {
+      "q": "¿Cuándo emites la factura global de cobros sin CFDI individual como arquitecto?",
+      "opts": [
+        "El día 17 junto con la declaración",
+        "Solo cuando acumulas $20,000 sin factura",
+        "El primer día del mes siguiente",
+        "El último día del mes de los cobros sin CFDI"
+      ],
+      "correct": 3,
+      "hint": "El módulo 8: factura global el último día del mes por los cobros sin CFDI de ese mes."
+    }
+  ]
+};
+const CHECKPOINT = 90;
+let quizLocked = false;
+let quizScrollY = 0;
+const moduleState = {};
+
+function initModuleState(modId) {
+  if (!moduleState[modId]) {
+    const qs = [...QUESTIONS[modId]];
+    for (let i = qs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [qs[i], qs[j]] = [qs[j], qs[i]];
+    }
+    moduleState[modId] = { questions: qs, fired: [], answered: 0 };
+  }
+}
+
+function getModuleProgress(modEl) {
+  const rect = modEl.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  return Math.min(100, (scrolled / modEl.offsetHeight) * 100);
+}
+
+function checkModules() {
+  if (quizLocked) return;
+  document.querySelectorAll('.mod[id]').forEach(mod => {
+    const modId = mod.id;
+    if (!QUESTIONS[modId]) return;
+    initModuleState(modId);
+    const state = moduleState[modId];
+    if (state.fired.includes(0)) return;
+    if (state.answered >= QUESTIONS[modId].length) return;
+    if (getModuleProgress(mod) < CHECKPOINT) return;
+    state.fired.push(0);
+    showQuestion(modId, state.questions[state.answered], 0);
+  });
+}
+
+function showQuestion(modId, q, cpIdx) {
+  if (quizLocked) return;
+  quizLocked = true;
+  quizScrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + quizScrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  const overlay = document.getElementById('quizOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.classList.add('active');
+    renderQuestion(modId, q, cpIdx);
+  }));
+}
+
+function renderQuestion(modId, q, cpIdx) {
+  const total = QUESTIONS[modId].length;
+  const done  = moduleState[modId].answered;
+  document.getElementById('quizProgressFill').style.width = ((done / total) * 100) + '%';
+  document.getElementById('quizProgressLabel').textContent = 'Pregunta ' + (done + 1) + ' de ' + total;
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  const letters = ['A','B','C','D'];
+  const optsEl = document.getElementById('quizOptions');
+  optsEl.innerHTML = '';
+  optsEl.style.opacity = '0';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.innerHTML = '<span class="quiz-opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    btn.addEventListener('click', () => handleAnswer(i, q.correct, q.hint, modId, cpIdx));
+    optsEl.appendChild(btn);
+  });
+  requestAnimationFrame(() => { optsEl.style.transition = 'opacity .3s ease'; optsEl.style.opacity = '1'; });
+}
+
+function handleAnswer(selected, correct, hint, modId, cpIdx) {
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns.forEach(b => b.disabled = true);
+  const ok = selected === correct;
+  btns[selected].classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  document.getElementById('quizFeedbackTitle').textContent = ok ? '¡Correcto!' : 'Respuesta incorrecta.';
+  if (ok) {
+    moduleState[modId].answered++;
+    const rem = QUESTIONS[modId].length - moduleState[modId].answered;
+    document.getElementById('quizFeedbackMsg').textContent = rem > 0 ? 'Siguiente pregunta del módulo...' : 'Respondiste correctamente las ' + QUESTIONS[modId].length + ' preguntas. ¡Módulo completado!';
+    fb.className = 'quiz-feedback ok show';
+    if (rem > 0) {
+      setTimeout(() => {
+        const q = moduleState[modId].questions[moduleState[modId].answered];
+        renderQuestion(modId, q, cpIdx);
+      }, 1200);
+    } else {
+      setTimeout(() => closeQuiz(true, null), 2000);
+    }
+  } else {
+    document.getElementById('quizFeedbackMsg').textContent = 'Pista: ' + hint + ' Regresarás al inicio del módulo para releer el contenido.';
+    fb.className = 'quiz-feedback fail show';
+    moduleState[modId].fired = [];
+    setTimeout(() => closeQuiz(false, modId), 2800);
+  }
+}
+
+function closeQuiz(success, modIdToReset) {
+  const overlay = document.getElementById('quizOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    if (success) {
+      window.scrollTo(0, quizScrollY);
+    } else {
+      const el = document.getElementById(modIdToReset);
+      if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 80), behavior: 'smooth' });
+    }
+    quizLocked = false;
+  }, 380);
+}
+
+window.addEventListener('wheel', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('touchmove', e => { if (quizLocked) e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', e => { if (!quizLocked) return; if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) e.preventDefault(); });
+
+let scrollThrottle = null;
+window.addEventListener('scroll', () => {
+  if (scrollThrottle) return;
+  scrollThrottle = setTimeout(() => { checkModules(); scrollThrottle = null; }, 120);
+}, { passive: true });
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('prog').style.width = (window.scrollY / h * 100) + '%';
+});
+
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { el.classList.add('in'); } });
+  }, { threshold: .08 }).observe(el);
+});
+
+document.addEventListener('DOMContentLoaded', checkModules);
+</script>
+</body>
+</html>
