@@ -930,7 +930,7 @@ footer{border-top:1px solid var(--border);padding:28px;max-width:1100px;margin:0
 <script>
 const SB_URL='https://olbnenpjpzsidzyhvdrb.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sYm5lbnBqcHpzaWR6eWh2ZHJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODk1NTUsImV4cCI6MjA5MzI2NTU1NX0.VqfTeOIw3F_9pvwT2GkCprZmfGC8zyLA5i2CIYBPF3M';
 let sb=null;
-try{if(SB_URL!=='TU_URL_AQUI')sb=window.supabase.createClient(SB_URL,SB_KEY)}catch(e){}
+try{if(SB_URL!=='TU_URL_AQUI')sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage}})}catch(e){}
 
 function switchTab(tab,el){
   document.querySelectorAll('.ltab').forEach(t=>t.classList.remove('on'));

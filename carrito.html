@@ -141,7 +141,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.92);backdrop-fi
 const SB_URL = 'https://olbnenpjpzsidzyhvdrb.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sYm5lbnBqcHpzaWR6eWh2ZHJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODk1NTUsImV4cCI6MjA5MzI2NTU1NX0.VqfTeOIw3F_9pvwT2GkCprZmfGC8zyLA5i2CIYBPF3M';
 let sb = null;
-try { sb = window.supabase.createClient(SB_URL, SB_KEY); } catch(e) {}
+try { sb = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage}}); } catch(e) {}
 </script>
 </head>
 <body>

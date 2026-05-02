@@ -1760,8 +1760,16 @@ const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 let sb = null;
 let currentUser = null;
 
+// Inicializar Supabase inmediatamente
 try {
-  sb = window.supabase.createClient(SB_URL, SB_KEY);
+  sb = window.supabase.createClient(SB_URL, SB_KEY, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storage: window.localStorage
+    }
+  });
 } catch(e) { console.warn('Supabase no disponible', e); }
 
 // ── AUTH STATE ──
@@ -1971,13 +1979,14 @@ async function saveClientesCloud() {
 <body>
 <div class="app">
   <!-- HEADER -->
-  <div class="header">
+  <div class="header" style="display:flex;align-items:center;justify-content:space-between">
     <div>
       <div class="logo">
         resicodeo<span class="dot"></span>
       </div>
-      <div class="tagline">Tu negocio creativo, en orden. <span class="accent">Sin complicaciones.</span></div>
+      <div class="tagline">Tu RESICO, en orden. <span class="accent">Sin complicaciones.</span></div>
     </div>
+    <div id="user-badge" style="display:flex;align-items:center;flex-shrink:0"></div>
   </div>
 
   <!-- TABS -->
@@ -2036,7 +2045,6 @@ async function saveClientesCloud() {
         <span>Cursos</span>
         <span class="tab-curso-badge">NUEVO</span>
       </a>
-      <div id="user-badge" style="display:flex;align-items:center;margin-left:4px"></div>
     </div>
   </div>
 
