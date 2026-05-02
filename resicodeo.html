@@ -1752,7 +1752,7 @@ select.input {
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- supabase movido al head -->
 <script>
 // ── SUPABASE CONFIG ──
 const SB_URL = 'https://olbnenpjpzsidzyhvdrb.supabase.co';
@@ -1766,24 +1766,39 @@ try {
 
 // ── AUTH STATE ──
 async function initAuth() {
-  if (!sb) return;
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    currentUser = session.user;
-    await loadUserProfile();
-    await syncDataFromCloud();
+  // Siempre renderizar el badge — con o sin sesión
+  renderUserBadge();
+
+  if (!sb) {
+    console.warn('Supabase no disponible');
+    return;
   }
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) {
+
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
       currentUser = session.user;
+      renderUserBadge();
       await loadUserProfile();
       await syncDataFromCloud();
-    } else if (event === 'SIGNED_OUT') {
-      currentUser = null;
-      renderUserBadge();
     }
-  });
-  renderUserBadge();
+
+    sb.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        currentUser = session.user;
+        renderUserBadge();
+        await loadUserProfile();
+        await syncDataFromCloud();
+        showToast('¡Bienvenido! Datos sincronizados ✓');
+      } else if (event === 'SIGNED_OUT') {
+        currentUser = null;
+        renderUserBadge();
+      }
+    });
+  } catch(e) {
+    console.warn('Auth error:', e);
+    renderUserBadge();
+  }
 }
 
 // ── PERFIL ──
@@ -1951,6 +1966,7 @@ async function saveClientesCloud() {
   } catch(e) { console.warn('saveClientes cloud error:', e); }
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div class="app">
