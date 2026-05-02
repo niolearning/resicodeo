@@ -136,11 +136,18 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.92);backdrop-fi
 .btn-open-app{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--purple);color:white;border-radius:12px;font-family:var(--body);font-size:15px;font-weight:700;text-decoration:none;transition:all .18s;box-shadow:0 4px 18px rgba(123,109,255,0.35)}
 .btn-open-app:hover{background:var(--purple-light);transform:translateY(-1px)}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SB_URL = 'https://olbnenpjpzsidzyhvdrb.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sYm5lbnBqcHpzaWR6eWh2ZHJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODk1NTUsImV4cCI6MjA5MzI2NTU1NX0.VqfTeOIw3F_9pvwT2GkCprZmfGC8zyLA5i2CIYBPF3M';
+let sb = null;
+try { sb = window.supabase.createClient(SB_URL, SB_KEY); } catch(e) {}
+</script>
 </head>
 <body>
 
 <nav>
-  <a href="/resicodeo/" class="logo">resicodeo<span class="logo-dot"></span></a>
+  <a href="resicodeo.html" class="logo">resicodeo<span class="logo-dot"></span></a>
   <div class="nav-secure">
     <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><rect x="3" y="7" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5 7V5a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
     Checkout seguro
@@ -323,7 +330,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(12,13,17,0.92);backdrop-fi
     <h2 class="success-title">¡Todo listo!</h2>
     <p class="success-sub" id="successSub">Tu cuenta fue creada y tu compra fue procesada. Ya puedes acceder a todo desde la app.</p>
     <div class="success-items" id="successItems"></div>
-    <a href="/resicodeo/" class="btn-open-app">
+    <a href="resicodeo.html" class="btn-open-app">
       <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><rect x="3" y="2" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M7 7h6M7 11h6M7 15h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
       Abrir resicodeo →
     </a>
@@ -476,7 +483,7 @@ function validate(id, fieldId, check) {
   return ok;
 }
 
-function submitAccount() {
+async function submitAccount() {
   const okN  = validate('inp-nombre',  'f-nombre',  v => v.trim().length > 0);
   const okA  = validate('inp-apellido','f-apellido', v => v.trim().length > 0);
   const okE  = validate('inp-email',   'f-email',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
@@ -484,9 +491,55 @@ function submitAccount() {
   const okT  = document.getElementById('chk-terms').checked;
   if (!okT) { alert('Debes aceptar los términos para continuar.'); return; }
   if (!okN || !okA || !okE || !okP) return;
-  userName = document.getElementById('inp-nombre').value.trim();
+
+  const nombre   = document.getElementById('inp-nombre').value.trim();
+  const apellido = document.getElementById('inp-apellido').value.trim();
+  const email    = document.getElementById('inp-email').value.trim();
+  const password = document.getElementById('inp-pw').value;
+  userName = nombre;
+
+  // Botón en estado cargando
+  const btn = document.querySelector('#screenAccount .btn-primary');
+  btn.disabled = true;
+  btn.textContent = 'Creando cuenta...';
+
+  if (sb) {
+    // Intentar registrar en Supabase
+    const { data, error } = await sb.auth.signUp({ email, password,
+      options: { data: { nombre, apellido } }
+    });
+
+    if (error) {
+      // Si ya existe la cuenta, intentar login
+      if (error.message.includes('already') || error.message.includes('registered')) {
+        const { error: loginErr } = await sb.auth.signInWithPassword({ email, password });
+        if (loginErr) {
+          btn.disabled = false;
+          btn.textContent = 'Crear cuenta y continuar →';
+          document.getElementById('f-email').classList.add('has-error');
+          document.querySelector('#f-email .field-error').textContent = 'Correo ya registrado con otra contraseña';
+          return;
+        }
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Crear cuenta y continuar →';
+        alert(error.message);
+        return;
+      }
+    }
+
+    // Actualizar perfil con nombre
+    if (data?.user) {
+      await sb.from('perfiles').upsert({
+        id: data.user.id, email,
+        nombre, apellido, plan: 'free'
+      });
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Crear cuenta y continuar →';
   goToStep(2);
-  // Mostrar upsell solo si el plan NO es max (max ya incluye especializado)
   setTimeout(() => {
     if (currentPlan !== 'max') showUpsell();
     else { goToStep(3); }

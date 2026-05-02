@@ -1752,6 +1752,170 @@ select.input {
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ── SUPABASE CONFIG ──
+const SB_URL = 'https://olbnenpjpzsidzyhvdrb.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sYm5lbnBqcHpzaWR6eWh2ZHJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2ODk1NTUsImV4cCI6MjA5MzI2NTU1NX0.VqfTeOIw3F_9pvwT2GkCprZmfGC8zyLA5i2CIYBPF3M';
+let sb = null;
+let currentUser = null;
+
+try {
+  sb = window.supabase.createClient(SB_URL, SB_KEY);
+} catch(e) { console.warn('Supabase no disponible', e); }
+
+// ── AUTH STATE ──
+async function initAuth() {
+  if (!sb) return;
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    await loadUserProfile();
+    await syncDataFromCloud();
+  }
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      currentUser = session.user;
+      await loadUserProfile();
+      await syncDataFromCloud();
+    } else if (event === 'SIGNED_OUT') {
+      currentUser = null;
+      renderUserBadge();
+    }
+  });
+  renderUserBadge();
+}
+
+// ── PERFIL ──
+async function loadUserProfile() {
+  if (!sb || !currentUser) return;
+  const { data } = await sb.from('perfiles').select('*').eq('id', currentUser.id).single();
+  if (data) {
+    if (data.plan === 'pro') localStorage.setItem('resicodeo_plan', 'pro');
+    if (data.cursos_comprados) localStorage.setItem('resicodeo_cursos', JSON.stringify(data.cursos_comprados));
+  }
+  renderUserBadge();
+}
+
+// ── BADGE USUARIO EN NAV ──
+function renderUserBadge() {
+  const badge = document.getElementById('user-badge');
+  if (!badge) return;
+  if (currentUser) {
+    const email = currentUser.email || '';
+    const inicial = email.charAt(0).toUpperCase();
+    badge.innerHTML = `<span style="background:var(--purple);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer" title="${email}" onclick="toggleUserMenu()">${inicial}</span>`;
+  } else {
+    badge.innerHTML = `<a href="https://niolearning.github.io/resicodeo/landing.html#acceso" style="font-size:12px;color:var(--muted);background:var(--ink3);border:1px solid var(--border2);padding:5px 12px;border-radius:8px;text-decoration:none;font-weight:600">Iniciar sesión</a>`;
+  }
+}
+
+// ── MENÚ USUARIO ──
+function toggleUserMenu() {
+  let menu = document.getElementById('user-menu');
+  if (menu) { menu.remove(); return; }
+  menu = document.createElement('div');
+  menu.id = 'user-menu';
+  menu.style.cssText = 'position:fixed;top:60px;right:16px;background:var(--ink2);border:1px solid var(--border2);border-radius:14px;padding:8px;min-width:200px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.4)';
+  const email = currentUser ? currentUser.email : '';
+  menu.innerHTML = `
+    <div style="padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);margin-bottom:4px">${email}</div>
+    <button onclick="cerrarSesion()" style="width:100%;padding:8px 12px;background:none;border:none;color:var(--red);font-size:13px;text-align:left;cursor:pointer;border-radius:8px;font-family:inherit">Cerrar sesión</button>
+  `;
+  document.body.appendChild(menu);
+  setTimeout(() => document.addEventListener('click', function close(e) {
+    if (!menu.contains(e.target)) { menu.remove(); document.removeEventListener('click', close); }
+  }), 100);
+}
+
+async function cerrarSesion() {
+  if (sb) await sb.auth.signOut();
+  currentUser = null;
+  renderUserBadge();
+  const m = document.getElementById('user-menu');
+  if (m) m.remove();
+}
+
+// ── SYNC A LA NUBE ──
+async function syncDataFromCloud() {
+  if (!sb || !currentUser) return;
+  try {
+    // Cargar ingresos
+    const { data: ing } = await sb.from('ingresos').select('*').eq('user_id', currentUser.id).order('fecha', { ascending: false });
+    if (ing && ing.length > 0) {
+      ingresos = ing.map(r => ({
+        id: r.id, desc: r.descripcion, monto: r.monto,
+        fecha: r.fecha, estado: r.estado, forma_pago: r.forma_pago,
+        categoria: r.categoria, notas: r.notas, uuid_fiscal: r.uuid_fiscal,
+        cliente_id: r.cliente_id, created_at: r.created_at
+      }));
+      localStorage.setItem('resicodeo_ingresos', JSON.stringify(ingresos));
+    }
+    // Cargar gastos
+    const { data: gst } = await sb.from('gastos').select('*').eq('user_id', currentUser.id).order('fecha', { ascending: false });
+    if (gst && gst.length > 0) {
+      gastos = gst.map(r => ({
+        id: r.id, desc: r.descripcion, subtotal: r.subtotal,
+        iva: r.iva, total: r.total, fecha: r.fecha,
+        categoria: r.categoria, tiene_factura: r.tiene_factura
+      }));
+      localStorage.setItem('resicodeo_gastos', JSON.stringify(gastos));
+    }
+    // Cargar clientes
+    const { data: cls } = await sb.from('clientes').select('*').eq('user_id', currentUser.id);
+    if (cls && cls.length > 0) {
+      clientes = cls;
+      localStorage.setItem('resicodeo_clientes', JSON.stringify(clientes));
+    }
+    renderResumenMes();
+  } catch(e) { console.warn('Sync error:', e); }
+}
+
+async function saveIngresosCloud() {
+  if (!sb || !currentUser) return;
+  try {
+    await sb.from('ingresos').delete().eq('user_id', currentUser.id);
+    if (ingresos.length > 0) {
+      await sb.from('ingresos').insert(ingresos.map(r => ({
+        user_id: currentUser.id,
+        descripcion: r.desc, monto: r.monto, fecha: r.fecha,
+        estado: r.estado || 'cobrado', forma_pago: r.forma_pago || '03',
+        categoria: r.categoria, notas: r.notas,
+        uuid_fiscal: r.uuid_fiscal, cliente_id: r.cliente_id
+      })));
+    }
+  } catch(e) { console.warn('saveIngresos cloud error:', e); }
+}
+
+async function saveGastosCloud() {
+  if (!sb || !currentUser) return;
+  try {
+    await sb.from('gastos').delete().eq('user_id', currentUser.id);
+    if (gastos.length > 0) {
+      await sb.from('gastos').insert(gastos.map(r => ({
+        user_id: currentUser.id,
+        descripcion: r.desc, subtotal: r.subtotal,
+        iva: r.iva || 0, total: r.total, fecha: r.fecha,
+        categoria: r.categoria, tiene_factura: r.tiene_factura || false
+      })));
+    }
+  } catch(e) { console.warn('saveGastos cloud error:', e); }
+}
+
+async function saveClientesCloud() {
+  if (!sb || !currentUser) return;
+  try {
+    await sb.from('clientes').delete().eq('user_id', currentUser.id);
+    if (clientes.length > 0) {
+      await sb.from('clientes').insert(clientes.map(r => ({
+        user_id: currentUser.id,
+        nombre: r.nombre, rfc: r.rfc, email: r.email,
+        telefono: r.telefono, tipo: r.tipo || 'fisica'
+      })));
+    }
+  } catch(e) { console.warn('saveClientes cloud error:', e); }
+}
+</script>
 </head>
 <body>
 <div class="app">
@@ -2737,16 +2901,19 @@ async function loadData() {
 async function saveIngresos() {
   try { localStorage.setItem('resicodeo_ingresos', JSON.stringify(ingresos)); }
   catch (e) { showToast('Error al guardar', true); }
+  await saveIngresosCloud();
 }
 
 async function saveGastos() {
   try { localStorage.setItem('resicodeo_gastos', JSON.stringify(gastos)); }
   catch (e) { showToast('Error al guardar', true); }
+  await saveGastosCloud();
 }
 
 async function saveClientes() {
   try { localStorage.setItem('resicodeo_clientes', JSON.stringify(clientes)); }
   catch (e) { showToast('Error al guardar', true); }
+  await saveClientesCloud();
 }
 
 async function savePaquetes() {
@@ -5779,6 +5946,8 @@ async function init() {
 
   // ── FREEMIUM ──
   aplicarBloqueoTabs();
+  // ── SUPABASE AUTH ──
+  initAuth();
 
   // Recordatorio de backup
   setTimeout(checkBackupReminder, 1500);
